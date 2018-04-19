@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Title</title>
+    <meta charset="utf-8">
+
+	<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
+
+    <style>
+      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+
+      body { font-family: 'Droid Serif'; }
+      h1, h2, h3 {
+        font-family: 'Yanone Kaffeesatz';
+        font-weight: normal;
+      }
+
+      table {
+      		margin-left:auto; 
+    		margin-right:auto;
+    		table-layout: fixed;
+      }
+      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+
+      .smaller-font { 	font-size:18px;}
+    </style>
+  </head>
+  <body>
+    <textarea id="source">
+
+class: center, middle
+
+# Title
+
+---
+
+Agenda
+======
+
+1. Introduction
+2. Deep-dive
+3. ...
+
+---
+
+# Variablentypen
+
+.pure-table.pure-table-bordered.pure-table-striped.smaller-font.[
+			| Scope 	| Reassignable 	| Mutable 	| Temporal Dead Zone
+------------|:---------:|:-------------:|:---------:|:-----------------:
+ const		| Block 	| No 		 	| Yes		| Yes
+]
+
+    </textarea>
+    <script src="https://remarkjs.com/downloads/remark-latest.min.js">
+    </script>
+    <script>
+      var slideshow = remark.create();
+    </script>
+  </body>
+</html>
