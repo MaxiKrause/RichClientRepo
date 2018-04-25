@@ -59,6 +59,7 @@ class: center, middle
 14. Die Array-Methoden - map / filter / reduce
 15. "..." Operator
 16. Promises
+17. Vereinfachte Iteration durch Arrays
 
 ---
 
@@ -582,6 +583,34 @@ console.log(num2) //Ausgabe: 10
     .catch(err => console.log(err));
       // catch dient zur Fehlerbehandlung, 
       // falls rej eine auslöst
+  ```
+]
+
+---
+
+.left-column[
+  ### Vertauschen von Variabeln
+  ### Die Array-Methoden - map / filter / reduce
+  ### "..." Operator
+  ### Promises
+  ### Vereinfachte Iteration durch Arrays
+]
+
+.right-column[
+  <ul>
+	<li>ES6 bietet die Möglichkeit Iterationen zu vereinfachen</li>
+  </ul>
+
+  ```javascript
+	// ES5
+	for (var i = 0; i < array.length; i++) {
+		console.log(array[i]);
+	}
+	
+	// ES6
+	for (let i of arr) {
+		console.log(i);
+	}
   ```
 ]
 
