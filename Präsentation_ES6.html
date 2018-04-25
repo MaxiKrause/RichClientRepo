@@ -56,6 +56,7 @@ class: center, middle
 11. Destructuring (Objekte): Umbenennung
 12. Destructuring (Arrays)
 13. Vertauschen von Variabeln
+14. Die Array-Methoden - map / filter / reduce
 
 ---
 
@@ -460,6 +461,46 @@ console.log(num1) //Ausgabe: 20
 console.log(num2) //Ausgabe: 10
 ```
 ]
+---
+
+.left-column[
+  ### Vertauschen von Variabeln
+  ### Die Array-Methoden - map / filter / reduce
+]
+
+.right-column[
+  <ul>
+    <li>
+      Die Methoden map, filter und reduce kommen von Funktionalen Programmieren und sind dafür da, nicht für jedes Problem mit einer for-Schleife zu benutzen.
+    </li> <br>
+    <li>
+      Falls man einmal durch ein Array iterieren muss sollte man aus Konvention einer dieser Methoden nehmen.
+    </li>
+  </ul>
+
+  ```javascript
+  const numbers = [0, 1, 2, 3, 4, 5, 6];
+  const doubledNumbers = numbers.map(n => n * 2); 
+                          // [0, 2, 4, 6, 8, 10, 12]
+  const evenNumbers = numbers.filter(n => n % 2 === 0); 
+                          // [0, 2, 4, 6]
+  const sum = numbers.reduce((prev, next) => prev + next, 0);
+                          // 21
+  ```
+
+  <ul>
+    <li>
+      map - Verändert in jeder Iteration den Wert wie gewünscht und gibt in als neues Array zurück
+    </li> <br>
+    <li>
+      filter - Filtert nach gewünschten Kriterium Objekte aus
+    </li> <br>
+    <li>
+      reduce - Ziel der Methode ist das Array in ein einzelenen Wert auszugeben 
+    </li>
+  </ul>
+]
+
 
     </textarea>
     <script src="https://remarkjs.com/downloads/remark-latest.min.js">
