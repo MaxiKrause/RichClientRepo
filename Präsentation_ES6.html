@@ -501,6 +501,88 @@ console.log(num2) //Ausgabe: 10
   </ul>
 ]
 
+---
+
+.left-column[
+  ### Vertauschen von Variabeln
+  ### Die Array-Methoden - map / filter / reduce
+  ### "..." Operator
+]
+
+.right-column[
+  <ul>
+    <li>
+      Der "..." Operator hängt iterierbare Elemente an Objekten ran (z.B. an Arrays)
+    </li> 
+  </ul>
+
+  ```javascript
+  const arr1 = ["a", "b", "c"];
+  const arr2 = [...arr1, "d", "e", "f"]; 
+      //arr2 => ["a", "b", "c", "d", "e", "f"]
+  ```
+
+  ```javascript
+  function myFunc(x, y, ...params) {
+    console.log(x);
+    console.log(y);
+    console.log(params)
+  }
+
+  myFunc("a", "b", "c", "d", "e", "f")
+  // "a"
+  // "b"
+  // ["c", "d", "e", "f"]
+  ```
+
+  ```javascript
+  const { x, y, ...z } = { x: 1, y: 2, a: 3, b: 4 };
+  console.log(x); // 1
+  console.log(y); // 2
+  console.log(z); // { a: 3, b: 4 }
+  ```
+]
+
+---
+
+.left-column[
+  ### Vertauschen von Variabeln
+  ### Die Array-Methoden - map / filter / reduce
+  ### "..." Operator
+  ### Promises
+]
+
+.right-column[
+  <ul>
+    <li>
+      Wenn man ein Ajax-Anfrage schickt ist die Antwort nicht synchron.
+    </li> <br>
+    <li>
+      Deshalb gibt es Promises, die sich um die asynchronen Kontrollfluss kümmern
+    </li>
+  </ul>
+
+  ```javascript
+  const fetchingPosts = new Promise((res, rej) => {
+    $.get("/posts") //get holt die geforderten Resourcen 
+      .done(posts => res(posts)) 
+        // sobald die Anfrage fertig ist soll das Promise 
+        // mit posts aufgelöst werden
+      .fail(err => rej(err)); 
+        // falls dies fehlschlägt dann soll es mit err 
+        // abgelehnt werden.
+  });
+
+  fetchingPosts
+    .then(posts => console.log(posts))
+      // then methode behandelt die Daten die von res
+      // mit gegeben werden
+    .catch(err => console.log(err));
+      // catch dient zur Fehlerbehandlung, 
+      // falls rej eine auslöst
+  ```
+]
+
 
     </textarea>
     <script src="https://remarkjs.com/downloads/remark-latest.min.js">
