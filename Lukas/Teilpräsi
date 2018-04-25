@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Title</title>
+    <meta charset="utf-8">
+	<link rel="stylesheet" href="https://raw.githubusercontent.com/markdowncss/air/master/css/air.css">
+  </head>
+  <body>
+    <textarea id="source">
+
+class: center, middle
+
+# Title
+
+---
+
+# Agenda
+
+1. Introduction
+2. Deep-dive
+3. ...
+
+---
+
+# Introduction
+
+---
+#Vereinfachte Programmierung mit neuen Features unter ES6
+---
+
+#Let und Const
+<ul>
+	<li><b>Let</b> ist block-scoped während <b>var</b> function-scoped ist</li>
+	<li><b>Const</b> ist wie <b>let</b> block-scoped, kann aber nach erstmaliger Deklaration keinen neuen Wert zugewiesen bekommen</li>
+</ul>
+```javascript
+function test (a,b){
+	//function-scope
+	let ausgabe = "function"
+	const c = "Konstant"
+	c = "Neuer Wert" //Nicht möglich
+	if (a > b){
+		//block-scope
+		let ausgabe = "a größer als b"
+		console.log(ausgabe) //a größer als b
+	}
+	else {
+		//block-scope
+		let ausgabe = "a nicht größer als b"
+		console.log(ausgabe) //a nicht größer als b
+		
+	}
+	console.log(ausgabe) //function
+}
+```
+
+---
+
+#Arrow Functions
+<ul>
+	<li><b>Arrow functions (=>)</b> werden benutzt um anonyme Funktionen zu deklarieren und werden statt <b>function</b> verwendet</li>
+	<li>Durch die Anwendung von <b>arrow functions</b> wird der Code kürzer und übersichtlicher da z.B. auch andere Teile wie das <b>return</b> einer Funktion wegfallen können</li>
+</ul>
+
+```javascript
+//anonyme Funktion wie es in ES5 üblich ist
+const longFunction = function (arg1, arg2){
+	return arg1 + arg2
+}
+
+//gleiche Funktion in ES6
+const shortFunction (arg1, arg2) => arg1 + arg2
+```
+
+---
+
+#Standard Parameter
+<ul>
+	<li>Parameter bekommen einen Standardwert der beim Aufruf der Funktion benutzt wird sofern keine andere Eingabe vorhanden ist</li>
+	<li>Bekannt aus Sprachen wie C++ als <b>default parameter</b></li>
+</ul>
+
+```javascript
+//Funktion ohne Standardwert
+const noDefaultFunction = (name1, name2) => {
+	console.log(name1 +" " +name2)
+}
+
+//Funktion mit Standardwert
+const withDefaultFunction = (name1, name2 = "Kein Name") => {
+	console.log(name1 +" " +name2)
+}
+	
+noDefaultFunction("Testname") //Ausgabe: Testname, undefined
+withDefaultFunction("Testname") //Ausgabe: Testname, Kein Name
+```
+
+---
+
+#Destructuring (Objekte): Allgemein
+<ul>
+	<li>Variabeln aus Objekten zu bekommen ist mit ES6 einfacher zu realisieren als zuvor</li>
+</ul>
+
+```javascript
+const Test = {
+	num1: 10
+	num2: 12
+}
+
+//Ohne ES6
+let num1 = Test.num1 
+let num2 = Test.num2
+
+//Mit ES6
+let {num1, num2} = Test
+console.log(num1 +" " +num2) //Ausgabe: 10 12
+```
+
+---
+
+#Destructuring (Objekte): Umbenennung
+<ul>
+	<li>Falls Variabelnamen die im Objekt vorkommen vorher im Code schon benutzt werden, müssen diese umbenannt werden</li>
+</ul>
+
+```javascript
+let name = "Irgendwer"
+const Test = {
+	name: "Person"
+}
+
+/*Funktioniert nicht da Variable 'name' 
+schon vorher deklariert wurde*/
+let {name} = Test
+
+//Aber man kann Variabeln neue Namen geben
+let {name: neuerName} = Test
+console.log(neuerName) //Ausgabe: Person
+```
+
+---
+
+#Destructuring (Arrays)
+<ul>
+	<li>Das Auseinandernehmen von Arrays funktioniert ähnlich wie bei Objekten</li>
+	<li>Die erste Variabel bekommt das erste Objekt im Array, die zweite Variabel das zweite Objekt usw.</li>
+	<li>Der übrige Teil eines Arrays kann mithilfe des Rest-Operators <b>(...)</b> in eine Variabel geschrieben werden</li>
+</ul>
+
+```javascript
+let array = [1, 2, 3, 4, 5]
+let [first, second, thrid, ...rest] = array
+console.log(first) //Ausgabe: 1
+console.log(second) //Ausgabe: 2
+console.log(thrid) //Ausgabe: 3
+console.log(rest) //Ausgabe: [4, 5]
+```
+
+---
+#Vertauschen von Variabeln
+<ul>
+	<li>Destructuring von Arrays bietet sich auch an um Variabeln einfach auszutaschen</li>
+</ul>
+
+```javascript
+let num1 = 10
+let num2 = 20;
+
+[num1, num2] = [num2, num1]
+
+console.log(num1) //Ausgabe: 20
+console.log(num2) //Ausgabe: 10
+```
+	
+    </textarea>
+    <script src="https://remarkjs.com/downloads/remark-latest.min.js">
+    </script>
+    <script>
+      var slideshow = remark.create();
+    </script>
+  </body>
+</html>
