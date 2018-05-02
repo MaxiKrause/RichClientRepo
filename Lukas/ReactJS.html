@@ -255,7 +255,7 @@ setInterval(tick, 1000)
 
 layout: false
 .left-column[
-  ### Styling mit React
+  ### Styling von React Komponenten
 ]
 
 .right-column[
@@ -451,26 +451,173 @@ layout: false
 layout: false
 .left-column[
   ### Eigene Komponenten mit React
+  ### DOM-Manipulation mit Referenzen
 ]
 
 .right-column[
 
 ```javascript
-function Welcome(props) {
-  return <h1>Hello, {props.name}</h1>;
+class CustomTextInput extends React.Component {
+  constructor(props) {
+    super(props);
+    this.textInput = React.createRef();
+    this.focusTextInput = this.focusTextInput.bind(this);
+  }
+  focusTextInput() {
+    this.textInput.current.focus();
+  }
+  render() {
+    return (
+      <div>
+        <input
+          type="text"
+          ref={this.textInput} />
+        <input
+          type="button"
+          value="Focus the text input"
+          onClick={this.focusTextInput}
+        />
+      </div>
+    );
+  }
 }
-
-const element = <Welcome name="Sara" />;
-ReactDOM.render(
-  element,
-  document.getElementById('root')
-);
 ```
 
-- Es können eigene Komponenten erstellt werden 
+- Referenzen ermöglichen es auf DOM nodes oder React Elemente zuzugreifen die in der Render Methode erstellt wurden
 
-- Anders als DOM Elemente, müssen eigene Komponentennamen mit einem Großbuchstaben anfangen (div bzw. Welcome)
+- Referenzen sollten nicht übermäßig benutzt werden
 
+]
+
+---
+
+layout: false
+.left-column[
+  ### Eigene Komponenten mit React
+  ### DOM-Manipulation mit Referenzen
+  ### Einfache Formulare mit React
+]
+
+.right-column[
+
+```javascript
+class NameForm extends React.Component {
+  handleSubmit = event => {
+    event.preventDefault() // Verhindert Standard Verhalten
+    console.log({target: event.target})
+    console.log(event.target[0].value)
+    console.log(
+      event.target.elements.username.value,
+    )
+    console.log(this.inputNode.value)
+  }
+  render() {
+    return (
+      <form onSubmit={this.handleSubmit}>
+        <label>
+          Name:
+          <input
+            type="text"
+            name="username"
+            ref={node => (this.inputNode = node)}
+          />
+        </label>
+        <button type="submit">Submit</button>
+      </form>
+    )
+  }
+}
+```
+
+- Formulare werden in React anders gehandelt als in normalen HTML
+]
+
+---
+
+layout: false
+.left-column[
+  ### Eigene Komponenten mit React
+  ### DOM-Manipulation mit Referenzen
+  ### Einfache Formulare mit React
+  ### Dynamische Formulare mit React
+]
+
+.right-column[
+
+```javascript
+class NameForm extends React.Component {
+  state = {error: this.props.getErrorMessage('')}
+  handleSubmit = event => {
+    event.preventDefault()
+    const value =
+      event.target.elements.username.value
+    const error = this.props.getErrorMessage(
+      value,
+    )
+    if (error) {
+      alert(`error: ${error}`)
+    } else {
+      alert(`success: ${value}`)
+    }
+  }
+  handleChange = event => {
+    const {value} = event.target
+    this.setState({
+      error: this.props.getErrorMessage(value),
+    })
+  }
+```
+
+- Es können Dynamische Formulare erzeugt werden um z.B. Fehlerbehandelungen besser für den Benutzer zu gestalten
+]
+
+---
+
+layout: false
+.left-column[
+  ### Eigene Komponenten mit React
+  ### DOM-Manipulation mit Referenzen
+  ### Einfache Formulare mit React
+  ### Dynamische Formulare mit React
+]
+
+.right-column[
+
+```javascript
+  render() {
+    const {error} = this.state
+    return (
+      <form onSubmit={this.handleSubmit}>
+        <label>
+          Name:
+          <input
+            type="text"
+            onChange={this.handleChange}
+            name="username"
+          />
+        </label>
+        <button
+          disabled={Boolean(error)}
+          type="submit"
+        >
+          Submit
+        </button>
+      </form>
+    )
+  }
+}
+ReactDOM.render(
+  <NameForm
+    getErrorMessage={value => {
+      if (value.length < 3) {
+        return `Only ${value.length} Chars`
+      }
+      return null
+    }}
+  />
+```
+
+- Es können Dynamische Formulare erzeugt werden um z.B. Fehlerbehandelungen besser für den Benutzer zu gestalten
 ]
 
    </textarea>
