@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Title</title>
+    <meta charset="utf-8">
+    <style>
+      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+
+      body { font-family: 'Droid Serif'; }
+      h1, h2, h3 {
+        font-family: 'Yanone Kaffeesatz';
+        font-weight: normal;
+      }
+      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+
+      /* Two-column layout */
+      .left-column {
+        color: #777;
+        width: 20%;
+        height: 92%;
+        float: left;
+      }
+        .left-column h2:last-of-type, .left-column h3:last-child {
+          color: #000;
+        }
+      .right-column {
+        width: 75%;
+        float: right;
+        padding-top: 1em;
+      }
+    </style>
+  </head>
+  <body>
+    <textarea id="source">
+
+class: center, middle
+
+# Testen mit Mocha unter NodeJS
+
+---
+
+# Agenda
+1. Mocha 
+2. Chai
+3. SinonJS
+4. SinonJS: Spies 
+5. SinonJS: Stubs
+6. SinonJS: Mocks
+7. Asynchronen Code testen (Callbacks)
+8. Asynchronen Code testen (Promises)
+---
+
+layout: false
+.left-column[
+  ### Mocha 
+]
+
+.right-column[
+
+- Ist ein Test Runner
+
+- Keine eigene Assertion Libary
+
+- Testet Funktionen entweder asynchron oder synchron
+
+```javascript
+const assert = require("assert");
+
+describe("smoke test", function() {
+  it("checks equality", function() {
+    assert.equal(true, true);
+  });
+})
+```
+]
+
+---
+
+layout: false
+.left-column[
+  ### Mocha 
+  ### Chai
+]
+
+.right-column[
+
+- Assertion Libary die Mocha verwenden kann
+
+- Durch Chai wird versucht Tests übersichtlicher zu machen
+
+- Es können drei verschiedene Assertion benutzt werden (expect, should und assert)
+
+```javascript
+//Hier wird expect als Assertion benutzt 
+describe("smoke test", function() {
+  it("checks equality", function() {
+    expect(true).to.be.true;
+  });
+});
+```
+]
+
+---
+
+layout: false
+.left-column[
+  ### Mocha 
+  ### Chai
+  ### SinonJS
+]
+
+.right-column[
+
+- SinonJS wird benutzt um Funktionen zu Simulieren ohne sie auszuführen 
+
+- Es gibt drei verschiedene Mocks (Attrappen) 
+
+- Spies: Wird benutzt um rauszufinden ob Methoden z.B. aufgerufen werden
+
+- Stubs: Die Funktion wird komplett ersetzt um lange Aufrufe zu verhindern
+
+- Mocks: Funktion kann spezifische Ergebnisse liefern 
+
+
+]
+
+---
+
+layout: false
+.left-column[
+  ### Mocha 
+  ### Chai
+  ### SinonJS
+  ### SinonJS: Spies
+]
+
+.right-column[
+
+- Durch Spies kann geprüft werden ob und wie viel eine Methode aufgerufen wird
+
+- Im folgenden Code wird geprüft ob die Methode einmal aufgerufen wird und der Parameter "Hey" übergeben wird
+
+```javascript
+describe("AppController", function()  {
+  describe("getIndexPage", function() {
+    it("should send hey", function() {
+      let req = {}
+      let res = {
+        send: sinon.spy()
+      }
+      expect(res.send.calledOnce).to.be.true;
+      expect(res.send.firstCall.args[0]).to.equal("Hey");
+    });
+  });
+});
+```
+]
+
+---
+
+layout: false
+.left-column[
+  ### Mocha 
+  ### Chai
+  ### SinonJS
+  ### SinonJS: Spies
+  ### SinonJS: Stubs
+]
+
+.right-column[
+
+- Im Gegensatz zu Spies wird beim Aufruf von Stubs die gesamte Funktion ersetzt
+
+- Dadurch können in der Praxis Funktionen getestet werden die längere Aufrufzteiten haben (z.B. Datenbank Aufrufe)
+
+```javascript
+describe("AppController", function()  {
+  describe("getIndexPage", function() {
+    it("should send hey when user is logged in", function() {
+      let user = {
+        isLoggedIn: function(){}
+      }
+      const s = sinon.stub(user, "isLoggedIn").returns(true);
+      let req = {
+        user: user
+      }
+		.
+		.
+		.
+      expect(s.calledOnce).to.be.true;
+    });
+  });
+});
+```
+]
+
+---
+
+layout: false
+.left-column[
+  ### Mocha 
+  ### Chai
+  ### SinonJS
+  ### SinonJS: Spies
+  ### SinonJS: Stubs
+  ### SinonJS: Mocks
+]
+
+.right-column[
+
+- Mit Mocks können Funktionen so ausgeführt werden das egal bei welcher Eingabe immer ein spezifisches Ergebniss zurückkommt
+
+- Es kann z.B. eine Methode emuliert werden und es wird getestet ob bei einer spezifischen Eingabe ein spezifisches Ergebniss zurück kommt 
+
+```javascript
+	  .
+	  .
+	  .
+      const mock = sinon.mock(res);
+	  
+      mock.expects("send").once().withExactArgs("Hey");
+
+      indexPage.getIndexPage(req, res);
+      expect(isLoggedInStub.calledOnce).to.be.true;
+
+      mock.verify();
+```
+]
+
+---
+
+layout: false
+.left-column[
+  ### Asynchronen Code testen (Callbacks)
+]
+
+.right-column[
+
+- Da JavaScript fast immer asynchron läuft muss häufig auch asynchroner Code getestet werden
+
+- Es muss darauf geachtet werden das die Mocha Tests auch asynchron laufen
+
+```javascript
+function someMadeUpAyncFunc(boolValue, cb) {
+  setTimeout(function() {
+    cb(boolValue ? "You get a sweet :)" : "You get nothing!")
+  }, 0);
+}
+describe.only("AsyncTest", function()  {
+  it("should return `You get a sweet :)` if `true` ", 
+  function(done) {
+    someMadeUpAyncFunc(true, function(sweetCheck){
+      expect(sweetCheck).to.equal("You get a sweet :)");
+      done(); 
+	  // Wichtig ist hier das mit done gearbeitet wird
+    });
+  });
+```
+]
+
+---
+
+layout: false
+.left-column[
+  ### Asynchronen Code testen (Callbacks)
+  ### Asynchronen Code testen (Promises)
+
+]
+
+.right-column[
+
+- Statt mit Callbacks zu arbeiten können auch Promises verwendet werden
+
+- Hierfür muss chai aber spezifisch mit Promises installiert werden (npm install --save-dev chai-as-promised)
+
+```javascript
+function someMadeUpAyncFunc(boolValue, cb) {
+  return new Promise(function(resolve){
+    setTimeout(function() {
+     resolve(boolValue ? "You get a sweet :)":"nothing")
+    }, 0);
+  })
+}
+
+describe.only("AsyncTest", function()  {
+  it("should return `You get a sweet :)` if `true` ", 
+  function() {
+    return expect(someMadeUpAyncFunc(true)).to
+	.eventually.equal("You get a sweet :)");
+  });
+```
+]
+
+
+
+    </textarea>
+    <script src="https://remarkjs.com/downloads/remark-latest.min.js">
+    </script>
+    <script>
+      var slideshow = remark.create();
+    </script>
+  </body>
+</html>
