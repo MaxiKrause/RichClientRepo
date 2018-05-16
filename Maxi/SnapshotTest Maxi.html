@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Title</title>
+    <meta charset="utf-8">
+    <style>
+      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+
+      body { font-family: 'Droid Serif'; }
+      h1, h2, h3 {
+        font-family: 'Yanone Kaffeesatz';
+        font-weight: normal;
+      }
+      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+
+      /* Two-column layout */
+      .left-column {
+        color: #777;
+        width: 20%;
+        height: 92%;
+        float: left;
+      }
+        .left-column h2:last-of-type, .left-column h3:last-child {
+          color: #000;
+        }
+      .right-column {
+        width: 75%;
+        float: right;
+        padding-top: 1em;
+      }
+    </style>
+  </head>
+  <body>
+    <textarea id="source">
+
+class: center, middle
+
+# Snapshotting mit Jest
+
+---
+
+# Agenda
+
+1. Was sind Snapshot Tests?
+2. "Let's Try It Out"
+3. Weiter geht es mit Snapshots
+4. Der erste Snapshot Test
+
+---
+
+.left-column[
+  ### Was sind Snapshot Tests?
+]
+
+.right-column[
+- Snapshot Tests prüft teil einer Funktionalität ab, ob es noch genau so funktioniert, wie es es am Anfang getan hatte.
+
+- Es speichert ein sogenanntes "Bild" ab und prüft ob das "Bild" sich nicht verändert hat.
+
+- Folgt dem Prinzip des "green-green-refactor" <br>
+  => Snapshot wird erstellt = grün <br>
+  => Nach dem Refactorn sollte der Test auch grün sein. 
+
+- Sollte nicht das alleinige Tool zum testen sein
+]
+
+---
+
+.left-column[
+  ### Was sind Snapshot Tests?
+  ### "Let's Try It Out"
+]
+
+.right-column[
+- Um in jest und seine Snapshot Tests rein zu kommen brauch es nicht viel.
+- Angefangen mit der Installation
+
+```sh
+npm install -g create-react-app
+```
+Installiert ein Paket zum erstellen von React Apps
+
+```sh
+create-react-app snapshot-testing
+```
+Erstellt eine React-App mit dem Namen snapshot-testing
+]
+
+Zum Testen kann man einfach mal
+```sh 
+npm test
+```
+Und damit müsste der erste Standard Test durchlaufen.
+
+---
+
+.left-column[
+  ### Was sind Snapshot Tests?
+  ### "Let's Try It Out"
+  ### Weiter geht es mit Snapshots
+]
+
+.right-column[
+- Wie macht man jetzt Snapshot Tests? <br>
+=> mit dem 'react-test-renderer'
+- Dieser ist Standard mäßig nicht installiert. <br>
+=> Also einmal das ausführen:
+
+```sh
+npm install --save-dev react-test-renderer
+```
+
+```js 
+import React from 'react';
+import ReactDOM from 'react-dom';
+import App from './App';
+
+it('renders without crashing', () => {
+  const div = document.createElement('div');
+  ReactDOM.render(<App />, div);
+});
+```
+.center[App.test.js]
+
+- Hier einmal diesen import hinzufügen und schon kann das Snapshotting beginnen.
+```js 
+import renderer from 'react-test-renderer';
+```
+]
+---
+
+.left-column[
+  ### Was sind Snapshot Tests?
+  ### "Let's Try It Out"
+  ### Weiter geht es mit Snapshots
+  ### Der erste Snapshot Test
+]
+
+.right-column[
+- Weiter geht es mit dem ersten Test.
+
+```js
+it('renders a snapshot', () => {
+  const tree = renderer.create(<App/>).toJSON();
+  expect(tree).toMatchSnapshot();
+});
+```
+- Der Renderer macht aus unserer App ein JSON-Objekt.
+- Danach schauen wir in toMatchSnapshot() ob dieses Objekt gleich dem Snapshot ist.
+- Ist noch kein Snapshot vorhanden, dann wird aus dem Objekt ein Snapshot erstellt und in den Ordner \_\_snapshot\_\_ gespeichert.
+]
+
+    </textarea>
+    <script src="https://remarkjs.com/downloads/remark-latest.min.js">
+    </script>
+    <script>
+      var slideshow = remark.create();
+    </script>
+  </body>
+</html>
