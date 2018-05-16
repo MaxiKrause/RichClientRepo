@@ -37,258 +37,195 @@
 
 class: center, middle
 
-# ReactJS
+# Tooling
 
 ---
 
 # Agenda
 
-1. Hello World
-2. JSX
-3. Custom Components
-4. PropTypes
-5. Bedingtes Rendern
-6. Rerender
-7. Styling von React Komponenten
-8. Eventhandling von React Komponenten
-9. Komponenten mit Zuständen
-10. Verhinderung von memory leaks
-11. Eigene Komponenten mit React
-12. DOM-Manipulation mit Referenzen
-13. Einfache Formulare mit React
-14. Dynamische Formulare mit React
-15. Formwerte kontrollieren
-16. Benutzen der key prop bei Arrays
-17. HTTP-Request
+1. Test Comparison
+2. Why Functional
+3. How Pure Functions Work
+4. Jasmine
+5. Mocha 
+6. Chai
+7. SinonJS
+8. SinonJS: Spies 
+9. SinonJS: Stubs
+10. SinonJS: Mocks
+11. Asynchronen Code testen (Callbacks)
+12. Asynchronen Code testen (Promises)
+13. Was sind Snapshot Tests?
+14. "Let's Try It Out"
+15. Weiter geht es mit Snapshots
+16. Der erste Snapshot Test
 ---
 
 layout: false
 .left-column[
-  ### Hello World
+  ### Test Comparison
 ]
 
 .right-column[
-- Oldschool JS
-```javascript
-const element = document.createElement('div')
-element.textContent = 'Hello World'
-element.className = 'container'
-rootElement.appendChild(element)
-```
-]
---
-.right-column[
-- React-API
-```javascript
-const element = React.createElement('div', {
-  className: 'container',
-  children: 'Hello World',
-},BeispielChild)
-ReactDOM.render(element, rootElement)
-```
-- HTML-Attribute(props) werden als Objekt behandelt
+- Unit tests
 
-- children können auch als Argumente nach den props angegeben werden
+Unit tests validate the functionality of isolated code
+
+- Integration tests
+
+Integration tests verify the flow of data and the interaction of components
+
+- Funtional tests
+
+Functional tests look at the behavior of the overall application
 ]
 
 ---
 
 layout: false
 .left-column[
-  ### Hello World
-  ### JSX
+  ### Test Comparison
+  ### Why Functional
 ]
 
 .right-column[
 
-```javascript
-<script type="text/babel">
+With Functional programming you can deal with the data and behavior in your application.
 
-const props = {
-  className: 'container',
-  children: 'Hello World',
-}
-//const element=<div className="contatiner">Hello World</div>
-const element = <div {...props} />
-ReactDOM.render(element, rootElement)
-```
-- babel übersetzt JSX in React.createElement aufrufe
+The application consists of a set of independent functions that each work in isolation and dont
+rely on external state.
 
-- Inhalt von {} wird als JS betrachtet und ausgeführt
+By programming functional your code becomes almost self-documenting, your functions are clearly
+defined and have consistent and understandable behavior.
 
-- Die beiden element-Objekte haben die gleiche Ausgabe
-
-- ```<div {...props} />``` kann nur genutzt wedrden wenn keine weiteren children angegeben werden
+It makes unit testing much easier.
 ]
 
 ---
 
 layout: false
 .left-column[
-  ### Hello World
-  ### JSX
-  ### Custom Components
+  ### Test Comparison
+  ### Why Functional
+  ### How Pure Functions Work
 ]
 
 .right-column[
 
-```javascript
-const Message = props => (
-  <div>{props.children}</div>
-)
-const element = (
-  <div className="container">
-    <Message>
-      Hello World
-      <Message>Goodbye World</Message>
-    </Message>
-  </div>
-)
-```
-- Message ist wiederverwendbar
+Pure functions are the foundation of functional programming, and they all share these three qualities:
 
-- Da das children Attribut standard ist kann Message wie ein HTML-Element genutzt werden 
+- Don’t rely on external state or variables
 
-]
+- Don’t cause side effects or alter external variables
 
-
----
-
-layout: false
-.left-column[
-  ### Hello World
-  ### JSX
-  ### Custom Components
-  ### Proptypes
-]
-
-.right-column[
-
-```javascript
-function SayHello(props) {
-  return (
-    <div>
-      Hello {props.firstName} {props.lastName}!
-    </div>
-  )
-}
-SayHello.propTypes = {
-  firstName: PropTypes.string.isRequired,
-  lastName: PropTypes.string.isRequired,
-}
-```
-- Proptypes Library bietet viele Validierungs möglichkeiten
-
-- Validiert automatisch die Werte der props 
-
-```javascript
-class SayHelloClass extends React.Component {
-	static propTypes = {
-	  firstName: PropTypes.string.isRequired,
-	  lastName: PropTypes.string.isRequired,
-	}
-}
-```
-
-- In Klassen werden PropTypes als static Eigenschaft hinzugefügt 
+- Always return the same result for the same input
 ]
 
 ---
 
 layout: false
 .left-column[
-  ### Hello World
-  ### JSX
-  ### Custom Components
-  ### Proptypes
-  ### Bedingtes Rendern
+  ### Test Comparison
+  ### Why Functional
+  ### How Pure Functions Work
+  ### Jasmine
 ]
 
 .right-column[
-
-```javascript
-function Message({message}) {
-  return (
-    <div>
-      {message ? (
-        <div>{message}</div>
-      ) : (
-        <div>No Message</div>
-      )}
-    </div>
-  )
-}
-ReactDOM.render(
-  <Message message={"null"} />,
-  document.getElementById('root'),
-)
+- The test that the test runner runs
+```javscript
+describe("isPalindrome", () => {
+  it("returns true if the string is a palindrome", () => {
+    expect(isPalindrome("abba")).toEqual(true);
+  });
+  it("returns f if the string isnt a palindrome", () => {
+    expect(isPalindrome("Bubba")).toEqual(false);
+  });
+});
 ```
-
-- Die message wird nur angezeigt wenn ein String vorhanden ist 
+- The function that is being tested
+```javascript
+const isPalindrome = (str) => {
+  return str
+    .split("")
+    .reverse()
+    .join("") === str;
+};
+```
 ]
 
 ---
 
 layout: false
 .left-column[
-  ### Hello World
-  ### JSX
-  ### Custom Components
-  ### Proptypes
-  ### Bedingtes Rendern
-  ### Rerender
+  ### Mocha 
 ]
 
 .right-column[
 
+- Ist ein Test Runner
+
+- Keine eigene Assertion Libary
+
+- Testet Funktionen entweder asynchron oder synchron
+
 ```javascript
-function tick() {
-  const time = new Date().toLocaleTimeString()
-  const element = (
-    <div>
-      It is
-      <input value={time} />
-      <input value={time} />
-    </div>
-  )
-  ReactDOM.render(element, rootElement)
-}
-tick()
-setInterval(tick, 1000)
+const assert = require("assert");
+
+describe("smoke test", function() {
+  it("checks equality", function() {
+    assert.equal(true, true);
+  });
+})
 ```
-
-- Funktion wird einmal jede Sekunde aufgerufen
-
-- React updated nur die Bereiche die sich ändern 
 ]
 
 ---
 
 layout: false
 .left-column[
-  ### Styling von React Komponenten
+  ### Mocha 
+  ### Chai
 ]
 
 .right-column[
 
+- Assertion Libary die Mocha verwenden kann
+
+- Durch Chai wird versucht Tests übersichtlicher zu machen
+
+- Es können drei verschiedene Assertion benutzt werden (expect, should und assert)
+
 ```javascript
-<style>
-.box {
-  border: 1px solid #333;
-}
-.box--small {
-  width: 60px;
-  height: 60px;
-}
-
-.box--medium {
-  width: 120px;
-  height: 120px;
-}
-</style>
+//Hier wird expect als Assertion benutzt 
+describe("smoke test", function() {
+  it("checks equality", function() {
+    expect(true).to.be.true;
+  });
+});
 ```
+]
 
-- Styles über lassen sich über Klassen defenieren um später weiterverwendet werden 
+---
+
+layout: false
+.left-column[
+  ### Mocha 
+  ### Chai
+  ### SinonJS
+]
+
+.right-column[
+
+- SinonJS wird benutzt um Funktionen zu Simulieren ohne sie auszuführen 
+
+- Es gibt drei verschiedene Mocks (Attrappen) 
+
+- Spies: Wird benutzt um rauszufinden ob Methoden z.B. aufgerufen werden
+
+- Stubs: Die Funktion wird komplett ersetzt um lange Aufrufe zu verhindern
+
+- Mocks: Funktion kann spezifische Ergebnisse liefern 
 
 
 ]
@@ -297,432 +234,275 @@ layout: false
 
 layout: false
 .left-column[
-  ### Styling von React Komponenten
+  ### Mocha 
+  ### Chai
+  ### SinonJS
+  ### SinonJS: Spies
 ]
 
 .right-column[
 
+- Durch Spies kann geprüft werden ob und wie viel eine Methode aufgerufen wird
+
+- Im folgenden Code wird geprüft ob die Methode einmal aufgerufen wird und der Parameter "Hey" übergeben wird
+
 ```javascript
-function Box({
-  style,
-  size,
-  className = '',
-  ...rest
-}) {
-  const sizeClassName = size ? `box--${size}` : ''
-  return (
-    <div
-      className={`box ${className} ${sizeClassName}`}
-      style={{paddingLeft: 20, ...style}}
-      {...rest}
-    />
-  )
-}
-const element = (
-  <div>
-    <Box
-      size="small"
-      style={{backgroundColor: 'lightblue'}}
-    >
-      small box
-    </Box>
+describe("AppController", function()  {
+  describe("getIndexPage", function() {
+    it("should send hey", function() {
+      let req = {}
+      let res = {
+        send: sinon.spy()
+      }
+      expect(res.send.calledOnce).to.be.true;
+      expect(res.send.firstCall.args[0]).to.equal("Hey");
+    });
+  });
+});
 ```
-
-- Vorher definierte Sytles (hier z.B. box--small) können nun auf Komponenten angewendet werden
-
-
 ]
 
 ---
 
 layout: false
 .left-column[
-  ### Styling von React Komponenten
-  ### Eventhandling von React Komponenten
+  ### Mocha 
+  ### Chai
+  ### SinonJS
+  ### SinonJS: Spies
+  ### SinonJS: Stubs
 ]
 
 .right-column[
 
+- Im Gegensatz zu Spies wird beim Aufruf von Stubs die gesamte Funktion ersetzt
+
+- Dadurch können in der Praxis Funktionen getestet werden die längere Aufrufzteiten haben (z.B. Datenbank Aufrufe)
+
 ```javascript
-const state = {eventCount: 0}
-function App() {
-  return (
-    <div>
-      <p>
-        There have been {state.eventCount} events
-      </p>
-      <p>
-        <button onClick={increment}>⚛️</button>
-      </p>
-    </div>
-  )
+describe("AppController", function()  {
+  describe("getIndexPage", function() {
+    it("should send hey when user is logged in", function() {
+      let user = {
+        isLoggedIn: function(){}
+      }
+      const s = sinon.stub(user, "isLoggedIn").returns(true);
+      let req = {
+        user: user
+      }
+		.
+		.
+		.
+      expect(s.calledOnce).to.be.true;
+    });
+  });
+});
+```
+]
+
+---
+
+layout: false
+.left-column[
+  ### Mocha 
+  ### Chai
+  ### SinonJS
+  ### SinonJS: Spies
+  ### SinonJS: Stubs
+  ### SinonJS: Mocks
+]
+
+.right-column[
+
+- Mit Mocks können Funktionen so ausgeführt werden das egal bei welcher Eingabe immer ein spezifisches Ergebniss zurückkommt
+
+- Es kann z.B. eine Methode emuliert werden und es wird getestet ob bei einer spezifischen Eingabe ein spezifisches Ergebniss zurück kommt 
+
+```javascript
+	  .
+	  .
+	  .
+      const mock = sinon.mock(res);
+	  
+      mock.expects("send").once().withExactArgs("Hey");
+
+      indexPage.getIndexPage(req, res);
+      expect(isLoggedInStub.calledOnce).to.be.true;
+
+      mock.verify();
+```
+]
+
+---
+
+layout: false
+.left-column[
+  ### Asynchronen Code testen (Callbacks)
+]
+
+.right-column[
+
+- Da JavaScript fast immer asynchron läuft muss häufig auch asynchroner Code getestet werden
+
+- Es muss darauf geachtet werden das die Mocha Tests auch asynchron laufen
+
+```javascript
+function someMadeUpAyncFunc(boolValue, cb) {
+  setTimeout(function() {
+    cb(boolValue ? "You get a sweet :)" : "You get nothing!")
+  }, 0);
 }
-function increment() {
-  setState({
-    eventCount: state.eventCount + 1,
+describe.only("AsyncTest", function()  {
+  it("should return `You get a sweet :)` if `true` ", 
+  function(done) {
+    someMadeUpAyncFunc(true, function(sweetCheck){
+      expect(sweetCheck).to.equal("You get a sweet :)");
+      done(); 
+	  // Wichtig ist hier das mit done gearbeitet wird
+    });
+  });
+```
+]
+
+---
+
+layout: false
+.left-column[
+  ### Asynchronen Code testen (Callbacks)
+  ### Asynchronen Code testen (Promises)
+
+]
+
+.right-column[
+
+- Statt mit Callbacks zu arbeiten können auch Promises verwendet werden
+
+- Hierfür muss chai aber spezifisch mit Promises installiert werden (npm install --save-dev chai-as-promised)
+
+```javascript
+function someMadeUpAyncFunc(boolValue, cb) {
+  return new Promise(function(resolve){
+    setTimeout(function() {
+     resolve(boolValue ? "You get a sweet :)":"nothing")
+    }, 0);
   })
 }
-function setState(newState) {
-  Object.assign(state, newState)
-  renderApp()
-}
-```
 
-- Eventhandling von React Komponenten funktioniert ähnlich wie das der DOM Elemente
-
-- React Events werden anders als in HTML (lowercase) mit camelCase geschrieben
-
-
-]
-
----
-
-layout: false
-.left-column[
-  ### Styling von React Komponenten
-  ### Eventhandling von React Komponenten
-  ### Komponenten mit Zuständen
-]
-
-.right-column[
-
-```javascript
-class Clock extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {date: new Date()};
-  }
-  componentDidMount() {
-    this.timerID = setInterval(
-      () => this.tick(),
-      1000
-    );
-  }
-  tick() {
-    this.setState({
-      date: new Date()
-    });
-  }
-  render() {
-    return (
-      <div>
-       <h1>Hello, world!</h1>
-       <h2>It is {this.state.date.toLocaleTimeString()}.</h2>
-      </div>
-    );
-  }
-}
-```
-
-- Komponenten werden eingekaplset und später als Klassen im ReactDOM wiederverwendet werden
-
-
-]
-
----
-
-layout: false
-.left-column[
-  ### Styling von React Komponenten
-  ### Eventhandling von React Komponenten
-  ### Komponenten mit Zuständen
-  ### Verhinderung von memory leaks
-]
-
-.right-column[
-
-```javascript
-.
-.
-.
-  componentDidMount() {
-    this.timerID = setInterval(
-      () => this.tick(),
-      1000
-    );
-  }
-  componentWillUnmount() {
-    clearInterval(this.timerID);
-  }
-.
-.
-.
-```
-
-- Komponenten mit Zuständen dürfen nicht weiterlaufen wenn sie aus dem DOM entfernt wurden
-
-- "Mount"-Methoden stellen dies sicher und verhindern meory leaks
-
-- Werden auch "lifecyle hooks" gennant
-
-]
-
----
-
-layout: false
-.left-column[
-  ### Eigene Komponenten mit React
-]
-.right-column[
-```javascript
-function Welcome(props) {
-  return <h1>Hello, {props.name}</h1>;
-}
-const element = <Welcome name="Sara" />;
-ReactDOM.render(
-  element,
-  document.getElementById('root')
-);
-```
-- Es können eigene Komponenten erstellt werden 
-
-- Anders als DOM Elemente, müssen eigene Komponentennamen mit einem Großbuchstaben anfangen (div bzw. Welcome)
-]
-
----
-
-layout: false
-.left-column[
-  ### Eigene Komponenten mit React
-  ### DOM-Manipulation mit Referenzen
-]
-
-.right-column[
-
-```javascript
-class CustomTextInput extends React.Component {
-  constructor(props) {
-    super(props);
-    this.textInput = React.createRef();
-    this.focusTextInput = this.focusTextInput.bind(this);
-  }
-  focusTextInput() {
-    this.textInput.current.focus();
-  }
-  render() {
-    return (
-      <div>
-        <input
-          type="text"
-          ref={this.textInput} />
-        <input
-          type="button"
-          value="Focus the text input"
-          onClick={this.focusTextInput}
-        />
-      </div>
-    );
-  }
-}
-```
-
-- Referenzen ermöglichen es auf DOM nodes oder React Elemente zuzugreifen die in der Render Methode erstellt wurden
-
-- Referenzen sollten nicht übermäßig benutzt werden
-
-]
-
----
-
-layout: false
-.left-column[
-  ### Eigene Komponenten mit React
-  ### DOM-Manipulation mit Referenzen
-  ### Einfache Formulare mit React
-]
-
-.right-column[
-
-```javascript
-class NameForm extends React.Component {
-  handleSubmit = event => {
-    event.preventDefault() // Verhindert Standard Verhalten
-    console.log({target: event.target})
-    console.log(event.target[0].value)
-    console.log(
-      event.target.elements.username.value,
-    )
-    console.log(this.inputNode.value)
-  }
-  render() {
-    return (
-      <form onSubmit={this.handleSubmit}>
-        <label>
-          Name:
-          <input
-            type="text"
-            name="username"
-            ref={node => (this.inputNode = node)}
-          />
-        </label>
-        <button type="submit">Submit</button>
-      </form>
-    )
-  }
-}
-```
-
-- Formulare werden in React anders gehandelt als in normalen HTML
-]
-
----
-
-layout: false
-.left-column[
-  ### Eigene Komponenten mit React
-  ### DOM-Manipulation mit Referenzen
-  ### Einfache Formulare mit React
-  ### Dynamische Formulare mit React
-]
-
-.right-column[
-
-```javascript
-class NameForm extends React.Component {
-  state = {error: this.props.getErrorMessage('')}
-  handleSubmit = event => {
-    event.preventDefault()
-    const value =
-      event.target.elements.username.value
-    const error = this.props.getErrorMessage(
-      value,
-    )
-    if (error) {
-      alert(`error: ${error}`)
-    } else {
-      alert(`success: ${value}`)
-    }
-  }
-  handleChange = event => {
-    const {value} = event.target
-    this.setState({
-      error: this.props.getErrorMessage(value),
-    })
-  }
-```
-
-- Es können Dynamische Formulare erzeugt werden um z.B. Fehlerbehandelungen besser für den Benutzer zu gestalten
-]
-
----
-
-layout: false
-.left-column[
-  ### Eigene Komponenten mit React
-  ### DOM-Manipulation mit Referenzen
-  ### Einfache Formulare mit React
-  ### Dynamische Formulare mit React
-]
-
-.right-column[
-
-```javascript
-  render() {
-    const {error} = this.state
-    return (
-      <form onSubmit={this.handleSubmit}>
-        <label>
-          Name:
-          <input
-            type="text"
-            onChange={this.handleChange}
-            name="username"
-          />
-        </label>
-        <button
-          disabled={Boolean(error)}
-          type="submit"
-        >
-          Submit
-        </button>
-      </form>
-    )
-  }
-}
-ReactDOM.render(
-  <NameForm
-    getErrorMessage={value => {
-      if (value.length < 3) {
-        return `Only ${value.length} Chars`
-      }
-      return null
-    }}
-  />
-```
-
-- Es können Dynamische Formulare erzeugt werden um z.B. Fehlerbehandelungen besser für den Benutzer zu gestalten
-]
-
----
-
-layout: false
-.left-column[
-  ### Formwerte kontrollieren
-]
-
-.right-column[
-
-- Die Werte eines Formulars werden mir der "value" Eigenschaft kontrolliert
-
-- Wenn "value" jedoch gesetzt ist kann der Benutzer die Eingaben nicht ändern
-
-- Benutzereingaben werden mit dem onChange-Event aufgenommen
-
-- Im onChange-Eventhandler werden dann Daten verarbeitet
-]
-
----
-
-layout: false
-.left-column[
-  ### Formwerte kontrollieren
-  ### Benutzen der key prop bei Arrays
-]
-
-.right-column[
-
-- Ohne eine eindeutige ID kann React nicht kontrollieren ob Objekte hinzugefügt oder entfernt werden
-
-```javascript
-{items.map((i, index) => (
-  <div key={i.id}>
-    <button
-      onClick={() => this.removeItem(i)}
-    >
-      -
-    </button>
-    {i.value}:
-    <input />
-  </div>
-))}
+describe.only("AsyncTest", function()  {
+  it("should return `You get a sweet :)` if `true` ", 
+  function() {
+    return expect(someMadeUpAyncFunc(true)).to
+	.eventually.equal("You get a sweet :)");
+  });
 ```
 ]
 
 ---
 
-layout: false
 .left-column[
-  ### Formwerte kontrollieren
-  ### Benutzen der key prop bei Arrays
-  ### HTTP-Request
+  ### Was sind Snapshot Tests?
 ]
 
 .right-column[
+- Snapshot Tests prüft teil einer Funktionalität ab, ob es noch genau so funktioniert, wie es es am Anfang getan hatte.
 
-```javascript
-axios.get('https://api.github.com/users/maecapozzi')
-      .then(response => 
-      this.setState({username: response.data.name}))
+- Es speichert ein sogenanntes "Bild" ab und prüft ob das "Bild" sich nicht verändert hat.
+
+- Folgt dem Prinzip des "green-green-refactor" <br>
+  => Snapshot wird erstellt = grün <br>
+  => Nach dem Refactorn sollte der Test auch grün sein. 
+
+- Sollte nicht das alleinige Tool zum testen sein
+]
+
+---
+
+.left-column[
+  ### Was sind Snapshot Tests?
+  ### "Let's Try It Out"
+]
+
+.right-column[
+- Um in jest und seine Snapshot Tests rein zu kommen brauch es nicht viel.
+- Angefangen mit der Installation
+
+```sh
+npm install -g create-react-app
+```
+Installiert ein Paket zum erstellen von React Apps
+
+```sh
+create-react-app snapshot-testing
+```
+Erstellt eine React-App mit dem Namen snapshot-testing
+]
+
+Zum Testen kann man einfach mal
+```sh 
+npm test
+```
+Und damit müsste der erste Standard Test durchlaufen.
+
+---
+
+.left-column[
+  ### Was sind Snapshot Tests?
+  ### "Let's Try It Out"
+  ### Weiter geht es mit Snapshots
+]
+
+.right-column[
+- Wie macht man jetzt Snapshot Tests? <br>
+=> mit dem 'react-test-renderer'
+- Dieser ist Standard mäßig nicht installiert. <br>
+=> Also einmal das ausführen:
+
+```sh
+npm install --save-dev react-test-renderer
 ```
 
-- Für die HTTP-Anfrage nutzen wir die axios Library
+```js 
+import React from 'react';
+import ReactDOM from 'react-dom';
+import App from './App';
 
-- Hier wird ein GET an https://api.github.com/users/maecapozzi gesendet
+it('renders without crashing', () => {
+  const div = document.createElement('div');
+  ReactDOM.render(<App />, div);
+});
+```
+.center[App.test.js]
 
-- Wenn die Daten angekommen sind wird .then ausgeführt
-
-
+- Hier einmal diesen import hinzufügen und schon kann das Snapshotting beginnen.
+```js 
+import renderer from 'react-test-renderer';
+```
 ]
+---
+
+.left-column[
+  ### Was sind Snapshot Tests?
+  ### "Let's Try It Out"
+  ### Weiter geht es mit Snapshots
+  ### Der erste Snapshot Test
+]
+
+.right-column[
+- Weiter geht es mit dem ersten Test.
+
+```js
+it('renders a snapshot', () => {
+  const tree = renderer.create(<App/>).toJSON();
+  expect(tree).toMatchSnapshot();
+});
+```
+- Der Renderer macht aus unserer App ein JSON-Objekt.
+- Danach schauen wir in toMatchSnapshot() ob dieses Objekt gleich dem Snapshot ist.
+- Ist noch kein Snapshot vorhanden, dann wird aus dem Objekt ein Snapshot erstellt und in den Ordner \_\_snapshot\_\_ gespeichert.
+]
+
+
+
 
    </textarea>
     <script src="https://remarkjs.com/downloads/remark-latest.min.js">
