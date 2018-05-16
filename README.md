@@ -8,3 +8,8 @@ Ziel der Anwendung ist es, eine Website zu erschaffen in der jeder für sich ent
 Trotzdem soll die Website nicht die vollen Funktionen anderer Websiten bereitstellen, sondern nur einen kleinen Teil den man schnell Überblicken kann (also statt z.B. alle nicht gelesenen Emails anzuzeigen werden nur die ersten fünf dargestellt).
 
 Optional: Es soll eine offene API bereitstehen mit der jeder eigene Widgets schreiben und veröffentlichen kann, damit diese wiederum andere User einbinden und benutzten können (angelehnt an NPM und Appstores).
+
+Beteiligte Personen an diesem Projekt:
+- Dirk Siemens
+- Maximilian Krause
+- Lukas Stoll
