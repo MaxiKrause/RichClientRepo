@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Title</title>
+    <meta charset="utf-8">
+    <style>
+      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+
+      body { font-family: 'Droid Serif'; }
+      h1, h2, h3 {
+        font-family: 'Yanone Kaffeesatz';
+        font-weight: normal;
+      }
+      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+
+      /* Two-column layout */
+      .left-column {
+        color: #777;
+        width: 20%;
+        height: 92%;
+        float: left;
+      }
+        .left-column h2:last-of-type, .left-column h3:last-child {
+          color: #000;
+        }
+      .right-column {
+        width: 75%;
+        float: right;
+        padding-top: 1em;
+      }
+    </style>
+  </head>
+  <body>
+    <textarea id="source">
+
+class: center, middle
+
+# Webpack
+
+---
+
+# Agenda
+
+1. Was ist Webpack
+2. Setup
+3. Module
+4. Dependency Graph
+5. Code Splitting
+---
+
+layout: false
+.left-column[
+  ### Was ist Webpack
+]
+
+.right-column[
+- Module Bundler
+
+- Das heißt mehrere Module(bzw. Dateien) werden zu einer großen Datei zusammengefasst
+
+- Wird normalerweise in zusammenhan gmit Javascript genutzt
+
+- Kann auch andere Ressourcen Bundeln
+]
+
+---
+
+layout: false
+.left-column[
+  ### Was ist Webpack
+  ### Setup
+]
+
+.right-column[
+```ruby
+mkdir webpack-demo && cd webpack-demo
+npm init -y
+npm install --save-dev webpack webpack-cli
+```
+
+- Als erstes wird ein npm-Projekt initialisiert
+
+- Und danach webpack installiert
+
+```javascript
+const path = require('path')
+
+module.exports = {
+  entry: './src/index.js',
+  output: {
+    filename: 'bundle.js',
+    path: path.resolve(__dirname, 'dist')
+  }
+}
+```
+
+- hier wird festgelegt welche Dateien gebundelt werden sollen und wo das Bundle gespeichert wird
+
+
+]
+
+---
+
+layout: false
+.left-column[
+  ### Was ist Webpack
+  ### Setup
+]
+
+.right-column[
+```javascript
+{
+    ...
+    "scripts": {
+-     "test": "echo \"Error: no test specified\" && exit 1"
++     "develop": "webpack --mode development --watch",
++     "build": "webpack --mode production"
+    },
+    ...
+  }
+```
+
+- So wird in der package.json ein script hinzugefügt
+
+- Es ist jetzt möglich <b>npm run develop</b> und <b>npm run build</b> aufzurufen
+
+- --mode development optimiert für build Geschwindigkeit und Debugging
+
+- --mode production optimiert für Ausführgeschwindigkeit und Dateigröße
+
+]
+
+---
+
+layout: false
+.left-column[
+  ### Was ist Webpack
+  ### Setup
+  ### Module
+]
+
+.right-column[
+- Mit ES Modulen kann ein großes Programm in viele kleine eigentändige Programme aufteilen
+
+- Webpack kann mit import und export Module laden oder zur verfügung stellen
+
+```javascript
+import { groupBy } from "lodash-es"
+import people from "./people"
+``` 
+
+- Import wie "lodash-es" werden in /node_modules gesucht da sie mit npm installiert wurden
+
+- Bei eigenen Modulen muss ein relativer Pfad angegeben werden
+]
+
+---
+
+layout: false
+.left-column[
+  ### Was ist Webpack
+  ### Setup
+  ### Module
+  ### Dependency Graph
+]
+
+.right-column[
+ <img src="https://dab1nmslvvntp.cloudfront.net/wp-content/uploads/2017/01/1484692838webpack-dependency-tree.png" alt="drawing" style="width: 600px;"/>
+
+ - Hier sieht man wie aus vielen Dateien mit dynamischen Abhängigkeiten wenige Dateien ohne Abhängigkeiten erstellt werden
+]
+
+---
+
+layout: false
+.left-column[
+  ### Was ist Webpack
+  ### Setup
+  ### Module
+  ### Dependency Graph
+  ### Code Splitting
+]
+
+.right-column[
+- Mit Code Splitting kann der Code in mehrere Teile aufgeteilt werden
+
+- Diese Teile können dann bei gebrauch oder parallel geladen werden
+
+- Dies dient zum verkleinern von Codepacketen und priorisieren welche Packete zuerst geladen werden
+
+- Bei richtiger Verwendung kann es großen Einfluss auf die Performance haben
+]
+
+
+
+   </textarea>
+    <script src="https://remarkjs.com/downloads/remark-latest.min.js">
+    </script>
+    <script>
+      var slideshow = remark.create();
+    </script>
+  </body>
+</html>

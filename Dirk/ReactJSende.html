@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Title</title>
+    <meta charset="utf-8">
+    <style>
+      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+
+      body { font-family: 'Droid Serif'; }
+      h1, h2, h3 {
+        font-family: 'Yanone Kaffeesatz';
+        font-weight: normal;
+      }
+      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+
+      /* Two-column layout */
+      .left-column {
+        color: #777;
+        width: 20%;
+        height: 92%;
+        float: left;
+      }
+        .left-column h2:last-of-type, .left-column h3:last-child {
+          color: #000;
+        }
+      .right-column {
+        width: 75%;
+        float: right;
+        padding-top: 1em;
+      }
+    </style>
+  </head>
+  <body>
+    <textarea id="source">
+
+class: center, middle
+
+# ReactJS
+
+---
+
+# Agenda
+
+15. Formwerte kontrollieren
+16. Benutzen der key prop bei Arrays
+17. HTTP-Request
+---
+
+layout: false
+.left-column[
+  ### Formwerte kontrollieren
+]
+
+.right-column[
+
+- Die Werte eines Formulars werden mir der "value" Eigenschaft kontrolliert
+
+- Wenn "value" jedoch gesetzt ist kann der Benutzer die Eingaben nicht ändern
+
+- Benutzereingaben werden mit dem onChange-Event aufgenommen
+
+- Im onChange-Eventhandler werden dann Daten verarbeitet
+]
+
+---
+
+layout: false
+.left-column[
+  ### Formwerte kontrollieren
+  ### Benutzen der key prop bei Arrays
+]
+
+.right-column[
+
+- Ohne eine eindeutige ID kann React nicht kontrollieren ob Objekte hinzugefügt oder entfernt werden
+
+```javascript
+{items.map((i, index) => (
+  <div key={i.id}>
+    <button
+      onClick={() => this.removeItem(i)}
+    >
+      -
+    </button>
+    {i.value}:
+    <input />
+  </div>
+))}
+```
+]
+
+---
+
+layout: false
+.left-column[
+  ### Formwerte kontrollieren
+  ### Benutzen der key prop bei Arrays
+  ### HTTP-Request
+]
+
+.right-column[
+
+```javascript
+axios.get('https://api.github.com/users/maecapozzi')
+      .then(response => 
+      this.setState({username: response.data.name}))
+```
+
+- Für die HTTP-Anfrage nutzen wir die axios Library
+
+- Hier wird ein GET an https://api.github.com/users/maecapozzi gesendet
+
+- Wenn die Daten angekommen sind wird .then ausgeführt
+
+
+]
+
+
+   </textarea>
+    <script src="https://remarkjs.com/downloads/remark-latest.min.js">
+    </script>
+    <script>
+      var slideshow = remark.create();
+    </script>
+  </body>
+</html>
