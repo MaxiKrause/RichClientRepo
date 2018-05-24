@@ -1,8 +1,8 @@
-LaTeX Template for simple article documents,
+﻿LaTeX Template for simple article documents,
 such as bachelor laboratory documents.
 
-Autor: Aljoscha Pörtner
-Contact: aljoscha.poertner@fh-bielefeld.de
+Autor: Lukas Stoll
+
 
 Based on the document by Matthias Pospiech
 

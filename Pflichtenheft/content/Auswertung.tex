@@ -24,12 +24,35 @@
 			
 		\subsubsection{Abgrenzung} 
 			Die Website dient nicht dazu viele Webseiten in eins zu verschmelzen und darzustellen, sondern lediglich einen sehr geringen Teil an Informationen anzuzeigen. Außerdem sollen die Funktionen der einzelnen Widget so gering wie möglich gehalten werden und keine komplexen Daten enthalten um eine möglichst saubere GUI zu bieten. Das Softwaresystem dient auch nicht als Lesezeichenverwaltung oder soll eine Vorschau zu jeweiligen Webseiten fungieren.
-				
+
+\newpage				
 \section{Anforderungen}
 
 	\subsection{Funktionale Anforderungen}
+		An das Programm werden die folgenden Anforderungen gestellt: 
+		\begin{itemize}
+			\item Bevor die Seite benutzt wird muss sich der User anmelden 
+			\item Um sich anzumelden muss vorher eine Registrierung mit E-Mail und Passwort stattfinden  
+			\item Auf der Startseite werden die Widgets angezeigt
+			\item Über das angemeldete Konto kann man seine persönlichen Widgets einstellen und verwalten
+			\item Falls gewollt kann das momentane Passwort geändert werden
+			\item Es besteht die Möglichkeit seinen Account zu löschen und alle Daten von der Seite zu entfernen 
+			\item Widgets können über die Einstellungen hinzugefügt oder entfernt werden
+			\item Es können neue Widgets aus der Datenbank hinzugefügt werden um diese auf der Website zu benutzen 
+			\item Nach der Abmeldung und dem Verlassen der Seite sollen alle Einstellungen gespeichert werden, damit beim erneuten Aufruf alle persönlichen Merkmale erhalten bleiben   
+			\item User können ihre eigenen Widgets programmieren und auf der Website veröffentlichen    
+		\end{itemize}
 	
 	\subsection{Nicht-funktionale Anforderungen}
+		Neben den Funktionalen Anforderungen bestehen noch folgende Nicht-funktionale:
+		\begin{itemize}
+			\item Widgets sollen sehr knapp gehalten werden
+			\item Einfache Navigierung der Website
+			\item Schnelle Reaktionszeit der Elemente der Website
+			\item Website entspricht den Usability Standards
+			\item Die Seite soll für den Desktop optimiert sein
+			\item Es soll nur eine bestimmte Anzahl an Widgets auf der Seite angezeigt werden
+		\end{itemize}
 	
 		\subsubsection{Rahmenbedingungen}
 		
@@ -44,6 +67,11 @@
 				\includegraphics[scale=0.4]{images/p1}
 			\end{figure}
 		
+		\subsubsection{Registrierung}
+			\begin{figure}[H]
+				\includegraphics[scale=0.4]{images/p1reg}
+			\end{figure}
+		
 		\subsubsection{Startseite}
 			\begin{figure}[H]
 				\includegraphics[scale=0.4]{images/p2}
@@ -51,32 +79,35 @@
 		
 		\subsubsection{Einstellungen}
 			\begin{figure}[H]
-				\includegraphics[scale=0.4]{images/p3}
+				\includegraphics[scale=0.5]{images/p3}
+			\end{figure}
+		
+		\subsubsection{Fileupload}
+			\begin{figure}[H]
+				\includegraphics[scale=0.5]{images/p4}
 			\end{figure}
 		
 		\subsubsection{Zustandsdiagramm}
 			\begin{figure}[H]
-				\includegraphics[scale=1]{images/zustand}
+				\includegraphics[scale=0.8]{images/zustand}
 			\end{figure}
 	
 	\subsection{Anforderungen im Detail}
-	
-		\subsubsection{User Stories}
 		
-			\begin{center}
-				\begin{tabular}{ | p{2cm} | p{2cm} | p{3cm} | p{3cm} | p{4cm} |}
-					\hline
-					\textbf{Name} & \textbf{Rolle} & \textbf{möchte ich} & \textbf{so dass} & \textbf{Akzeptanzkriterien}\\ \hline
-					Registrieren & Besucher & mich registrieren & ich einen Account habe & Besucher gibt valide Daten an \\  \hline
-					Anmelden & Besucher & mich Anmelde & ich meine persöhnliche \newline Seite bearbeiten kann & Der Besucher hat einen Account \\  \hline
-					Abmelden & User & mich Abmelden & nicht mehr eingeloggt bin & Der Besucher ist angemeldet \\ \hline
-					Widget hinzufügen & User & ein Widget hinzugügen & das Widget auf meinem Desktop angezeigt wird & Das Widget wird Angeboten und der User ist angemeldet \\ \hline
-					Widget entfernen & User & ein Widget entfernen & das Widget nicht mehr angezeigt wird & Das Widget war hinzugefügt und der User ist angemeldet \\ \hline
-					Neues Widget erstellen & Entwickler & ein Widget erstellen & ich und andere dieses Widget nutzen können & Das Widget entspricht den Vorgaben \\ \hline
-					Widget zulassen & Admin & ein neues Widget zulassen & die User das neue Widget nutzen können & Das Widget entspricht den Vorgaben \\				
-					\hline
-				\end{tabular}
-			\end{center}
+		\begin{center}
+			\begin{tabular}{ | p{2cm} | p{2cm} | p{3cm} | p{3cm} | p{4cm} |}
+				\hline
+				\textbf{Name} & \textbf{Rolle} & \textbf{möchte ich} & \textbf{so dass} & \textbf{Akzeptanzkriterien}\\ \hline
+				Registrieren & Besucher & mich registrieren & ich einen Account habe & Besucher gibt valide Daten an \\  \hline
+				Anmelden & Besucher & mich Anmelde & ich meine persöhnliche \newline Seite bearbeiten kann & Der Besucher hat einen Account \\  \hline
+				Abmelden & User & mich Abmelden & nicht mehr eingeloggt bin & Der Besucher ist angemeldet \\ \hline
+				Widget hinzufügen & User & ein Widget hinzugügen & das Widget auf meinem Desktop angezeigt wird & Das Widget wird Angeboten und der User ist angemeldet \\ \hline
+				Widget entfernen & User & ein Widget entfernen & das Widget nicht mehr angezeigt wird & Das Widget war hinzugefügt und der User ist angemeldet \\ \hline
+				Neues Widget erstellen & Entwickler & ein Widget erstellen & ich und andere dieses Widget nutzen können & Das Widget entspricht den Vorgaben \\ \hline
+				Widget zulassen & Admin & ein neues Widget zulassen & die User das neue Widget nutzen können & Das Widget entspricht den Vorgaben \\				
+				\hline
+			\end{tabular}
+		\end{center}
 
 	
 \section{Technische Beschreibung}
@@ -97,8 +128,15 @@
 	\subsection{Annahmen}
 	
 	\subsection{Verantwortlichkeiten}
+		\begin{description}
+			\item[Lukas Stoll (Projektleiter)] Frontend, GUI, Dokumentation
+			\item[Maxi Krause] Backend, Datenbank, Qualitätsanalyse
+			\item[Dirk Siemens] Frontend, GUI, Dokumentation
+		\end{description}
+		Da die Gruppengröße mit drei Mitgliedern nicht sehr groß ausfällt wird es nicht zu vermeiden sein das jedes Teammitglied auch in anderen Gebieten mitwirken wird. 
 	
 	\subsection{Grober Projektplan}
+		
 	
 
 \section{Anhänge}
