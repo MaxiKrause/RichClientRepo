@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Title</title>
+    <meta charset="utf-8">
+    <style>
+      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+
+      body { font-family: 'Droid Serif'; }
+      h1, h2, h3 {
+        font-family: 'Yanone Kaffeesatz';
+        font-weight: normal;
+      }
+      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+
+      /* Two-column layout */
+      .left-column {
+        color: #777;
+        width: 20%;
+        height: 92%;
+        float: left;
+      }
+        .left-column h2:last-of-type, .left-column h3:last-child {
+          color: #000;
+        }
+      .right-column {
+        width: 75%;
+        float: right;
+        padding-top: 1em;
+      }
+    </style>
+  </head>
+  <body>
+    <textarea id="source">
+
+class: center, middle
+
+# ES6 Features
+
+---
+
+# Agenda
+
+1. Arrows
+2. Klassen
+3. Template-Strings
+4. Let/Const
+5. Iterators/for..of
+6. Generator
+7. Modules
+8. Datentypen
+
+---
+
+layout: false
+.left-column[
+  ### Arrows
+]
+
+.right-column[
+
+- Der Ausdruck einer Pfeilfunktion hat im Vergleich zu (allgemeinen) Funktionsausdrücken eine kürzere Syntax.
+
+- Bindet kein eigenes this, arguments, super, oder new.target.
+
+- Pfeilfunktionen sind immer anonym. 
+
+- Solche Funktionsausdrücke sind am besten für nicht-methodische Funktionen geeignet und können nicht als Konstruktoren verwendet werden.
+
+```javascript
+// ES5
+var multiplyES5 = function(x, y) {
+  return x * y;
+};
+
+// ES6
+const multiplyES6 = (x, y) => { return x * y };
+```
+]
+
+---
+
+.left-column[
+  ### Arrows
+  ### Klassen
+]
+
+.right-column[
+
+```javascript
+class Polygon {
+  constructor(hoehe, breite) {
+    this.hoehe = hoehe;
+    this.breite = breite;
+  }
+  
+  get flaeche() {
+    return this.berechneFlaeche();
+  }
+
+  berechneFlaeche() {
+    return this.hoehe * this.breite;
+  }
+}
+
+const quadrat = new Polygon(10, 10);
+
+console.log(quadrat.flaeche);
+```
+]
+
+---
+
+.left-column[
+  ### Arrows
+  ### Klassen
+  ### Template-Strings
+]
+
+.right-column[
+```javascript
+`string text`
+```
+
+- normaler String
+
+
+```javascript
+`string text line 1
+ string text line 2`
+```
+
+- String über mehrere Zeilen
+
+
+```javascript
+`string text ${expression} string text`
+```
+
+- String mit Platzhalter
+]
+
+---
+
+.left-column[
+  ### Arrows
+  ### Klassen
+  ### Template-Strings
+  ### Let/Const
+]
+
+.right-column[
+
+```javascript
+let x = 1;
+
+if (x === 1) {
+  let x = 2;
+
+  console.log(x);
+  // expected output: 2
+}
+
+console.log(x);
+// expected output: 1
+```
+
+```javascript
+const number = 42;
+
+try {
+  number = 99;
+} catch(err) {
+  console.log(err);
+  // TypeError: invalid assignment to const `number'
+  // Note - error messages will vary depending on browser
+}
+
+console.log(number);
+// expected output: 42
+``` 
+
+]
+
+---
+
+.left-column[
+  ### Arrows
+  ### Klassen
+  ### Template-Strings
+  ### Let/Const
+  ### Iterators/for..of
+]
+
+.right-column[
+
+```javascript
+let iterable = [10, 20, 30];
+
+for (let value of iterable) {
+  value += 1;
+  console.log(value);
+}
+// 11
+// 21
+// 31
+```
+
+- Es wird über ein iterable-Objekt iteriert.
+
+- Funktioniert nicht mit Objects.
+
+]
+
+---
+
+.left-column[
+  ### Arrows
+  ### Klassen
+  ### Template-Strings
+  ### Let/Const
+  ### Iterators/for..of
+  ### Generator
+]
+
+.right-column[
+
+```javascript
+function* idMaker() {
+    var index = 0;
+    while(true)
+        yield index++;
+}
+
+var gen = idMaker(); // "Generator { }"
+
+console.log(gen.next().value); // 0
+console.log(gen.next().value); // 1
+console.log(gen.next().value); // 2
+```
+
+- Generatoren entsprechen dem Iterator und dem Iterable Protokoll.
+
+- Generator.prototype.next()
+
+- Generator.prototype.return()
+
+- Generator.prtotoype.throw()
+
+]
+
+---
+
+.left-column[
+  ### Arrows
+  ### Klassen
+  ### Template-Strings
+  ### Let/Const
+  ### Iterators/for..of
+  ### Generator
+  ### Modules
+]
+
+.right-column[
+
+```javascript
+// lib/mathplusplus.js
+export * from "lib/math";
+export var e = 2.71828182846;
+export default function(x) {
+    return Math.log(x);
+}
+// app.js
+import ln, {pi, e} from "lib/mathplusplus";
+alert("2π = " + ln(e)*pi*2);
+```
+
+- Es wird zwichen benannten und Default-Exports unterschieden.
+
+- Default-Exports können nur einmal je Datei genutzt werden.
+
+- Default-Exports können beim import beliebig benannt werden.
+
+]
+
+---
+
+.left-column[
+  ### Datentypen
+]
+
+.right-column[
+
+```javascript
+// Sets
+var s = new Set();
+s.add("hello").add("goodbye").add("hello");
+s.size === 2;
+s.has("hello") === true;
+
+// Maps
+var m = new Map();
+m.set("hello", 42);
+m.set(s, 34);
+m.get(s) == 34;
+
+// Weak Maps
+var wm = new WeakMap();
+wm.set(s, { extra: 42 });
+wm.size === undefined
+
+// Weak Sets
+var ws = new WeakSet();
+ws.add({ data: 42 });
+// Because the added object has no other references,
+// it will not be held in the set
+```
+]
+
+
+
+    </textarea>
+    <script src="https://remarkjs.com/downloads/remark-latest.min.js">
+    </script>
+    <script>
+      var slideshow = remark.create();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,482 @@
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2016.11.2)  24 MAY 2018 11:01
+entering extended mode
+**./titel.tex
+(titel.tex
+LaTeX2e <2016/03/31> patch level 3
+Babel <3.9r> and hyphenation patterns for 75 language(s) loaded.
+
+! LaTeX Error: Environment titlepage undefined.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.11 \begin{titlepage}
+                      
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+! LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.12    \mbox{}
+               \vspace{5\baselineskip}\\
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+! Undefined control sequence.
+l.13    \sffamily\huge
+                      
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.16    {\Huge
+               Rich Client Application Development } \\
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+Overfull \hbox (20.0pt too wide) in paragraph at lines 12--16
+ [][]  
+ []
+
+
+Overfull \hbox (18.45836pt too wide) in paragraph at lines 12--16
+ \OT1/cmss/m/n/10 Rich 
+ []
+
+
+Overfull \hbox (24.3889pt too wide) in paragraph at lines 12--16
+ \OT1/cmss/m/n/10 Client 
+ []
+
+
+Overfull \hbox (15.16669pt too wide) in paragraph at lines 12--16
+ \OT1/cmss/m/n/10 Ap- 
+ []
+
+
+Overfull \hbox (13.27777pt too wide) in paragraph at lines 12--16
+ \OT1/cmss/m/n/10 pli- 
+ []
+
+
+Overfull \hbox (12.58334pt too wide) in paragraph at lines 12--16
+ \OT1/cmss/m/n/10 ca- 
+ []
+
+
+Overfull \hbox (16.16669pt too wide) in paragraph at lines 12--16
+ \OT1/cmss/m/n/10 tion 
+ []
+
+
+Overfull \hbox (15.00003pt too wide) in paragraph at lines 12--16
+ \OT1/cmss/m/n/10 De- 
+ []
+
+
+Overfull \hbox (14.77779pt too wide) in paragraph at lines 12--16
+ \OT1/cmss/m/n/10 vel- 
+ []
+
+
+Overfull \hbox (13.50002pt too wide) in paragraph at lines 12--16
+ \OT1/cmss/m/n/10 op- 
+ []
+
+
+Overfull \hbox (21.16669pt too wide) in paragraph at lines 12--16
+ \OT1/cmss/m/n/10 ment 
+ []
+
+
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.17     \vspace{2\baselineskip}\\
+                                  
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+! LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.18   P
+        rojekt:  SaveYourClicks, eine SPA die Zeit spart\\
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+Overfull \hbox (33.19453pt too wide) in paragraph at lines 18--18
+ []\OT1/cmss/m/n/10 Projekt: 
+ []
+
+
+Overfull \hbox (29.41673pt too wide) in paragraph at lines 18--18
+ \OT1/cmss/m/n/10 SaveY- 
+ []
+
+
+Overfull \hbox (40.69452pt too wide) in paragraph at lines 18--18
+ \OT1/cmss/m/n/10 ourClicks, 
+ []
+
+
+Overfull \hbox (16.44444pt too wide) in paragraph at lines 18--18
+ \OT1/cmss/m/n/10 eine 
+ []
+
+
+Overfull \hbox (17.77782pt too wide) in paragraph at lines 18--18
+ \OT1/cmss/m/n/10 SPA 
+ []
+
+
+Overfull \hbox (12.0pt too wide) in paragraph at lines 18--18
+ \OT1/cmss/m/n/10 die 
+ []
+
+
+Overfull \hbox (16.55556pt too wide) in paragraph at lines 18--18
+ \OT1/cmss/m/n/10 Zeit 
+ []
+
+
+Overfull \hbox (20.55559pt too wide) in paragraph at lines 18--18
+ \OT1/cmss/m/n/10 spart 
+ []
+
+
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.19    \vspace{2\baselineskip}\\
+                                 
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+! Undefined control sequence.
+l.20    \rmfamily\Large
+                       
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+! LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.21   F
+        achhochschule Bielefeld \\
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+Overfull \hbox (67.13899pt too wide) in paragraph at lines 21--21
+ []\OT1/cmr/m/n/10 Fachhochschule 
+ []
+
+
+Overfull \hbox (24.86115pt too wide) in paragraph at lines 21--21
+ \OT1/cmr/m/n/10 Biele- 
+ []
+
+
+Overfull \hbox (15.83337pt too wide) in paragraph at lines 21--21
+ \OT1/cmr/m/n/10 feld 
+ []
+
+
+! LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.22   C
+        ampus Minden \\
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+Overfull \hbox (35.61119pt too wide) in paragraph at lines 22--22
+ []\OT1/cmr/m/n/10 Campus 
+ []
+
+
+Overfull \hbox (20.83337pt too wide) in paragraph at lines 22--22
+ \OT1/cmr/m/n/10 Min- 
+ []
+
+
+Overfull \hbox (15.55559pt too wide) in paragraph at lines 22--22
+ \OT1/cmr/m/n/10 den 
+ []
+
+
+! LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.23   S
+        tudiengang Informatik
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+Overfull \hbox (53.88904pt too wide) in paragraph at lines 23--24
+ []\OT1/cmr/m/n/10 Studiengang 
+ []
+
+
+Overfull \hbox (12.50002pt too wide) in paragraph at lines 23--24
+ \OT1/cmr/m/n/10 In- 
+ []
+
+
+Overfull \hbox (15.30559pt too wide) in paragraph at lines 23--24
+ \OT1/cmr/m/n/10 for- 
+ []
+
+
+Overfull \hbox (25.27786pt too wide) in paragraph at lines 23--24
+ \OT1/cmr/m/n/10 matik 
+ []
+
+
+! LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.25 \noindent
+              \rule{15cm}{0.4pt}
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Environment table undefined.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.27 \begin{table}
+                  [H]
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+! Undefined control sequence.
+l.28 	\tablestyle
+                 
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.29 	\rowcolors
+                {1}{tablerowcolor}{white!100}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line 30.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line 30.
+
+! LaTeX Error: Illegal character in array arg.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.30 	\begin{tabular}{*{1}{v{0.45\textwidth}}}
+                                              
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Illegal character in array arg.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.30 	\begin{tabular}{*{1}{v{0.45\textwidth}}}
+                                              
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+! Undefined control sequence.
+<recently read> \rowcolor 
+                          
+l.32 		\rowcolor
+                {tableheadcolor}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+! LaTeX Error: \begin{document} ended by \end{table}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.41 \end{table}
+                
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+Overfull \hbox (426.79134pt too wide) in paragraph at lines 25--42
+ [] 
+ []
+
+
+Overfull \hbox (41.52786pt too wide) in paragraph at lines 25--42
+ \OT1/cmr/m/n/10 Beteiligte 
+ []
+
+
+Overfull \hbox (18.22223pt too wide) in paragraph at lines 25--42
+ \OT1/cmr/m/n/10 Per- 
+ []
+
+
+Overfull \hbox (12.27779pt too wide) in paragraph at lines 25--42
+ \OT1/cmr/m/n/10 so- 
+ []
+
+
+Overfull \hbox (18.33337pt too wide) in paragraph at lines 25--42
+ \OT1/cmr/m/n/10 nen: 
+ []
+
+
+Overfull \hbox (13.05559pt too wide) in paragraph at lines 25--42
+ \OT1/cmr/m/n/10 [H] 
+ []
+
+
+Overfull \hbox (45.86119pt too wide) in paragraph at lines 25--42
+ \OT1/cmr/m/n/10 1tablerow- 
+ []
+
+
+Overfull \hbox (15.55557pt too wide) in paragraph at lines 25--42
+ \OT1/cmr/m/n/10 col- 
+ []
+
+
+Overfull \hbox (12.25002pt too wide) in paragraph at lines 25--42
+ \OT1/cmr/m/n/10 or- 
+ []
+
+
+Overfull \hbox (41.66676pt too wide) in paragraph at lines 25--42
+ \OT1/cmr/m/n/10 white!100 
+ []
+
+
+Overfull \hbox (96.13885pt too wide) in paragraph at lines 25--42
+ [] 
+ []
+
+
+! LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.44 \noindent
+              \rule{15cm}{0.4pt}
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+! Undefined control sequence.
+l.61    \today
+              
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+! LaTeX Error: \begin{document} ended by \end{titlepage}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.62 \end{titlepage}
+                    
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+Overfull \hbox (426.79134pt too wide) in paragraph at lines 44--63
+[]
+ []
+
+)
+! Emergency stop.
+<*> ./titel.tex
+               
+*** (job aborted, no legal \end found)
+
+ 
+Here is how much of TeX's memory you used:
+ 18 strings out of 493334
+ 193 string characters out of 3139252
+ 55242 words of memory out of 3000000
+ 3646 multiletter control sequences out of 15000+200000
+ 4253 words of font info for 16 fonts, out of 3000000 for 9000
+ 1141 hyphenation exceptions out of 8191
+ 19i,6n,16p,71b,195s stack positions out of 5000i,500n,10000p,200000b,50000s
+!  ==> Fatal error occurred, no output PDF file produced!

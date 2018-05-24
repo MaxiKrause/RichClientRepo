@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Title</title>
+    <meta charset="utf-8">
+    <style>
+      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+
+      body { font-family: 'Droid Serif'; }
+      h1, h2, h3 {
+        font-family: 'Yanone Kaffeesatz';
+        font-weight: normal;
+      }
+      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+
+      /* Two-column layout */
+      .left-column {
+        color: #777;
+        width: 20%;
+        height: 92%;
+        float: left;
+      }
+        .left-column h2:last-of-type, .left-column h3:last-child {
+          color: #000;
+        }
+      .right-column {
+        width: 75%;
+        float: right;
+        padding-top: 1em;
+      }
+    </style>
+  </head>
+  <body>
+    <textarea id="source">
+
+class: center, middle
+
+# Tooling
+
+---
+
+# Agenda
+
+1. Test Comparison
+2. Why Functional
+3. How Pure Functions Work
+4. Jasmine
+5. Mocha 
+6. Chai
+7. SinonJS
+8. SinonJS: Spies 
+9. SinonJS: Stubs
+10. SinonJS: Mocks
+11. Asynchronen Code testen (Callbacks)
+12. Asynchronen Code testen (Promises)
+13. Was sind Snapshot Tests?
+14. "Let's Try It Out"
+15. Weiter geht es mit Snapshots
+16. Der erste Snapshot Test
+---
+
+layout: false
+.left-column[
+  ### Test Comparison
+]
+
+.right-column[
+- Unit tests
+
+Unit tests validate the functionality of isolated code
+
+- Integration tests
+
+Integration tests verify the flow of data and the interaction of components
+
+- Funtional tests
+
+Functional tests look at the behavior of the overall application
+]
+
+---
+
+layout: false
+.left-column[
+  ### Test Comparison
+  ### Why Functional
+]
+
+.right-column[
+
+With Functional programming you can deal with the data and behavior in your application.
+
+The application consists of a set of independent functions that each work in isolation and dont
+rely on external state.
+
+By programming functional your code becomes almost self-documenting, your functions are clearly
+defined and have consistent and understandable behavior.
+
+It makes unit testing much easier.
+]
+
+---
+
+layout: false
+.left-column[
+  ### Test Comparison
+  ### Why Functional
+  ### How Pure Functions Work
+]
+
+.right-column[
+
+Pure functions are the foundation of functional programming, and they all share these three qualities:
+
+- Don’t rely on external state or variables
+
+- Don’t cause side effects or alter external variables
+
+- Always return the same result for the same input
+]
+
+---
+
+layout: false
+.left-column[
+  ### Test Comparison
+  ### Why Functional
+  ### How Pure Functions Work
+  ### Jasmine
+]
+
+.right-column[
+- The test that the test runner runs
+```javscript
+describe("isPalindrome", () => {
+  it("returns true if the string is a palindrome", () => {
+    expect(isPalindrome("abba")).toEqual(true);
+  });
+  it("returns f if the string isnt a palindrome", () => {
+    expect(isPalindrome("Bubba")).toEqual(false);
+  });
+});
+```
+- The function that is being tested
+```javascript
+const isPalindrome = (str) => {
+  return str
+    .split("")
+    .reverse()
+    .join("") === str;
+};
+```
+]
+
+---
+
+layout: false
+.left-column[
+  ### Mocha 
+]
+
+.right-column[
+
+- Ist ein Test Runner
+
+- Keine eigene Assertion Libary
+
+- Testet Funktionen entweder asynchron oder synchron
+
+```javascript
+const assert = require("assert");
+
+describe("smoke test", function() {
+  it("checks equality", function() {
+    assert.equal(true, true);
+  });
+})
+```
+]
+
+---
+
+layout: false
+.left-column[
+  ### Mocha 
+  ### Chai
+]
+
+.right-column[
+
+- Assertion Libary die Mocha verwenden kann
+
+- Durch Chai wird versucht Tests übersichtlicher zu machen
+
+- Es können drei verschiedene Assertion benutzt werden (expect, should und assert)
+
+```javascript
+//Hier wird expect als Assertion benutzt 
+describe("smoke test", function() {
+  it("checks equality", function() {
+    expect(true).to.be.true;
+  });
+});
+```
+]
+
+---
+
+layout: false
+.left-column[
+  ### Mocha 
+  ### Chai
+  ### SinonJS
+]
+
+.right-column[
+
+- SinonJS wird benutzt um Funktionen zu Simulieren ohne sie auszuführen 
+
+- Es gibt drei verschiedene Mocks (Attrappen) 
+
+- Spies: Wird benutzt um rauszufinden ob Methoden z.B. aufgerufen werden
+
+- Stubs: Die Funktion wird komplett ersetzt um lange Aufrufe zu verhindern
+
+- Mocks: Funktion kann spezifische Ergebnisse liefern 
+
+
+]
+
+---
+
+layout: false
+.left-column[
+  ### Mocha 
+  ### Chai
+  ### SinonJS
+  ### SinonJS: Spies
+]
+
+.right-column[
+
+- Durch Spies kann geprüft werden ob und wie viel eine Methode aufgerufen wird
+
+- Im folgenden Code wird geprüft ob die Methode einmal aufgerufen wird und der Parameter "Hey" übergeben wird
+
+```javascript
+describe("AppController", function()  {
+  describe("getIndexPage", function() {
+    it("should send hey", function() {
+      let req = {}
+      let res = {
+        send: sinon.spy()
+      }
+      expect(res.send.calledOnce).to.be.true;
+      expect(res.send.firstCall.args[0]).to.equal("Hey");
+    });
+  });
+});
+```
+]
+
+---
+
+layout: false
+.left-column[
+  ### Mocha 
+  ### Chai
+  ### SinonJS
+  ### SinonJS: Spies
+  ### SinonJS: Stubs
+]
+
+.right-column[
+
+- Im Gegensatz zu Spies wird beim Aufruf von Stubs die gesamte Funktion ersetzt
+
+- Dadurch können in der Praxis Funktionen getestet werden die längere Aufrufzteiten haben (z.B. Datenbank Aufrufe)
+
+```javascript
+describe("AppController", function()  {
+  describe("getIndexPage", function() {
+    it("should send hey when user is logged in", function() {
+      let user = {
+        isLoggedIn: function(){}
+      }
+      const s = sinon.stub(user, "isLoggedIn").returns(true);
+      let req = {
+        user: user
+      }
+		.
+		.
+		.
+      expect(s.calledOnce).to.be.true;
+    });
+  });
+});
+```
+]
+
+---
+
+layout: false
+.left-column[
+  ### Mocha 
+  ### Chai
+  ### SinonJS
+  ### SinonJS: Spies
+  ### SinonJS: Stubs
+  ### SinonJS: Mocks
+]
+
+.right-column[
+
+- Mit Mocks können Funktionen so ausgeführt werden das egal bei welcher Eingabe immer ein spezifisches Ergebniss zurückkommt
+
+- Es kann z.B. eine Methode emuliert werden und es wird getestet ob bei einer spezifischen Eingabe ein spezifisches Ergebniss zurück kommt 
+
+```javascript
+	  .
+	  .
+	  .
+      const mock = sinon.mock(res);
+	  
+      mock.expects("send").once().withExactArgs("Hey");
+
+      indexPage.getIndexPage(req, res);
+      expect(isLoggedInStub.calledOnce).to.be.true;
+
+      mock.verify();
+```
+]
+
+---
+
+layout: false
+.left-column[
+  ### Asynchronen Code testen (Callbacks)
+]
+
+.right-column[
+
+- Da JavaScript fast immer asynchron läuft muss häufig auch asynchroner Code getestet werden
+
+- Es muss darauf geachtet werden das die Mocha Tests auch asynchron laufen
+
+```javascript
+function someMadeUpAyncFunc(boolValue, cb) {
+  setTimeout(function() {
+    cb(boolValue ? "You get a sweet :)" : "You get nothing!")
+  }, 0);
+}
+describe.only("AsyncTest", function()  {
+  it("should return `You get a sweet :)` if `true` ", 
+  function(done) {
+    someMadeUpAyncFunc(true, function(sweetCheck){
+      expect(sweetCheck).to.equal("You get a sweet :)");
+      done(); 
+	  // Wichtig ist hier das mit done gearbeitet wird
+    });
+  });
+```
+]
+
+---
+
+layout: false
+.left-column[
+  ### Asynchronen Code testen (Callbacks)
+  ### Asynchronen Code testen (Promises)
+
+]
+
+.right-column[
+
+- Statt mit Callbacks zu arbeiten können auch Promises verwendet werden
+
+- Hierfür muss chai aber spezifisch mit Promises installiert werden (npm install --save-dev chai-as-promised)
+
+```javascript
+function someMadeUpAyncFunc(boolValue, cb) {
+  return new Promise(function(resolve){
+    setTimeout(function() {
+     resolve(boolValue ? "You get a sweet :)":"nothing")
+    }, 0);
+  })
+}
+
+describe.only("AsyncTest", function()  {
+  it("should return `You get a sweet :)` if `true` ", 
+  function() {
+    return expect(someMadeUpAyncFunc(true)).to
+	.eventually.equal("You get a sweet :)");
+  });
+```
+]
+
+---
+
+.left-column[
+  ### Was sind Snapshot Tests?
+]
+
+.right-column[
+- Snapshot Tests prüft teil einer Funktionalität ab, ob es noch genau so funktioniert, wie es es am Anfang getan hatte.
+
+- Es speichert ein sogenanntes "Bild" ab und prüft ob das "Bild" sich nicht verändert hat.
+
+- Folgt dem Prinzip des "green-green-refactor" <br>
+  => Snapshot wird erstellt = grün <br>
+  => Nach dem Refactorn sollte der Test auch grün sein. 
+
+- Sollte nicht das alleinige Tool zum testen sein
+]
+
+---
+
+.left-column[
+  ### Was sind Snapshot Tests?
+  ### "Let's Try It Out"
+]
+
+.right-column[
+- Um in jest und seine Snapshot Tests rein zu kommen brauch es nicht viel.
+- Angefangen mit der Installation
+
+```sh
+npm install -g create-react-app
+```
+Installiert ein Paket zum erstellen von React Apps
+
+```sh
+create-react-app snapshot-testing
+```
+Erstellt eine React-App mit dem Namen snapshot-testing
+]
+
+Zum Testen kann man einfach mal
+```sh 
+npm test
+```
+Und damit müsste der erste Standard Test durchlaufen.
+
+---
+
+.left-column[
+  ### Was sind Snapshot Tests?
+  ### "Let's Try It Out"
+  ### Weiter geht es mit Snapshots
+]
+
+.right-column[
+- Wie macht man jetzt Snapshot Tests? <br>
+=> mit dem 'react-test-renderer'
+- Dieser ist Standard mäßig nicht installiert. <br>
+=> Also einmal das ausführen:
+
+```sh
+npm install --save-dev react-test-renderer
+```
+
+```js 
+import React from 'react';
+import ReactDOM from 'react-dom';
+import App from './App';
+
+it('renders without crashing', () => {
+  const div = document.createElement('div');
+  ReactDOM.render(<App />, div);
+});
+```
+.center[App.test.js]
+
+- Hier einmal diesen import hinzufügen und schon kann das Snapshotting beginnen.
+```js 
+import renderer from 'react-test-renderer';
+```
+]
+---
+
+.left-column[
+  ### Was sind Snapshot Tests?
+  ### "Let's Try It Out"
+  ### Weiter geht es mit Snapshots
+  ### Der erste Snapshot Test
+]
+
+.right-column[
+- Weiter geht es mit dem ersten Test.
+
+```js
+it('renders a snapshot', () => {
+  const tree = renderer.create(<App/>).toJSON();
+  expect(tree).toMatchSnapshot();
+});
+```
+- Der Renderer macht aus unserer App ein JSON-Objekt.
+- Danach schauen wir in toMatchSnapshot() ob dieses Objekt gleich dem Snapshot ist.
+- Ist noch kein Snapshot vorhanden, dann wird aus dem Objekt ein Snapshot erstellt und in den Ordner \_\_snapshot\_\_ gespeichert.
+]
+
+
+
+
+   </textarea>
+    <script src="https://remarkjs.com/downloads/remark-latest.min.js">
+    </script>
+    <script>
+      var slideshow = remark.create();
+    </script>
+  </body>
+>>>>>>> 0e6784098fd0d90b701ebc130030ef443bb5653c
+</html>
