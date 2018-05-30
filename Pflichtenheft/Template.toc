@@ -1,37 +1,43 @@
 \select@language {ngerman}
-\contentsline {section}{\numberline {1}Einf\IeC {\"u}hrung}{3}{section.1}
-\contentsline {subsection}{\numberline {1.1}Beschreibung}{3}{subsection.1.1}
-\contentsline {subsection}{\numberline {1.2}Ziele}{3}{subsection.1.2}
-\contentsline {subsubsection}{\nonumberline Allgemein}{3}{section*.3}
-\contentsline {subsubsection}{\nonumberline Marktanforderungen}{3}{section*.4}
-\contentsline {subsubsection}{\nonumberline Alleinstellungsmerkmale}{3}{section*.5}
-\contentsline {subsubsection}{\nonumberline Zielgruppen}{3}{section*.6}
-\contentsline {subsubsection}{\nonumberline Abgrenzung}{4}{section*.7}
-\contentsline {section}{\numberline {2}Anforderungen}{5}{section.2}
-\contentsline {subsection}{\numberline {2.1}Funktionale Anforderungen}{5}{subsection.2.1}
-\contentsline {subsection}{\numberline {2.2}Nicht-funktionale Anforderungen}{5}{subsection.2.2}
-\contentsline {subsubsection}{\nonumberline Rahmenbedingungen}{6}{section*.8}
-\contentsline {subsubsection}{\nonumberline Betriebsbedingungen}{6}{section*.9}
-\contentsline {subsubsection}{\nonumberline Qualit\IeC {\"a}tsmerkmale}{6}{section*.10}
-\contentsline {subsection}{\numberline {2.3}Graphische Benutzerschnittstelle}{6}{subsection.2.3}
-\contentsline {subsubsection}{\nonumberline Anmeldung}{6}{section*.11}
-\contentsline {subsubsection}{\nonumberline Registrierung}{7}{section*.13}
-\contentsline {subsubsection}{\nonumberline Startseite}{8}{section*.15}
-\contentsline {subsubsection}{\nonumberline Einstellungen}{9}{section*.17}
-\contentsline {subsubsection}{\nonumberline Fileupload}{10}{section*.19}
-\contentsline {subsubsection}{\nonumberline Zustandsdiagramm}{11}{section*.21}
-\contentsline {subsection}{\numberline {2.4}Anforderungen im Detail}{11}{subsection.2.4}
-\contentsline {section}{\numberline {3}Technische Beschreibung}{13}{section.3}
-\contentsline {subsection}{\numberline {3.1}System\IeC {\"u}bersicht}{13}{subsection.3.1}
-\contentsline {subsection}{\numberline {3.2}Softwarearchitektur}{14}{subsection.3.2}
-\contentsline {subsection}{\numberline {3.3}Datenmodell}{14}{subsection.3.3}
-\contentsline {subsection}{\numberline {3.4}Abl\IeC {\"a}ufe}{14}{subsection.3.4}
-\contentsline {subsection}{\numberline {3.5}Entwurf}{14}{subsection.3.5}
-\contentsline {section}{\numberline {4}Projektorganisation}{14}{section.4}
-\contentsline {subsection}{\numberline {4.1}Annahmen}{14}{subsection.4.1}
-\contentsline {subsection}{\numberline {4.2}Verantwortlichkeiten}{14}{subsection.4.2}
-\contentsline {subsection}{\numberline {4.3}Grober Projektplan}{14}{subsection.4.3}
-\contentsline {section}{\numberline {5}Anh\IeC {\"a}nge}{14}{section.5}
-\contentsline {subsection}{\numberline {5.1}Glossar}{14}{subsection.5.1}
-\contentsline {subsection}{\numberline {5.2}Referenzen}{14}{subsection.5.2}
-\contentsline {subsection}{\numberline {5.3}Index}{14}{subsection.5.3}
+\contentsline {section}{\numberline {1}Einf\IeC {\"u}hrung}{4}{section.1}
+\contentsline {subsection}{\numberline {1.1}Beschreibung}{4}{subsection.1.1}
+\contentsline {subsection}{\numberline {1.2}Ziele}{4}{subsection.1.2}
+\contentsline {subsubsection}{\nonumberline Allgemein}{4}{section*.3}
+\contentsline {subsubsection}{\nonumberline Marktanforderungen}{4}{section*.4}
+\contentsline {subsubsection}{\nonumberline Alleinstellungsmerkmale}{4}{section*.5}
+\contentsline {subsubsection}{\nonumberline Zielgruppen}{4}{section*.6}
+\contentsline {subsubsection}{\nonumberline Abgrenzung}{5}{section*.7}
+\contentsline {section}{\numberline {2}Anforderungen}{6}{section.2}
+\contentsline {subsection}{\numberline {2.1}Funktionale Anforderungen}{6}{subsection.2.1}
+\contentsline {subsubsection}{\nonumberline Ausgeschriebene Anforderungen}{6}{section*.8}
+\contentsline {subsubsection}{\nonumberline UC01 An- und Abmeldung}{7}{section*.9}
+\contentsline {subsubsection}{\nonumberline UC02 Registrierung}{8}{section*.11}
+\contentsline {subsubsection}{\nonumberline UC03 Passwort\IeC {\"a}nderung}{9}{section*.13}
+\contentsline {subsubsection}{\nonumberline UC04 Widgets bearbeiten}{10}{section*.15}
+\contentsline {subsubsection}{\nonumberline UC05 Widgets hochladen}{10}{section*.17}
+\contentsline {subsection}{\numberline {2.2}Nicht-funktionale Anforderungen}{11}{subsection.2.2}
+\contentsline {subsubsection}{\nonumberline Rahmenbedingungen}{11}{section*.19}
+\contentsline {subsubsection}{\nonumberline Betriebsbedingungen}{11}{section*.20}
+\contentsline {subsubsection}{\nonumberline Qualit\IeC {\"a}tsmerkmale}{11}{section*.21}
+\contentsline {subsection}{\numberline {2.3}Graphische Benutzerschnittstelle}{12}{subsection.2.3}
+\contentsline {subsubsection}{\nonumberline Anmeldung}{12}{section*.22}
+\contentsline {subsubsection}{\nonumberline Registrierung}{13}{section*.24}
+\contentsline {subsubsection}{\nonumberline Startseite}{14}{section*.26}
+\contentsline {subsubsection}{\nonumberline Einstellungen}{15}{section*.28}
+\contentsline {subsubsection}{\nonumberline Fileupload}{16}{section*.30}
+\contentsline {subsubsection}{\nonumberline Zustandsdiagramm}{17}{section*.32}
+\contentsline {subsection}{\numberline {2.4}Anforderungen im Detail}{18}{subsection.2.4}
+\contentsline {section}{\numberline {3}Technische Beschreibung}{19}{section.3}
+\contentsline {subsection}{\numberline {3.1}System\IeC {\"u}bersicht}{19}{subsection.3.1}
+\contentsline {subsection}{\numberline {3.2}Softwarearchitektur}{20}{subsection.3.2}
+\contentsline {subsection}{\numberline {3.3}Datenmodell}{20}{subsection.3.3}
+\contentsline {subsection}{\numberline {3.4}Abl\IeC {\"a}ufe}{20}{subsection.3.4}
+\contentsline {subsection}{\numberline {3.5}Entwurf}{20}{subsection.3.5}
+\contentsline {section}{\numberline {4}Projektorganisation}{20}{section.4}
+\contentsline {subsection}{\numberline {4.1}Annahmen}{20}{subsection.4.1}
+\contentsline {subsection}{\numberline {4.2}Verantwortlichkeiten}{20}{subsection.4.2}
+\contentsline {subsection}{\numberline {4.3}Grober Projektplan}{20}{subsection.4.3}
+\contentsline {section}{\numberline {5}Anh\IeC {\"a}nge}{20}{section.5}
+\contentsline {subsection}{\numberline {5.1}Glossar}{20}{subsection.5.1}
+\contentsline {subsection}{\numberline {5.2}Referenzen}{20}{subsection.5.2}
+\contentsline {subsection}{\numberline {5.3}Index}{20}{subsection.5.3}

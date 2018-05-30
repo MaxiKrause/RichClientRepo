@@ -29,19 +29,51 @@
 \section{Anforderungen}
 
 	\subsection{Funktionale Anforderungen}
-		An das Programm werden die folgenden Anforderungen gestellt: 
-		\begin{itemize}
-			\item Bevor die Seite benutzt wird muss sich der User anmelden 
-			\item Um sich anzumelden muss vorher eine Registrierung mit E-Mail und Passwort stattfinden  
-			\item Auf der Startseite werden die Widgets angezeigt
-			\item Über das angemeldete Konto kann man seine persönlichen Widgets einstellen und verwalten
-			\item Falls gewollt kann das momentane Passwort geändert werden
-			\item Es besteht die Möglichkeit seinen Account zu löschen und alle Daten von der Seite zu entfernen 
-			\item Widgets können über die Einstellungen hinzugefügt oder entfernt werden
-			\item Es können neue Widgets aus der Datenbank hinzugefügt werden um diese auf der Website zu benutzen 
-			\item Nach der Abmeldung und dem Verlassen der Seite sollen alle Einstellungen gespeichert werden, damit beim erneuten Aufruf alle persönlichen Merkmale erhalten bleiben   
-			\item User können ihre eigenen Widgets programmieren und auf der Website veröffentlichen    
-		\end{itemize}
+		\subsubsection{Ausgeschriebene Anforderungen}
+			An das Programm werden die folgenden Anforderungen gestellt: 
+			\begin{itemize}
+				\item Bevor die Seite benutzt wird muss sich der User anmelden 
+				\item Um sich anzumelden muss vorher eine Registrierung mit E-Mail und Passwort stattfinden  
+				\item Auf der Startseite werden die Widgets angezeigt
+				\item Über das angemeldete Konto kann man seine persönlichen Widgets einstellen und verwalten
+				\item Falls gewollt kann das momentane Passwort geändert werden
+				\item Es besteht die Möglichkeit seinen Account zu löschen und alle Daten von der Seite zu entfernen 
+				\item Widgets können über die Einstellungen hinzugefügt oder entfernt werden
+				\item Es können neue Widgets aus der Datenbank hinzugefügt werden um diese auf der Website zu benutzen 
+				\item Nach der Abmeldung und dem Verlassen der Seite sollen alle Einstellungen gespeichert werden, damit beim erneuten Aufruf alle persönlichen Merkmale erhalten bleiben   
+				\item User können ihre eigenen Widgets programmieren und auf der Website veröffentlichen    
+			\end{itemize}
+		
+		\subsubsection{UC01 An- und Abmeldung}
+			\begin{figure}[H]
+				\includegraphics[scale=0.8]{images/AnAbmeldung}
+			\end{figure}
+			Dieser Use Case beschreibt die An- und Abmeldung auf der Website. Ein registrierter User kann sich auf der Seite mit seinem Account anmelden und sich später auch wieder ausloggen. 
+		
+		\subsubsection{UC02 Registrierung}
+			\begin{figure}[H]
+				\includegraphics[scale=0.8]{images/Registrierung}
+			\end{figure}
+			In diesem Use Case wird die Registrierung eines Accounts dargestellt. Hier muss ein vorher noch nicht registrierter User seine E-Mail eingeben und ein Passwort festlegen.  
+		
+		\subsubsection{UC03 Passwortänderung}
+			\begin{figure}[H]
+				\includegraphics[scale=0.8]{images/Passwortanderung}
+			\end{figure}
+			Der Use Case stellt die Passwortänderung da. Ein angemeldeter User kann sein momentanes Passwort jederzeit wechseln. 
+\newpage		 
+		\subsubsection{UC04 Widgets bearbeiten}
+			\begin{figure}[H]
+				\includegraphics[scale=0.8]{images/WidgetsBearbeiten}
+			\end{figure}
+			Hier wird beschreiben wie ein individueller User seine Widgets verwalten kann. Er kann neue Widgets hinzufügen, bestehende ausblenden oder sogar komplett entfernen. 
+			
+		
+		\subsubsection{UC05 Widgets hochladen}
+			\begin{figure}[H]
+				\includegraphics[scale=0.8]{images/WidgetHochladen}
+			\end{figure}
+			Dieser Use Case stellt da wie ein Entwickler seine eigenen Widgets hochladen kann. Dafür muss dieser einfach nur sein Widget als über die Website als Datei hochladen. 
 	
 	\subsection{Nicht-funktionale Anforderungen}
 		Neben den Funktionalen Anforderungen bestehen noch folgende Nicht-funktionale:
@@ -55,11 +87,18 @@
 		\end{itemize}
 	
 		\subsubsection{Rahmenbedingungen}
+			\textbf{Hardware: }Jede Hardware die eine Internetverbindung besitzt und einen lauffähigen Webbrowser installiert hat soll von der Anwendung unterstützt werden.
 		
 		\subsubsection{Betriebsbedingungen}
+			\textbf{Plattform: }Die Website ist nur für Desktop-User konzipiert und soll nicht auf mobile Geräte angepasst werden.\\
+			\textbf{Browsersupport: }Alle Browser die ReactJS unterstützt (Firefox, Chrome, IE9+, etc.), sollen auch ohne Einschränkungen auf die Website zugreifen können.\\
+			\textbf{Programmiersprache(n): }Für die Entwickelung der Website soll hauptsächlich JavaScript mit dem ReactJS Framework benutzt werden. Severseitig soll NodeJS und Express zur Verwendung kommen.\\
 		
 		\subsubsection{Qualitätsmerkmale}
-		
+			\textbf{Sicherheit: }Da die Website eine Anmeldung mit Passwort voraussetzt, müssen Userdaten sicher gespeichert werden.\\
+			\textbf{Usability: }Die Seite soll übersichtlich gestaltet werden und deswegen nicht mehr als sechs Widgets pro Seite unterstützen.\\
+			\textbf{Performance: }Es sollen keine Performanceeinbrüche durch mehrere Widgets eintreten. Außerdem soll die Eingabeverzögerung minimal gehalten werden.\\
+			 
 	\subsection{Graphische Benutzerschnittstelle}
 		
 		\subsubsection{Anmeldung}
@@ -109,11 +148,10 @@
 			\end{tabular}
 		\end{center}
 
-	
+\newpage
 \section{Technische Beschreibung}
 	
 	\subsection{Systemübersicht}
-	
 		\begin{figure}[H]
 			\includegraphics[scale=0.8]{images/SYCArchitektur}
 		\end{figure}
@@ -140,6 +178,17 @@
 		Da die Gruppengröße mit drei Mitgliedern nicht sehr groß ausfällt wird es nicht zu vermeiden sein das jedes Teammitglied auch in anderen Gebieten mitwirken wird. 
 	
 	\subsection{Grober Projektplan}
+		\textbf{Projektdeadline: } Donnerstag 12.7.2018 \\
+		Zur jeweiligen Kalenderwoche sollen folgende Funktionen erstellt werden: 
+		\begin{itemize}
+			\item \textbf{KW 23: }Login und Registrierung, Navigierung zwischen den einzelnen Seiten 
+			\item \textbf{KW 24: }Grobe Funktion eines Widgetcontainer, Standard für Widgetcontainer, Beispiel Widgets  
+			\item \textbf{KW 25: }Widgetcontainer, hinzufügen und entfernen von Widgets auf der Startseite, Anordnung von Widgets auf der Startseite   
+			\item \textbf{KW 26: }Upload von eigenen Widgets
+			\item \textbf{KW 27: }Detailliertes Design der Website 
+			\item \textbf{KW 28: }Anwendung läuft auf dem Server ohne Fehler
+		\end{itemize}
+		
 		
 	
 
