@@ -3,10 +3,12 @@
 \section{Einführung}
 
 	\subsection{Beschreibung}
+	\label{Projektbesch}
 		Die Idee hinter dem Projekt "SaveYourClicks" ist, wie der Name schon andeutet, dem alltäglichem User des Internets zu helfen Klicks und Zeit einzusparen. Dies soll daraus resultieren das eine Single Page Application (SPA) gegeben ist, die aus mehreren Widgets besteht. Jedes dieser Widgets soll eine kleine Funktion bieten (wie z.B. Wetteranzeige oder die momentanen Schlagzeilen aus Deutschland) und jeder User kann für sich selbst entscheiden welche Elemente er angezeigt haben möchte. So müssen nicht viele verschiedene Webseiten aufgerufen werden um minimale Informationen zu erhalten. 
 		Außerdem soll die Möglichkeit bestehen eigenständige Widgets zu entwickeln und auf der Website zu veröffentlichen um so eine größere Vielfalt von Funktionen zu bieten.
 	
 	\subsection{Ziele}
+	\label{ziel}
 	
 		\subsubsection{Allgemein}
 			Die Motivation der Website besteht darin dem einfachen Internetuser das Leben einfacher zu machen. Deswegen ist die Seite auch nicht für Firmen oder andere größere Einrichtungen gedacht. Durch die öffentliche Erweiterbarkeit ist der Umfang theoretisch Unbegrenzt, da jeder etwas beisteuern kann.
@@ -25,9 +27,9 @@
 		\subsubsection{Abgrenzung} 
 			Die Website dient nicht dazu viele Webseiten in eins zu verschmelzen und darzustellen, sondern lediglich einen sehr geringen Teil an Informationen anzuzeigen. Außerdem sollen die Funktionen der einzelnen Widget so gering wie möglich gehalten werden und keine komplexen Daten enthalten um eine möglichst saubere GUI zu bieten. Das Softwaresystem dient auch nicht als Lesezeichenverwaltung oder soll eine Vorschau zu jeweiligen Webseiten fungieren.
 
-\newpage				
+\newpage			
 \section{Anforderungen}
-
+\label{anford}	
 	\subsection{Funktionale Anforderungen}
 		\subsubsection{Ausgeschriebene Anforderungen}
 			An das Programm werden die folgenden Anforderungen gestellt: 
@@ -44,6 +46,7 @@
 				\item User können ihre eigenen Widgets programmieren und auf der Website veröffentlichen    
 			\end{itemize}
 		
+		\label{usecase}
 		\subsubsection{UC01 An- und Abmeldung}
 			\begin{figure}[H]
 				\includegraphics[scale=0.8]{images/AnAbmeldung}
@@ -100,39 +103,45 @@
 			\textbf{Performance: }Es sollen keine Performanceeinbrüche durch mehrere Widgets eintreten. Außerdem soll die Eingabeverzögerung minimal gehalten werden.\\
 			 
 	\subsection{Graphische Benutzerschnittstelle}
-		
+		\label{guimocl}
 		\subsubsection{Anmeldung}
 			\begin{figure}[H]
 				\includegraphics[scale=0.4]{images/p1}
 			\end{figure}
+			In dieser Grafik sieht man den Login Bildschirm. Hierüber können User sich anmelden oder neu registrieren.  
 		
 		\subsubsection{Registrierung}
 			\begin{figure}[H]
 				\includegraphics[scale=0.4]{images/p1reg}
 			\end{figure}
+			Dieses Mockup zeigt den Registriervorgang. 
 		
 		\subsubsection{Startseite}
 			\begin{figure}[H]
 				\includegraphics[scale=0.4]{images/p2}
 			\end{figure}
+			Dieses Fenster wird dem User angezeigt, nachdem dieser sich angemeldet hat.
 		
 		\subsubsection{Einstellungen}
 			\begin{figure}[H]
 				\includegraphics[scale=0.5]{images/p3}
 			\end{figure}
+			Auf dieser Seite kann der User seine Widgets nach belieben verwalten.
 		
 		\subsubsection{Fileupload}
 			\begin{figure}[H]
 				\includegraphics[scale=0.5]{images/p4}
 			\end{figure}
+			Wenn eine Person ein neues Widget hochladen möchte, benutzt er dieses Fenster.
 		
 		\subsubsection{Zustandsdiagramm}
 			\begin{figure}[H]
 				\includegraphics[scale=0.8]{images/zustand}
 			\end{figure}
+			Dieses Diagramm zeigt die Zusammenhänge der einzelnen Mockups.
 	
 	\subsection{Anforderungen im Detail}
-		
+		\label{userstor}
 		\begin{center}
 			\begin{tabular}{ | p{2cm} | p{2cm} | p{3cm} | p{3cm} | p{4cm} |}
 				\hline
@@ -150,7 +159,7 @@
 
 \newpage
 \section{Technische Beschreibung}
-	
+	\label{sysarch}
 	\subsection{Systemübersicht}
 		\begin{figure}[H]
 			\includegraphics[scale=0.6]{images/SYCArchitektur}
@@ -160,6 +169,7 @@
 	nutzen wir ReactJS. Um Daten zu speichern nutzen wir MongoDB da diese Datenbank es sehr einfach macht mit JSON-Daten zu arbeiten.
 	Für die Registrierung sowie die Anmeldung und Abmeldung nutzen wir den Service von Auth0.
 	
+	\label{data}
 	\subsection{Datenmodell}
 	
 		\begin{figure}[H]
@@ -170,6 +180,7 @@
 	Da wir die Anmeldung über einen Drittanbieter machen, müssen wir erst bei diesem anfragen welcher Nutzer
 	angemeldet ist, damit wir dann die nötigen Daten aus unserer Datenbank lesen können.
 	
+	\label{ablauf}
 	\subsection{Abläufe}
 	
 		\subsubsection{An-und Abmeldung}
@@ -197,10 +208,13 @@
 			\end{figure}
 	
 
+\newpage
 \section{Projektorganisation}
 
 	\subsection{Annahmen}
+		Es wird davon ausgegangen das alle externen Dienste ohne Einschränkungen funktionieren. Falls dies nicht der Fall ist können User sich nicht anmelden oder registrieren, außerdem können Widgets nicht angezeigt werden falls die Datenbank nicht erreichbar ist.
 	
+	\label{rolle}
 	\subsection{Verantwortlichkeiten}
 		\begin{description}
 			\item[Lukas Stoll (Projektleiter)] Frontend, GUI, Dokumentation
@@ -209,6 +223,7 @@
 		\end{description}
 		Da die Gruppengröße mit drei Mitgliedern nicht sehr groß ausfällt wird es nicht zu vermeiden sein das jedes Teammitglied auch in anderen Gebieten mitwirken wird. 
 	
+	\label{meile}
 	\subsection{Grober Projektplan}
 		\textbf{Projektdeadline: } Donnerstag 12.7.2018 \\
 		Zur jeweiligen Kalenderwoche sollen folgende Funktionen erstellt werden: 
@@ -223,11 +238,26 @@
 		
 		
 	
-
+\newpage
 \section{Anhänge}
 
 	\subsection{Glossar}
-	
-	\subsection{Referenzen}
+		\textbf{Entwickler:} Eine Person die zwar ein User ist, aber eigene Widgets erstellt\\
+		\textbf{Fileupload: }Hochladen eigener Widgets\\
+		\textbf{User: }Gewöhnlicher Besucher der Website\\
+		\textbf{Widget: } Eine Komponente eines grafischen Fenstersystems
+		 
 	
 	\subsection{Index}
+	Ablaufdiagramme \ref{ablauf}\\
+	Anforderungen \ref{anford} \\
+	Datenbankdiagramm \ref{data}\\
+	GUI Mockups \ref{guimocl}\\
+	Meilensteine \ref{meile} \\
+	Projektbeschreibung \ref{Projektbesch} \\
+	Rollenverteilung \ref{rolle}\\
+	Systemarchitektur \ref{sysarch}\\
+	Use Case Diagramme \ref{usecase}\\
+	Userstories \ref{userstor}\\
+	Ziele \ref{ziel}
+	

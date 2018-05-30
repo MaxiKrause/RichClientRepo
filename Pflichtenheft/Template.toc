@@ -1,4 +1,4 @@
-\babel@toc {ngerman}{}
+\select@language {ngerman}
 \contentsline {section}{\numberline {1}Einf\IeC {\"u}hrung}{4}{section.1}
 \contentsline {subsection}{\numberline {1.1}Beschreibung}{4}{subsection.1.1}
 \contentsline {subsection}{\numberline {1.2}Ziele}{4}{subsection.1.2}
@@ -35,11 +35,10 @@
 \contentsline {subsubsection}{\nonumberline Registrieren}{22}{section*.38}
 \contentsline {subsubsection}{\nonumberline Widgets bearbeiten}{23}{section*.40}
 \contentsline {subsubsection}{\nonumberline Kompletter Ablauf}{24}{section*.42}
-\contentsline {section}{\numberline {4}Projektorganisation}{24}{section.4}
-\contentsline {subsection}{\numberline {4.1}Annahmen}{24}{subsection.4.1}
-\contentsline {subsection}{\numberline {4.2}Verantwortlichkeiten}{24}{subsection.4.2}
+\contentsline {section}{\numberline {4}Projektorganisation}{25}{section.4}
+\contentsline {subsection}{\numberline {4.1}Annahmen}{25}{subsection.4.1}
+\contentsline {subsection}{\numberline {4.2}Verantwortlichkeiten}{25}{subsection.4.2}
 \contentsline {subsection}{\numberline {4.3}Grober Projektplan}{25}{subsection.4.3}
-\contentsline {section}{\numberline {5}Anh\IeC {\"a}nge}{25}{section.5}
-\contentsline {subsection}{\numberline {5.1}Glossar}{25}{subsection.5.1}
-\contentsline {subsection}{\numberline {5.2}Referenzen}{25}{subsection.5.2}
-\contentsline {subsection}{\numberline {5.3}Index}{25}{subsection.5.3}
+\contentsline {section}{\numberline {5}Anh\IeC {\"a}nge}{26}{section.5}
+\contentsline {subsection}{\numberline {5.1}Glossar}{26}{subsection.5.1}
+\contentsline {subsection}{\numberline {5.2}Index}{26}{subsection.5.2}
