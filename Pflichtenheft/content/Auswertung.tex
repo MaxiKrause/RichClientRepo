@@ -153,14 +153,42 @@
 	
 	\subsection{Systemübersicht}
 		\begin{figure}[H]
-			\includegraphics[scale=0.8]{images/SYCArchitektur}
+			\includegraphics[scale=0.6]{images/SYCArchitektur}
 		\end{figure}
+	
+	Auf unserem Server nutzen wir NodeJS mit dem Express Web-Framework um unsere Anfragen zu realisieren. Beim Client haben wir uns für ReactJS
+	entschieden um unsere GUI aufzubauen. Um Daten zu speichern nutzen wir MongoDB da diese Datenbank es sehr einfach macht mit JSON-Daten zu arbeiten.
+	Für die Registrierung sowie die Anmeldung und Abmeldung nutzen wir den Service von Auth0.
 	
 	\subsection{Softwarearchitektur}
 	
 	\subsection{Datenmodell}
 	
 	\subsection{Abläufe}
+	
+		\subsubsection{An-und Abmeldung}
+		
+			\begin{figure}[H]
+				\includegraphics[scale=0.6]{images/UC1Activity}
+			\end{figure}
+		
+		\subsubsection{Registrieren}
+		
+			\begin{figure}[H]
+				\includegraphics[scale=0.6]{images/UC2Activity}
+			\end{figure}
+		
+		\subsubsection{Widgets bearbeiten}
+		
+			\begin{figure}[H]
+				\includegraphics[scale=0.6]{images/UC4Activity}
+			\end{figure}
+		
+		\subsubsection{Kompletter Ablauf}
+		
+			\begin{figure}[H]
+				\includegraphics[scale=0.6]{images/ActivityComplete}
+			\end{figure}
 	
 	\subsection{Entwurf}
 	
