@@ -156,13 +156,19 @@
 			\includegraphics[scale=0.6]{images/SYCArchitektur}
 		\end{figure}
 	
-	Auf unserem Server nutzen wir NodeJS mit dem Express Web-Framework um unsere Anfragen zu realisieren. Beim Client haben wir uns für ReactJS
-	entschieden um unsere GUI aufzubauen. Um Daten zu speichern nutzen wir MongoDB da diese Datenbank es sehr einfach macht mit JSON-Daten zu arbeiten.
+	Auf unserem Server nutzen wir NodeJS mit dem Express Web-Framework um unsere Anfragen zu realisieren. Zum erstellen der GUI
+	nutzen wir ReactJS. Um Daten zu speichern nutzen wir MongoDB da diese Datenbank es sehr einfach macht mit JSON-Daten zu arbeiten.
 	Für die Registrierung sowie die Anmeldung und Abmeldung nutzen wir den Service von Auth0.
 	
-	\subsection{Softwarearchitektur}
-	
 	\subsection{Datenmodell}
+	
+		\begin{figure}[H]
+			\includegraphics[scale=0.6]{images/Datenmodell}
+		\end{figure}
+	
+	In unserer Datenbank speichern wir die Benutzernamen und dazu die aktivierten und versteckten Widgets.
+	Da wir die Anmeldung über einen Drittanbieter machen, müssen wir erst bei diesem anfragen welcher Nutzer
+	angemeldet ist, damit wir dann die nötigen Daten aus unserer Datenbank lesen können.
 	
 	\subsection{Abläufe}
 	
@@ -189,8 +195,6 @@
 			\begin{figure}[H]
 				\includegraphics[scale=0.6]{images/ActivityComplete}
 			\end{figure}
-	
-	\subsection{Entwurf}
 	
 
 \section{Projektorganisation}
