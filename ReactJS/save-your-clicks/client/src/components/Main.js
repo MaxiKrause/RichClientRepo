@@ -5,6 +5,16 @@ import Login from './Login'
 import Register from './Register'
 import Settings from './Settings'
 import Upload from './Upload'
+import Auth from '../Auth/Auth';
+import history from '../history';
+
+const auth = new Auth();
+
+const handleAuthentication = ({location}) => {
+  if (/access_token|id_token|error/.test(location.hash)) {
+    auth.handleAuthentication();
+  }
+}
 
 // The Main component renders one of the three provided
 // Routes (provided that one matches). Both the /roster
@@ -14,11 +24,14 @@ import Upload from './Upload'
 const Main = () => (
   <main>
     <Switch>
-      <Route exact path='/home' component={Home}/>
-	  <Route path='/login' component={Login}/>
+      <Route path='/home' render={(props) => {
+	  	handleAuthentication(props);
+	  	return <Home />
+	  }} />
+	  <Route path='/login' render={(props) => <Login auth={auth} {...props} />} />
       <Route path='/register' component={Register}/>
       <Route path='/settings' component={Settings}/>
-	  <Route path='/upload' component={Upload}/>
+	  <Route path='/upload' render={(props) => <Upload auth={auth} {...props} />} />
     </Switch>
   </main>
 )

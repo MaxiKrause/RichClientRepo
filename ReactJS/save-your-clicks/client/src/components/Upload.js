@@ -1,9 +1,25 @@
-import React from 'react'
+import React, { Component } from 'react';
 
-const Upload = () => (
-  <div>
-		<p>Upload Page</p>
-  </div>
-)
 
+class Upload extends Component {
+ 	render() {
+ 		const {isAuthenticated} = this.props.auth;
+ 		return(
+ 			<div>
+ 				{
+ 					!isAuthenticated() && (
+ 						<p>Bitte anmelden!</p>
+ 					)
+ 				}
+ 				{
+ 					isAuthenticated() && (
+ 						<p>Willkommen User!</p>
+ 					)
+ 				}
+
+ 			</div>
+ 		);
+
+ 	}
+}
 export default Upload
