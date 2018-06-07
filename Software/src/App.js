@@ -1,20 +1,9 @@
 import React, { Component } from 'react';
 import { Navbar, Button } from 'react-bootstrap';
 import './App.css';
+import Profile from './Profile/Profile.js';
 
 class App extends Component {
-  componentWillMount() {
-    this.setState( {profile : {}});
-    const { userProfile, getProfile } = this.props.auth;
-    if (!userProfile) {
-      getProfile((err, profile) => {
-        this.setState({ profile });
-      });
-    } else {
-      this.setState({ profile: userProfile });
-    }
-
-  }
 
   goTo(route) {
     this.props.history.replace(`/${route}`)
@@ -30,8 +19,7 @@ class App extends Component {
 
   render() {
     const { isAuthenticated } = this.props.auth;   
-    const { profile } = this.state;
-    console.log(this.state);
+    console.log(this.props.auth);
     return (
       <div>
         <Navbar fluid>
@@ -71,11 +59,13 @@ class App extends Component {
                   
                )
             }
-            <Navbar.Text>
-              Hallo { profile !== 0 && profile.nickname}
-            </Navbar.Text>
           </Navbar.Header>
         </Navbar>
+        {
+          isAuthenticated() && (
+              <Profile auth={this.props.auth}/>
+            )
+        }
       </div>
     );
   }

@@ -3,6 +3,14 @@ import auth0 from 'auth0-js';
 import { AUTH_CONFIG } from './auth0-variables';
 
 export default class Auth {
+  constructor() {
+    this.login = this.login.bind(this);
+    this.logout = this.logout.bind(this);
+    this.handleAuthentication = this.handleAuthentication.bind(this);
+    this.isAuthenticated = this.isAuthenticated.bind(this);
+    this.getProfile = this.getProfile.bind(this);
+  }
+
   auth0 = new auth0.WebAuth({
     domain: AUTH_CONFIG.domain,
     clientID: AUTH_CONFIG.clientId,
@@ -14,13 +22,7 @@ export default class Auth {
 
   userProfile;
 
-  constructor() {
-    this.login = this.login.bind(this);
-    this.logout = this.logout.bind(this);
-    this.handleAuthentication = this.handleAuthentication.bind(this);
-    this.isAuthenticated = this.isAuthenticated.bind(this);
-    this.getProfile = this.getProfile.bind(this);
-  }
+
 
   getAccessToken() {
     const accessToken = localStorage.getItem('access_token');
@@ -31,12 +33,12 @@ export default class Auth {
   }
 
   getProfile(cb) {
+    console.log("Ich bin im GETPROFILE")
     let accessToken = this.getAccessToken();
     this.auth0.client.userInfo(accessToken, (err, profile) => {
       if (profile) {
         this.userProfile = profile;
-        console.log("auth : " + profile)
-        console.log (profile)
+        console.log("ich habe eigentlich userProfile gesetzt")
       }
       cb(err, profile);
     });
