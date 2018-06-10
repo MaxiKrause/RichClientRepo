@@ -1,5 +1,4 @@
-import React, { Component } from 'react';
-import Button from '@material-ui/core/Button';
+import { Component } from 'react';
 
 
 class Login extends Component {
@@ -12,7 +11,7 @@ class Login extends Component {
   	}
 
   	render() {
-  		const { isAuthenticated } = this.props.auth;
+  		//const { isAuthenticated } = this.props.auth;
   		this.login();
   		return(null);
   	}
