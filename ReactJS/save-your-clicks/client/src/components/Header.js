@@ -7,7 +7,9 @@ import Button from '@material-ui/core/Button';
 // The Header creates links that can be used to navigate
 // between routes.
 
+
 class SimpleMenu extends React.Component {
+
   state = {
     anchorEl: null,
   };
@@ -43,11 +45,15 @@ class SimpleMenu extends React.Component {
           <MenuItem onClick={this.handleClose}><Link to='/register'>Register</Link></MenuItem>
           <MenuItem onClick={this.handleClose}><Link to='/settings'>Settings</Link></MenuItem>
           <MenuItem onClick={this.handleClose}><Link to='/upload'>Upload</Link></MenuItem>
+          <MenuItem onClick={this.handleClose}><Link to='/dragtest'>Drag</Link></MenuItem>
         </Menu>
       </div>
+
+
     );
   }
 }
+
 const Header = () => (
   <header>
     <nav>
