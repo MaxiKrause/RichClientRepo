@@ -1,4 +1,5 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react.js';
+import DragCard from './DragCard.js';
 
 class Home extends Component {
 	
@@ -8,6 +9,7 @@ class Home extends Component {
   		return(
   			<div>
     			<p>Home-Seite</p>
+    			<DragCard />
   			</div>
   		);
 	}
