@@ -7,7 +7,7 @@ class App extends Component {
 
 	render() {
 		const { isAuthenticated } = this.props.auth;
-    if (history.location.pathname === '/') {
+    if (history.location.pathname === '/' && !isAuthenticated()) {
       history.replace('/login');
     }
   		return(
