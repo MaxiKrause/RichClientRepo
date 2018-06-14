@@ -6,6 +6,7 @@ import Login from './Login'
 import Register from './Register'
 import Settings from './Settings'
 import Upload from './Upload'
+import Dragtest from './Dragtest'
 import Auth from '../Auth/Auth';
 import history from '../history';
 import Callback from './Callback/Callback'
@@ -27,6 +28,7 @@ export const Main = () => {
           <Route path='/login' render={(props) => <Login auth={auth} {...props} />} />
           <Route path='/register' component={Register}/>
           <Route path='/settings' component={Settings}/>
+          <Route path='/dragtest' component={Dragtest}/>
           <Route path='/upload' render={(props) => <Upload auth={auth} {...props} />} />
           <Route path="/callback" render={(props) => {
             handleAuthentication(props);
