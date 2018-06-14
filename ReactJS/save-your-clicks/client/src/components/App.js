@@ -3,20 +3,18 @@ import Header from './Header'
 import history from '../history.js'
 
 class App extends Component {
-	constructor(props) {
-		super(props);
-		history.replace('/home', {isLoggedIn: false});
-		console.log(history.location.state.isLoggedIn);
-	}
+	
 
 	render() {
 		const { isAuthenticated } = this.props.auth;
-
+    if (history.location.pathname === '/') {
+      history.replace('/login');
+    }
   		return(
   			<div>
   				<Header />
     			<p>Hallo</p>
-  			
+          <p>{history.location.pathname}</p>
     			{
     				isAuthenticated() && (
     					<p>LOGGED IN</p>
