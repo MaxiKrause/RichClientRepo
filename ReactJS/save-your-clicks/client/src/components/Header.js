@@ -8,7 +8,7 @@ import Button from '@material-ui/core/Button';
 // between routes.
 
 
-class SimpleMenu extends React.Component {
+class Header extends React.Component {
 
   state = {
     anchorEl: null,
@@ -24,7 +24,6 @@ class SimpleMenu extends React.Component {
 
   render() {
     const { anchorEl } = this.state;
-
     return (
       <div>
         <Button
@@ -47,19 +46,14 @@ class SimpleMenu extends React.Component {
           <MenuItem onClick={this.handleClose}><Link to='/upload'>Upload</Link></MenuItem>
           <MenuItem onClick={this.handleClose}><Link to='/dragtest'>Drag</Link></MenuItem>
         </Menu>
+        <Button onClick={() => this.props.auth.logout()}>
+          Log Out 
+        </Button>
       </div>
 
 
     );
   }
 }
-
-const Header = () => (
-  <header>
-    <nav>
-      <SimpleMenu/>
-    </nav>
-  </header>
-)
 
 export default Header

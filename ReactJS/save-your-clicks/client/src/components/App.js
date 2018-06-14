@@ -3,7 +3,14 @@ import Header from './Header'
 import history from '../history.js'
 
 class App extends Component {
-	
+	constructor(props) {
+    super();
+    this.logout = this.logout.bind(this);
+  }
+
+  logout() {
+    this.props.auth.logout();
+  }
 
 	render() {
 		const { isAuthenticated } = this.props.auth;
@@ -12,7 +19,7 @@ class App extends Component {
     }
   		return(
   			<div>
-  				<Header />
+  				<Header auth={this.props.auth}/>
     			<p>Hallo</p>
           <p>{history.location.pathname}</p>
     			{
