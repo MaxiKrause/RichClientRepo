@@ -17,6 +17,9 @@ class App extends Component {
     if (history.location.pathname === '/' && !isAuthenticated()) {
       history.replace('/login');
     }
+    if (isAuthenticated()) {
+      this.props.auth.getProfile(() => {});
+    }
   		return(
   			<div>
   				<Header auth={this.props.auth}/>

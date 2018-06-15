@@ -38,7 +38,8 @@ export default class Auth {
     this.auth0.client.userInfo(accessToken, (err, profile) => {
       if (profile) {
         this.userProfile = profile;
-        console.log("ich habe eigentlich userProfile gesetzt")
+        console.log("ich habe eigentlich userProfile gesetzt");
+        console.log(profile);
       }
       cb(err, profile);
     });
@@ -52,7 +53,7 @@ export default class Auth {
     this.auth0.parseHash((err, authResult) => {
       if (authResult && authResult.accessToken && authResult.idToken) {
         this.setSession(authResult);
-        history.replace('/home', {isLoggedIn: true});
+        history.replace('/home');
       } else if (err) {
         history.replace('/home');
         console.log(err);

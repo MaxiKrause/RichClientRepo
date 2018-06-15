@@ -1,15 +1,22 @@
 import React from 'react';
-import DraggableCore from 'react-draggable';
+import Draggable from 'react-draggable';
 import PropTypes from 'prop-types';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import IconButton from '@material-ui/core/IconButton';
+import Lock from '@material-ui/icons/Lock';
 import './Dragtest.css';
 
 class DragCard extends React.Component {
-	
+	constructor(props) {
+		super(props);
+		this.state = {disabled : false};
+	}
+
+
 	clearSelection() {
 	    if (window.getSelection) {
 	        window.getSelection().removeAllRanges();
@@ -18,9 +25,19 @@ class DragCard extends React.Component {
 	    }
 	}
 
+	changeMoveState(e) {
+		e.preventDefault();
+    	e.stopPropagation();
+    	this.clearSelection();
+    	const {disabled} = this.state;
+    	let newMoveState = !disabled;
+    	this.setState({disabled: newMoveState});
+    	console.log(this.state.disabled);
+	}
+
 	render() {
 		return (
-		    <DraggableCore grid={[25, 25]} bounds="body" >
+		    <Draggable disabled={this.state.disabled} {...this.props}>
 	        	<div>
 	        		<Card className="card">
 	        			<CardContent>
@@ -39,11 +56,16 @@ class DragCard extends React.Component {
 	                		</Typography>
 	              		</CardContent>
 	              		<CardActions>
-	                		<Button size="small" onClick={() => { props.disabled=true }}>Learn More</Button>
+	              			<IconButton size="small" onClick={this.changeMoveState.bind(this)}>
+        						<Lock />
+      						</IconButton>
+	                		<Button>Learn More</Button>
 	              		</CardActions>
 	            	</Card>
 	          	</div>
-	        </DraggableCore>
+	        </Draggable>
 		);
 	}
 }
+
+export default DragCard;

@@ -1,4 +1,4 @@
-import React, { Component } from 'react.js';
+import React, { Component } from 'react';
 import DragCard from './DragCard.js';
 
 class Home extends Component {
@@ -9,7 +9,7 @@ class Home extends Component {
   		return(
   			<div>
     			<p>Home-Seite</p>
-    			<DragCard />
+    			<DragCard grid={[25, 25]} bounds="body"/>
   			</div>
   		);
 	}
