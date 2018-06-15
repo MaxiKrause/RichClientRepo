@@ -2,20 +2,28 @@ import React from 'react';
 import Draggable from 'react-draggable';
 import PropTypes from 'prop-types';
 import Card from '@material-ui/core/Card';
+import CardHeader from '@material-ui/core/CardHeader'
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
-import Lock from '@material-ui/icons/Lock';
+import LockIcon from '@material-ui/icons/Lock';
+import UnlockIcon from '@material-ui/icons/LockOpen';
+import Image from 'material-ui-image';
+import Sunny from '../assets/Weather/050-sun.svg';
 import './Dragtest.css';
 
 class DragCard extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = {disabled : false};
+		this.state = {
+			disabled : false,
+			weatherData: null,
+			WeatherIMG: null,
+			cityName: "Loading..."
+		};
 	}
-
 
 	clearSelection() {
 	    if (window.getSelection) {
@@ -30,22 +38,53 @@ class DragCard extends React.Component {
     	e.stopPropagation();
     	this.clearSelection();
     	const {disabled} = this.state;
-    	let newMoveState = !disabled;
-    	this.setState({disabled: newMoveState});
-    	console.log(this.state.disabled);
+    	this.setState({disabled: !disabled});
+	}
+
+	handleData(data) {
+		console.log(data);
+		//set Image
+		this.setState({WeatherIMG : "http://openweathermap.org/img/w/" + data.weather[0].icon + ".png"});
+		this.setState({cityName: data.name})
+	}
+
+	componentDidMount() {
+		const curWeatherAPI = "http://api.openweathermap.org/data/2.5/weather?q=London,uk"
+		const API_KEY = "63e1989514bf141a4fa6085fb66c5802";
+
+		fetch(curWeatherAPI + "&appid=" + API_KEY)
+			.then((response) => response.json())
+			.then((data) => this.handleData(data));
 	}
 
 	render() {
 		return (
 		    <Draggable disabled={this.state.disabled} {...this.props}>
-	        	<div>
+	        	<div style={{ width: 500 }}>
 	        		<Card className="card">
+	        			<CardHeader 
+	        				avatar={
+	        					<img src={this.state.WeatherIMG} />
+	        				}
+	        				action={
+	        					<IconButton size="small" onClick={this.changeMoveState.bind(this)}>
+	        						{
+	    								this.state.disabled && (
+	    									<LockIcon />
+	    								)
+	    							}
+	    							{
+	    								!this.state.disabled && (
+	    									<UnlockIcon />
+	    								)
+	    							}
+      							</IconButton>
+
+	        				}
+	        			/>
 	        			<CardContent>
-	                		<Typography className="title" color="textSecondary">
-	                  			Word of the Day
-	                		</Typography>
 	                		<Typography variant="headline" component="h2">
-	                  			YEET
+	                  			{this.state.cityName}
 	                		</Typography>
 	                		<Typography className="pos" color="textSecondary">
 	                  			adjective
@@ -56,9 +95,6 @@ class DragCard extends React.Component {
 	                		</Typography>
 	              		</CardContent>
 	              		<CardActions>
-	              			<IconButton size="small" onClick={this.changeMoveState.bind(this)}>
-        						<Lock />
-      						</IconButton>
 	                		<Button>Learn More</Button>
 	              		</CardActions>
 	            	</Card>
