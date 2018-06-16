@@ -62,7 +62,10 @@ class DragCard extends React.Component {
 	}
 
 	handleDialogOpen() {
-		this.setState({dialogOpen: true});
+		this.setState({
+			dialogOpen: true,
+			disabled: true
+		});
 	}
 
 	handleDialogClose() {
