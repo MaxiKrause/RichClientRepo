@@ -8,11 +8,22 @@ import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
+import Modal from '@material-ui/core/Modal';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
 import LockIcon from '@material-ui/icons/Lock';
 import UnlockIcon from '@material-ui/icons/LockOpen';
 import Image from 'material-ui-image';
 import Sunny from '../assets/Weather/050-sun.svg';
 import './Dragtest.css';
+
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+
+import Input from '@material-ui/core/Input';
+import InputLabel from '@material-ui/core/InputLabel';
 
 class DragCard extends React.Component {
 	constructor(props) {
@@ -21,7 +32,9 @@ class DragCard extends React.Component {
 			disabled : false,
 			weatherData: null,
 			WeatherIMG: null,
-			cityName: "Loading..."
+			cityName: "Loading...",
+			dialogOpen: false,
+			userCity: "London,uk"
 		};
 	}
 
@@ -48,8 +61,25 @@ class DragCard extends React.Component {
 		this.setState({cityName: data.name})
 	}
 
+	handleDialogOpen() {
+		this.setState({dialogOpen: true});
+	}
+
+	handleDialogClose() {
+		this.setState({dialogOpen: false});
+		this.fetchData();
+	}
+
+	handleChangeInput(event) {
+    	this.setState({ userCity: event.target.value });
+  	};
+
 	componentDidMount() {
-		const curWeatherAPI = "http://api.openweathermap.org/data/2.5/weather?q=London,uk"
+		this.fetchData();
+	}
+
+	fetchData() {
+		const curWeatherAPI = "http://api.openweathermap.org/data/2.5/weather?q=" + this.state.userCity;
 		const API_KEY = "63e1989514bf141a4fa6085fb66c5802";
 
 		fetch(curWeatherAPI + "&appid=" + API_KEY)
@@ -67,19 +97,23 @@ class DragCard extends React.Component {
 	        					<img src={this.state.WeatherIMG} />
 	        				}
 	        				action={
-	        					<IconButton size="small" onClick={this.changeMoveState.bind(this)}>
-	        						{
-	    								this.state.disabled && (
-	    									<LockIcon />
-	    								)
-	    							}
-	    							{
-	    								!this.state.disabled && (
-	    									<UnlockIcon />
-	    								)
-	    							}
-      							</IconButton>
-
+	        					<div>
+		        					<IconButton size="small" onClick={this.changeMoveState.bind(this)}>
+		        						{
+		    								this.state.disabled && (
+		    									<LockIcon />
+		    								)
+		    							}
+		    							{
+		    								!this.state.disabled && (
+		    									<UnlockIcon />
+		    								)
+		    							}
+	      							</IconButton>
+	      					        <IconButton onClick={this.handleDialogOpen.bind(this)}>
+	                					<MoreVertIcon />
+	              					</IconButton>
+	              				</div>
 	        				}
 	        			/>
 	        			<CardContent>
@@ -98,6 +132,16 @@ class DragCard extends React.Component {
 	                		<Button>Learn More</Button>
 	              		</CardActions>
 	            	</Card>
+	            	<Dialog
+	            		open={this.state.dialogOpen}
+          				onClose={this.handleDialogClose.bind(this)}
+          			>
+          				<DialogContentText>
+              				Bitte Stadt eingeben.
+            			</DialogContentText>
+            			<InputLabel htmlFor="city">Name</InputLabel>
+          				<Input id="city" value={this.state.userCity} onChange={this.handleChangeInput.bind(this)} />
+          			</Dialog>
 	          	</div>
 	        </Draggable>
 		);
