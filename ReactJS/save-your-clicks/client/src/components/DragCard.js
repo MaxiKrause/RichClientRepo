@@ -22,7 +22,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
-import Input from '@material-ui/core/Input';
+import TextField from '@material-ui/core/TextField';
 import InputLabel from '@material-ui/core/InputLabel';
 
 class DragCard extends React.Component {
@@ -68,7 +68,7 @@ class DragCard extends React.Component {
 		});
 	}
 
-	handleDialogClose() {
+	handleDialogClose(event) {
 		this.setState({dialogOpen: false});
 		this.fetchData();
 	}
@@ -137,13 +137,28 @@ class DragCard extends React.Component {
 	            	</Card>
 	            	<Dialog
 	            		open={this.state.dialogOpen}
-          				onClose={this.handleDialogClose.bind(this)}
           			>
-          				<DialogContentText>
-              				Bitte Stadt eingeben.
-            			</DialogContentText>
-            			<InputLabel htmlFor="city">Name</InputLabel>
-          				<Input id="city" value={this.state.userCity} onChange={this.handleChangeInput.bind(this)} />
+          				<div>
+          					<DialogTitle>
+          						Einstellungen
+          					</DialogTitle>
+          					<DialogContent>
+	            				<TextField
+	            					id="city" 
+	            					value={this.state.userCity} 
+	            					onChange={this.handleChangeInput.bind(this)} 
+	            					label="Wetter für"
+	            				/>
+	            			</DialogContent>
+	    					<DialogActions>
+	    						<Button onClick={() => this.setState({dialogOpen: false})} color="primary" id="cancel">
+					            	Abbrechen
+					            </Button>
+					            <Button onClick={this.handleDialogClose.bind(this)} color="primary" id="save">
+					            	Speichern
+					            </Button>
+	    					</DialogActions>
+          				</div>
           			</Dialog>
 	          	</div>
 	        </Draggable>
