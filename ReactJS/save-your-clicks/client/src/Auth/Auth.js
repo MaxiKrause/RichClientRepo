@@ -1,6 +1,7 @@
 import history from '../history';
 import auth0 from 'auth0-js';
 import { AUTH_CONFIG } from './auth0-variables';
+import request from 'superagent';
 
 export default class Auth {
   constructor() {
@@ -38,8 +39,18 @@ export default class Auth {
     this.auth0.client.userInfo(accessToken, (err, profile) => {
       if (profile) {
         this.userProfile = profile;
-        console.log("ich habe eigentlich userProfile gesetzt");
-        console.log(profile);
+
+      request
+        .post('/api/saveusers')
+        .send(this.userProfile)
+        .set('Accept', 'application/json')
+        .end((err, res) => {
+          if (err || !res.ok) {
+            console.log('Failure');
+          } else {
+            console.log('Success');
+          }
+        });
       }
       cb(err, profile);
     });
