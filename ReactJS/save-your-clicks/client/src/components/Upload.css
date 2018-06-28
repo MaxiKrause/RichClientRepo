@@ -1,0 +1,16 @@
+.Editor{
+	width: 600px;
+    height: 600px;
+    border: 1px solid blue; 
+    float: left;
+    font-size: 15px;
+    overflow: auto;
+}
+
+.Preview{
+	width: 600px;
+    height: 600px;
+    border: 1px solid blue; 
+    float: left;
+    overflow: auto;
+}
