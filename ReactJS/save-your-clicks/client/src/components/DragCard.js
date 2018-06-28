@@ -25,6 +25,8 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import TextField from '@material-ui/core/TextField';
 import InputLabel from '@material-ui/core/InputLabel';
 
+import Grid from '@material-ui/core/Grid'
+
 class DragCard extends React.Component {
 	constructor(props) {
 		super(props);
@@ -34,7 +36,8 @@ class DragCard extends React.Component {
 			WeatherIMG: null,
 			cityName: "Loading...",
 			dialogOpen: false,
-			userCity: "London,uk"
+			userCity: "London,uk",
+			temp: "Loading..."
 		};
 	}
 
@@ -58,7 +61,26 @@ class DragCard extends React.Component {
 		console.log(data);
 		//set Image
 		this.setState({WeatherIMG : "http://openweathermap.org/img/w/" + data.weather[0].icon + ".png"});
-		this.setState({cityName: data.name})
+		this.setState({cityName: data.name});
+		this.setState({weatherData : data});
+		this.setState({temp: data.main.temp})
+	}
+
+	handleForecast(data) {
+		console.log(data);
+		let list = data.list;
+		let filteredList = [];
+		var day = new Date(1999);
+		console.log(day.getDate());
+
+		for (let forecast of list) {
+			let forecastDay = new Date(forecast.dt_txt);
+			if(day.getDate() != forecastDay.getDate()) {
+				filteredList.push(forecast);
+				day = forecastDay;
+			}
+		}
+		console.log(filteredList);
 	}
 
 	handleDialogOpen() {
@@ -82,12 +104,20 @@ class DragCard extends React.Component {
 	}
 
 	fetchData() {
-		const curWeatherAPI = "http://api.openweathermap.org/data/2.5/weather?q=" + this.state.userCity;
+		const units = "&units=Metric";
+		const days = "&cnt=7"
+		const curWeatherAPI = "http://api.openweathermap.org/data/2.5/weather?q=" + this.state.userCity + units;
+		const forecast5 = "http://api.openweathermap.org/data/2.5/forecast?q=" + this.state.userCity + units;
 		const API_KEY = "63e1989514bf141a4fa6085fb66c5802";
 
 		fetch(curWeatherAPI + "&appid=" + API_KEY)
 			.then((response) => response.json())
 			.then((data) => this.handleData(data));
+
+		fetch(forecast5 + "&appid=" + API_KEY)
+			.then((response) => response.json())
+			.then((data) => this.handleForecast(data))
+
 	}
 
 	render() {
@@ -121,18 +151,22 @@ class DragCard extends React.Component {
 	        			/>
 	        			<CardContent>
 	                		<Typography variant="headline" component="h2">
-	                  			{this.state.cityName}
+	                  			{this.state.cityName} {this.state.temp}°C
 	                		</Typography>
-	                		<Typography className="pos" color="textSecondary">
-	                  			adjective
-	                		</Typography>
-	                		<Typography component="p">
-	                  			well meaning and kindly.<br />
-	                  			{'"a benevolent smile"'}
-	                		</Typography>
+	                		<Grid
+	                			container
+	                			spacing="16"
+	                			direction="row"
+	                			justify="center"
+	                			alignItems="center"
+
+	                		>
+	                			<Grid item><p>Hallo1</p></Grid>
+	                			<Grid item><p>Hallo2</p></Grid>
+	                			<Grid item><p>Hallo3</p></Grid>
+	                		</Grid>	
 	              		</CardContent>
 	              		<CardActions>
-	                		<Button>Learn More</Button>
 	              		</CardActions>
 	            	</Card>
 	            	<Dialog
