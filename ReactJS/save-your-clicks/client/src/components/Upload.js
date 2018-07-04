@@ -5,7 +5,9 @@ import {
   LiveProvider,
   LiveEditor,
   LiveError,
-  LivePreview
+  LivePreview,
+  generateElement,
+  renderElementAsync
 } from 'react-live'
 
 class Upload extends Component {
@@ -15,14 +17,20 @@ class Upload extends Component {
     this.state = {
 			content: ""
 		};
-  }
+ 	}
 
  	handleContent(data){
  		this.setState({ content: data});
  	}
 
+ 	renderElement() {
+ 		let code = '<h3>Hello World</h3>';
+ 		return generateElement({code});
+ 	}
+
  	render() {
  		const {isAuthenticated} = this.props.auth;
+ 		const TEST = this.renderElement();
  		return(
  			<div>
  				{
@@ -41,9 +49,8 @@ class Upload extends Component {
 			      <LiveError />
 			      <LivePreview className="Preview"/>
 			    </LiveProvider>
-
-			    {this.state.content}
-
+ 			
+			    <TEST />
  			</div>
  		);
 
