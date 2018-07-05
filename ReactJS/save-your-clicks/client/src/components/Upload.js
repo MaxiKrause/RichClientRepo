@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import './Upload.css';
+import Babel from 'babel-standalone';
 
 import {
   LiveProvider,
   LiveEditor,
   LiveError,
-  LivePreview
+  LivePreview,
+  withLive
 } from 'react-live'
 
 class Upload extends Component {
@@ -23,6 +25,9 @@ class Upload extends Component {
 
  	render() {
  		const {isAuthenticated} = this.props.auth;
+ 		var input = "<strong>Hello</strong>";
+ 		var output = Babel.transform(input);
+ 		console.log(output.code);
  		return(
  			<div>
  				{
@@ -43,7 +48,6 @@ class Upload extends Component {
 			    </LiveProvider>
 
 			    {this.state.content}
-
  			</div>
  		);
 

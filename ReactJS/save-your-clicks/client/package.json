@@ -6,6 +6,7 @@
     "@material-ui/core": "^1.2.0",
     "@material-ui/icons": "^1.1.0",
     "auth0-js": "^9.0.0",
+    "babel-standalone": "^6.26.0",
     "material-ui-image": "^3.0.0",
     "polished": "^1.9.2",
     "react": "^16.4.0",

@@ -105,9 +105,9 @@ class DragCard extends React.Component {
 
 	fetchData() {
 		const units = "&units=Metric";
-		const days = "&cnt=7"
+		const cnt = "&cnt=5"
 		const curWeatherAPI = "http://api.openweathermap.org/data/2.5/weather?q=" + this.state.userCity + units;
-		const forecast5 = "http://api.openweathermap.org/data/2.5/forecast?q=" + this.state.userCity + units;
+		const forecast5 = "http://api.openweathermap.org/data/2.5/forecast?q=" + this.state.userCity + units + cnt;
 		const API_KEY = "63e1989514bf141a4fa6085fb66c5802";
 
 		fetch(curWeatherAPI + "&appid=" + API_KEY)
