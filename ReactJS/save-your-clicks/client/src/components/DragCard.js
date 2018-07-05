@@ -1,6 +1,5 @@
 import React from 'react';
 import Draggable from 'react-draggable';
-import PropTypes from 'prop-types';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader'
 import CardActions from '@material-ui/core/CardActions';
@@ -8,12 +7,9 @@ import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
-import Modal from '@material-ui/core/Modal';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import LockIcon from '@material-ui/icons/Lock';
 import UnlockIcon from '@material-ui/icons/LockOpen';
-import Image from 'material-ui-image';
-import Sunny from '../assets/Weather/050-sun.svg';
 import './Dragtest.css';
 
 import Dialog from '@material-ui/core/Dialog';
