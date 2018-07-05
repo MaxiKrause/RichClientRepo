@@ -39,7 +39,6 @@ class Upload extends Component {
  	render() {
  		const {isAuthenticated} = this.props.auth;
  		var TEST = this.state.component;
- 		console.log(<TEST />);
  		return(
  			<div>
  				{
