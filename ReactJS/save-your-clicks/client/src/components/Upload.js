@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './Upload.css';
-import Babel from 'babel-standalone';
+import Button from '@material-ui/core/Button'
 
 import {
   LiveProvider,
@@ -15,8 +15,10 @@ class Upload extends Component {
 
 	constructor(props) {
     super(props);
+    const div = generateElement({code : '<div> </div>'});
     this.state = {
-			content: ""
+			content: "<strong>Hello World!</strong>",
+			component: div
 		};
  	}
 
@@ -25,13 +27,18 @@ class Upload extends Component {
  	}
 
  	renderElement() {
- 		let code = '<h3>Hello World</h3>';
+ 		const code = this.state.content
  		return generateElement({code});
+ 	}
+
+ 	uploadComponent() {
+ 		const code = this.state.content;
+ 		this.setState({component: generateElement({code})});
  	}
 
  	render() {
  		const {isAuthenticated} = this.props.auth;
- 		const TEST = this.renderElement();
+ 		var TEST = this.state.component;
  		return(
  			<div>
  				{
@@ -50,8 +57,9 @@ class Upload extends Component {
 			      <LiveError />
 			      <LivePreview className="Preview"/>
 			    </LiveProvider>
-
-			    {this.state.content}
+			    <Button color="primary" onClick={this.uploadComponent.bind(this)}>
+			    	Hochladen
+			    </Button>
 			    <TEST />
  			</div>
  		);
