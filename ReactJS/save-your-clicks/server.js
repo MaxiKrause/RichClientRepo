@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const MongoClient = require('mongodb').MongoClient;
+const Babel = require('babel-core');
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -32,6 +33,15 @@ app.post('/api/saveusers', (req, res) => {
 			}
 		});
 	});
+});
+
+app.get('/api/babel', (req, res) => {
+	let code = `code();`
+
+	let test = Babel.transformFile("DragCard.js", {
+  		plugins: ["transform-runtime"]},
+  		(err, result) => {console.log(result);});
+	
 });
 
 
