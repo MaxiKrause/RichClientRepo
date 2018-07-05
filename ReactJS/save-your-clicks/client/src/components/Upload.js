@@ -15,7 +15,7 @@ class Upload extends Component {
 
 	constructor(props) {
     super(props);
-    const div = generateElement({code : '<div></div>'});
+    const div = generateElement({code : '<div> </div>'});
     this.state = {
 			content: "<strong>Hello World!</strong>",
 			component: div
