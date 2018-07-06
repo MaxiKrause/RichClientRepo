@@ -3,6 +3,13 @@ import { Link } from 'react-router-dom'
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
+import { Logout } from 'mdi-material-ui'
+import MenuIcon from '@material-ui/icons/Menu';
+import './Header.css';
+import History from '../history'
+
+
+
 
 // The Header creates links that can be used to navigate
 // between routes.
@@ -18,8 +25,9 @@ class Header extends React.Component {
     this.setState({ anchorEl: event.currentTarget });
   };
 
-  handleClose = () => {
+  handleClose = (route) => {
     this.setState({ anchorEl: null });
+    History.replace(route)
   };
 
   render() {
@@ -27,10 +35,12 @@ class Header extends React.Component {
     return (
       <div>
         <Button
+          variant="contained"
           aria-owns={anchorEl ? 'simple-menu' : null}
           aria-haspopup="true"
-          onMouseOver={this.handleClick}
+          onClick={this.handleClick}
         >
+          <MenuIcon />
           Open Menu
         </Button>
         <Menu
@@ -39,16 +49,19 @@ class Header extends React.Component {
           open={Boolean(anchorEl)}
           onClose={this.handleClose}
         >
-          <MenuItem onClick={this.handleClose}><Link to='/home'>Home</Link></MenuItem>
-          <MenuItem onClick={this.handleClose}><Link to='/login'>Login</Link></MenuItem>
-          <MenuItem onClick={this.handleClose}><Link to='/register'>Register</Link></MenuItem>
-          <MenuItem onClick={this.handleClose}><Link to='/settings'>Settings</Link></MenuItem>
-          <MenuItem onClick={this.handleClose}><Link to='/upload'>Upload</Link></MenuItem>
-          <MenuItem onClick={this.handleClose}><Link to='/dragtest'>Drag</Link></MenuItem>
+          <MenuItem onClick={() => this.handleClose("/home")}>Home</MenuItem>
+          <MenuItem onClick={() => this.handleClose("/register")}>Register</MenuItem>
+          <MenuItem onClick={() => this.handleClose("/settings")}>Settings</MenuItem>
+          <MenuItem onClick={() => this.handleClose("/upload")}>Upload</MenuItem>
+          <MenuItem onClick={() => this.handleClose("/dragtest")}>Drag</MenuItem>
         </Menu>
-        <Button onClick={() => this.props.auth.logout()}>
-          Log Out 
-        </Button>
+        
+        <div className="Logout-Button">
+          <Button  variant="contained" onClick={() => this.props.auth.logout()} >
+            <Logout />
+            Log Out 
+          </Button>
+        </div>
       </div>
 
 
