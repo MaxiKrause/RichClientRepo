@@ -30,8 +30,11 @@ class NewsCard extends React.Component {
 			disabled : false,
 			dialogOpen: false,
 			Items: [],
-			query: "bitcoin",
-			country: "de",
+			query: "",
+			country: "",
+			language: "de",
+			category: "",
+			sources: "",
 		};
 	}
 
@@ -75,8 +78,24 @@ class NewsCard extends React.Component {
 		this.fetchData();
 	}
 
-	handleChangeInput(event) {
+	handleChangeQuery(event) {
     	this.setState({ query: event.target.value });
+  	};
+
+  	handleChangeCountry(event) {
+    	this.setState({ country: event.target.value });
+  	};
+
+  	handleChangeCategory(event) {
+    	this.setState({ category: event.target.value });
+  	};
+
+  	handleChangeLanguage(event) {
+    	this.setState({ language: event.target.value });
+  	};
+
+  	handleChangeSources(event) {
+    	this.setState({ sources: event.target.value });
   	};
 
 	componentDidMount() {
@@ -84,9 +103,13 @@ class NewsCard extends React.Component {
 	}
 
 	fetchData() {
-		let ctry = "country="+this.state.country;
-		let catery = "&q="+this.state.query;
-		const newsAPI = "https://newsapi.org/v2/top-headlines?" + ctry + catery;
+		let query = "q="+this.state.query;
+		let country = "&country="+this.state.country;
+		let sources = "&sources="+this.state.sources;
+		let language = "&language="+this.state.language;
+		let category = "&category="+this.state.category;
+		
+		const newsAPI = "https://newsapi.org/v2/top-headlines?" + query + country + sources + language + category;
 		const API_KEY = "17c1decdae4e4e36b7f8650b368616b3";
 
 		fetch(newsAPI + "&apiKey=" + API_KEY)
@@ -100,7 +123,10 @@ class NewsCard extends React.Component {
 		    <Draggable disabled={this.state.disabled} {...this.props}>
 	        	<div style={{ width: 900 }}>
 	        		<Card className="card">
-	        			<CardHeader 	        				
+	        			<CardHeader 	
+	        				avatar={
+				                <h1> Nachrichten </h1>
+				            }	             				
 	        				action={
 	        					<div>
 		        					<IconButton size="small" onClick={this.changeMoveState.bind(this)}>
@@ -122,7 +148,7 @@ class NewsCard extends React.Component {
 	        				}
 	        			/>
 	        			<CardContent className="content">
-	                		<Typography variant="headline" component="h2">
+	                		<Typography component="h2">
 	                  			<ul>{this.state.Items}</ul>
 	                		</Typography>
 	              		</CardContent>
@@ -138,10 +164,34 @@ class NewsCard extends React.Component {
           					</DialogTitle>
           					<DialogContent>
 	            				<TextField
+	            					id="query" 
+	            					value={this.state.query} 
+	            					onChange={this.handleChangeQuery.bind(this)} 
+	            					label="Suchbegriff"
+	            				/>
+	            				<TextField
 	            					id="category" 
 	            					value={this.state.category} 
-	            					onChange={this.handleChangeInput.bind(this)} 
+	            					onChange={this.handleChangeCategory.bind(this)} 
 	            					label="Kategorie"
+	            				/>
+	            				<TextField
+	            					id="sources" 
+	            					value={this.state.sources} 
+	            					onChange={this.handleChangeSources.bind(this)} 
+	            					label="Quellen"
+	            				/>
+	            				<TextField
+	            					id="language" 
+	            					value={this.state.language} 
+	            					onChange={this.handleChangeLanguage.bind(this)} 
+	            					label="Sprache"
+	            				/>
+	            				<TextField
+	            					id="country" 
+	            					value={this.state.country} 
+	            					onChange={this.handleChangeCountry.bind(this)} 
+	            					label="Land"
 	            				/>
 	            			</DialogContent>
 	    					<DialogActions>
