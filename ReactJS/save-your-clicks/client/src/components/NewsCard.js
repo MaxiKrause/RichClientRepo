@@ -15,13 +15,9 @@ import './NewsCard.css';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-
 import TextField from '@material-ui/core/TextField';
-import InputLabel from '@material-ui/core/InputLabel';
 
-import Grid from '@material-ui/core/Grid'
 
 class NewsCard extends React.Component {
 	constructor(props) {
@@ -55,9 +51,8 @@ class NewsCard extends React.Component {
 	}
 
 	handleData(data) {
-		console.log(data);
-		const listItems = data.articles.map((data) =>
-			  <li>{data.source.name} : <a href={data.url}>{data.title}</a></li>
+		const listItems = data.articles.map((data, i) =>
+			  <li key={i}>{data.source.name} : <a href={data.url}>{data.title}</a></li>
 		);
 		this.setState({Items: listItems});
 	}
