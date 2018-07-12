@@ -11,6 +11,8 @@ import {
   renderElementAsync
 } from 'react-live'
 
+import { serialize, deserialize } from "react-serialize";
+
 class Upload extends Component {
 
 	constructor(props) {
@@ -18,7 +20,7 @@ class Upload extends Component {
     const div = generateElement({code : '<div> </div>'});
     this.state = {
 			content: "<strong>Hello World!</strong>",
-			component: div
+			component: div,
 		};
  	}
 
@@ -33,7 +35,17 @@ class Upload extends Component {
 
  	uploadComponent() {
  		const code = this.state.content;
- 		this.setState({component: generateElement({code})});
+ 		const Component = generateElement({code});
+ 		this.setState({component: Component});
+
+ 		fetch('/api/saveComponent', {
+ 			method: 'POST',
+ 			headers: {
+ 				Accept: 'application/json',
+ 				'Content-Type': 'application/json'
+ 			},
+ 			body: {Component: <Component />},
+ 		});
  	}
 
  	render() {
