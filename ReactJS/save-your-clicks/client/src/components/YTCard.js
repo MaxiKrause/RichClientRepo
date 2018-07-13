@@ -14,26 +14,27 @@ import UnlockIcon from '@material-ui/icons/LockOpen';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
 import TextField from '@material-ui/core/TextField';
-import InputLabel from '@material-ui/core/InputLabel';
+import GetYTID from 'get-youtube-id'
 
-import Grid from '@material-ui/core/Grid'
-
-class DragCard extends React.Component {
+class YTCard extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			disabled : false,
-			weatherData: null,
-			WeatherIMG: null,
-			cityName: "Loading...",
 			dialogOpen: false,
-			userCity: "London,uk",
-			temp: "Loading..."
+			link: "https://www.youtube.com/",
+			embedlink: "",
+			id: "",
 		};
+	}
+
+	getID(ytlink) {
+		let ytid = GetYTID(ytlink);
+		this.setState({id: ytid})
+		console.log(ytid)
 	}
 
 	clearSelection() {
@@ -52,32 +53,7 @@ class DragCard extends React.Component {
     	this.setState({disabled: !disabled});
 	}
 
-	handleData(data) {
-		console.log(data);
-		//set Image
-		this.setState({WeatherIMG : "http://openweathermap.org/img/w/" + data.weather[0].icon + ".png"});
-		this.setState({cityName: data.name});
-		this.setState({weatherData : data});
-		this.setState({temp: data.main.temp})
-	}
-
-	handleForecast(data) {
-		console.log(data);
-		let list = data.list;
-		let filteredList = [];
-		var day = new Date(1999);
-		console.log(day.getDate());
-
-		for (let forecast of list) {
-			let forecastDay = new Date(forecast.dt_txt);
-			if(day.getDate() != forecastDay.getDate()) {
-				filteredList.push(forecast);
-				day = forecastDay;
-			}
-		}
-		console.log(filteredList);
-	}
-
+	
 	handleDialogOpen() {
 		this.setState({
 			dialogOpen: true,
@@ -87,31 +63,21 @@ class DragCard extends React.Component {
 
 	handleDialogClose(event) {
 		this.setState({dialogOpen: false});
-		this.fetchData();
 	}
 
 	handleChangeInput(event) {
-    	this.setState({ userCity: event.target.value });
+    	this.setState({ link: event.target.value });
+    	console.log(this.state.link)
+
+		this.getID(this.state.link)
+
+		
+    	let embid = "https://www.youtube.com/embed/"+this.state.id;
+
+    	this.setState({ embedlink: embid})
   	};
 
 	componentDidMount() {
-		this.fetchData();
-	}
-
-	fetchData() {
-		const units = "&units=Metric";
-		const cnt = "&cnt=5"
-		const curWeatherAPI = "http://api.openweathermap.org/data/2.5/weather?q=" + this.state.userCity + units;
-		const forecast5 = "http://api.openweathermap.org/data/2.5/forecast?q=" + this.state.userCity + units + cnt;
-		const API_KEY = "63e1989514bf141a4fa6085fb66c5802";
-
-		fetch(curWeatherAPI + "&appid=" + API_KEY)
-			.then((response) => response.json())
-			.then((data) => this.handleData(data));
-
-		fetch(forecast5 + "&appid=" + API_KEY)
-			.then((response) => response.json())
-			.then((data) => this.handleForecast(data))
 
 	}
 
@@ -121,9 +87,6 @@ class DragCard extends React.Component {
 	        	<div style={{ width: 500 }}>
 	        		<Card className="card">
 	        			<CardHeader 
-	        				avatar={
-	        					<img src={this.state.WeatherIMG} />
-	        				}
 	        				action={
 	        					<div>
 		        					<IconButton size="small" onClick={this.changeMoveState.bind(this)}>
@@ -145,21 +108,9 @@ class DragCard extends React.Component {
 	        				}
 	        			/>
 	        			<CardContent>
-	                		<Typography variant="headline" component="h2">
-	                  			{this.state.cityName} {this.state.temp}°C
-	                		</Typography>
-	                		<Grid
-	                			container
-	                			spacing="16"
-	                			direction="row"
-	                			justify="center"
-	                			alignItems="center"
-
-	                		>
-	                			<Grid item><p>Hallo1</p></Grid>
-	                			<Grid item><p>Hallo2</p></Grid>
-	                			<Grid item><p>Hallo3</p></Grid>
-	                		</Grid>	
+	                		<iframe width="420" height="315"
+								src={this.state.embedlink}>
+							</iframe>	                		
 	              		</CardContent>
 	              		<CardActions>
 	              		</CardActions>
@@ -173,10 +124,10 @@ class DragCard extends React.Component {
           					</DialogTitle>
           					<DialogContent>
 	            				<TextField
-	            					id="city" 
-	            					value={this.state.userCity} 
-	            					onChange={this.handleChangeInput.bind(this)} 
-	            					label="Wetter für"
+	            					id="link" 
+	            					value={this.state.link} 
+	            					onInput={this.handleChangeInput.bind(this)} 
+	            					label="Youtube Link"
 	            				/>
 	            			</DialogContent>
 	    					<DialogActions>
@@ -195,4 +146,4 @@ class DragCard extends React.Component {
 	}
 }
 
-export default DragCard;
+export default YTCard;

@@ -7,6 +7,7 @@
     "@material-ui/icons": "^1.1.0",
     "auth0-js": "^9.0.0",
     "babel-standalone": "^6.26.0",
+    "get-youtube-id": "^1.0.0",
     "material-design-icons": "^3.0.1",
     "material-ui-image": "^3.0.0",
     "mdi-material-ui": "^5.1.1",

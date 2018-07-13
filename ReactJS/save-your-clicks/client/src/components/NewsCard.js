@@ -10,29 +10,27 @@ import IconButton from '@material-ui/core/IconButton';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import LockIcon from '@material-ui/icons/Lock';
 import UnlockIcon from '@material-ui/icons/LockOpen';
+import './NewsCard.css';
 
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-
 import TextField from '@material-ui/core/TextField';
-import InputLabel from '@material-ui/core/InputLabel';
 
-import Grid from '@material-ui/core/Grid'
 
-class DragCard extends React.Component {
+class NewsCard extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			disabled : false,
-			weatherData: null,
-			WeatherIMG: null,
-			cityName: "Loading...",
 			dialogOpen: false,
-			userCity: "London,uk",
-			temp: "Loading..."
+			Items: [],
+			query: "",
+			country: "",
+			language: "de",
+			category: "",
+			sources: "",
 		};
 	}
 
@@ -53,29 +51,14 @@ class DragCard extends React.Component {
 	}
 
 	handleData(data) {
-		console.log(data);
-		//set Image
-		this.setState({WeatherIMG : "http://openweathermap.org/img/w/" + data.weather[0].icon + ".png"});
-		this.setState({cityName: data.name});
-		this.setState({weatherData : data});
-		this.setState({temp: data.main.temp})
+		const listItems = data.articles.map((data, i) =>
+			  <li key={i}>{data.source.name} : <a href={data.url}>{data.title}</a></li>
+		);
+		this.setState({Items: listItems});
 	}
 
 	handleForecast(data) {
 		console.log(data);
-		let list = data.list;
-		let filteredList = [];
-		var day = new Date(1999);
-		console.log(day.getDate());
-
-		for (let forecast of list) {
-			let forecastDay = new Date(forecast.dt_txt);
-			if(day.getDate() != forecastDay.getDate()) {
-				filteredList.push(forecast);
-				day = forecastDay;
-			}
-		}
-		console.log(filteredList);
 	}
 
 	handleDialogOpen() {
@@ -90,8 +73,24 @@ class DragCard extends React.Component {
 		this.fetchData();
 	}
 
-	handleChangeInput(event) {
-    	this.setState({ userCity: event.target.value });
+	handleChangeQuery(event) {
+    	this.setState({ query: event.target.value });
+  	};
+
+  	handleChangeCountry(event) {
+    	this.setState({ country: event.target.value });
+  	};
+
+  	handleChangeCategory(event) {
+    	this.setState({ category: event.target.value });
+  	};
+
+  	handleChangeLanguage(event) {
+    	this.setState({ language: event.target.value });
+  	};
+
+  	handleChangeSources(event) {
+    	this.setState({ sources: event.target.value });
   	};
 
 	componentDidMount() {
@@ -99,31 +98,30 @@ class DragCard extends React.Component {
 	}
 
 	fetchData() {
-		const units = "&units=Metric";
-		const cnt = "&cnt=5"
-		const curWeatherAPI = "http://api.openweathermap.org/data/2.5/weather?q=" + this.state.userCity + units;
-		const forecast5 = "http://api.openweathermap.org/data/2.5/forecast?q=" + this.state.userCity + units + cnt;
-		const API_KEY = "63e1989514bf141a4fa6085fb66c5802";
+		let query = "q="+this.state.query;
+		let country = "&country="+this.state.country;
+		let sources = "&sources="+this.state.sources;
+		let language = "&language="+this.state.language;
+		let category = "&category="+this.state.category;
+		
+		const newsAPI = "https://newsapi.org/v2/top-headlines?" + query + country + sources + language + category;
+		const API_KEY = "17c1decdae4e4e36b7f8650b368616b3";
 
-		fetch(curWeatherAPI + "&appid=" + API_KEY)
+		fetch(newsAPI + "&apiKey=" + API_KEY)
 			.then((response) => response.json())
 			.then((data) => this.handleData(data));
-
-		fetch(forecast5 + "&appid=" + API_KEY)
-			.then((response) => response.json())
-			.then((data) => this.handleForecast(data))
 
 	}
 
 	render() {
 		return (
 		    <Draggable disabled={this.state.disabled} {...this.props}>
-	        	<div style={{ width: 500 }}>
+	        	<div style={{ width: 900 }}>
 	        		<Card className="card">
-	        			<CardHeader 
+	        			<CardHeader 	
 	        				avatar={
-	        					<img src={this.state.WeatherIMG} />
-	        				}
+				                <h1> Nachrichten </h1>
+				            }	             				
 	        				action={
 	        					<div>
 		        					<IconButton size="small" onClick={this.changeMoveState.bind(this)}>
@@ -144,22 +142,10 @@ class DragCard extends React.Component {
 	              				</div>
 	        				}
 	        			/>
-	        			<CardContent>
-	                		<Typography variant="headline" component="h2">
-	                  			{this.state.cityName} {this.state.temp}°C
+	        			<CardContent className="content">
+	                		<Typography component="h2">
+	                  			<ul>{this.state.Items}</ul>
 	                		</Typography>
-	                		<Grid
-	                			container
-	                			spacing="16"
-	                			direction="row"
-	                			justify="center"
-	                			alignItems="center"
-
-	                		>
-	                			<Grid item><p>Hallo1</p></Grid>
-	                			<Grid item><p>Hallo2</p></Grid>
-	                			<Grid item><p>Hallo3</p></Grid>
-	                		</Grid>	
 	              		</CardContent>
 	              		<CardActions>
 	              		</CardActions>
@@ -173,10 +159,34 @@ class DragCard extends React.Component {
           					</DialogTitle>
           					<DialogContent>
 	            				<TextField
-	            					id="city" 
-	            					value={this.state.userCity} 
-	            					onChange={this.handleChangeInput.bind(this)} 
-	            					label="Wetter für"
+	            					id="query" 
+	            					value={this.state.query} 
+	            					onChange={this.handleChangeQuery.bind(this)} 
+	            					label="Suchbegriff"
+	            				/>
+	            				<TextField
+	            					id="category" 
+	            					value={this.state.category} 
+	            					onChange={this.handleChangeCategory.bind(this)} 
+	            					label="Kategorie"
+	            				/>
+	            				<TextField
+	            					id="sources" 
+	            					value={this.state.sources} 
+	            					onChange={this.handleChangeSources.bind(this)} 
+	            					label="Quellen"
+	            				/>
+	            				<TextField
+	            					id="language" 
+	            					value={this.state.language} 
+	            					onChange={this.handleChangeLanguage.bind(this)} 
+	            					label="Sprache"
+	            				/>
+	            				<TextField
+	            					id="country" 
+	            					value={this.state.country} 
+	            					onChange={this.handleChangeCountry.bind(this)} 
+	            					label="Land"
 	            				/>
 	            			</DialogContent>
 	    					<DialogActions>
@@ -195,4 +205,4 @@ class DragCard extends React.Component {
 	}
 }
 
-export default DragCard;
+export default NewsCard;
