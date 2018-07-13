@@ -5,7 +5,6 @@ import CardHeader from '@material-ui/core/CardHeader'
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import LockIcon from '@material-ui/icons/Lock';
@@ -25,7 +24,6 @@ class YTCard extends React.Component {
 		this.state = {
 			disabled : false,
 			dialogOpen: false,
-			link: "https://www.youtube.com/",
 			embedlink: "",
 			id: "",
 		};
@@ -34,7 +32,6 @@ class YTCard extends React.Component {
 	getID(ytlink) {
 		let ytid = GetYTID(ytlink);
 		this.setState({id: ytid})
-		console.log(ytid)
 	}
 
 	clearSelection() {
@@ -63,22 +60,18 @@ class YTCard extends React.Component {
 
 	handleDialogClose(event) {
 		this.setState({dialogOpen: false});
+
+		let embid = "https://www.youtube.com/embed/"+this.state.id;
+
+    	this.setState({ embedlink: embid})
 	}
 
 	handleChangeInput(event) {
-    	this.setState({ link: event.target.value });
-    	console.log(this.state.link)
-
-		this.getID(this.state.link)
-
-		
-    	let embid = "https://www.youtube.com/embed/"+this.state.id;
-
-    	this.setState({ embedlink: embid})
+		this.getID(event.target.value)
   	};
 
 	componentDidMount() {
-
+		console.log(this.state.embedlink)
 	}
 
 	render() {
@@ -108,7 +101,7 @@ class YTCard extends React.Component {
 	        				}
 	        			/>
 	        			<CardContent>
-	                		<iframe width="420" height="315"
+	                		<iframe width="420" height="315" allowFullScreen="true" title="YTCard"
 								src={this.state.embedlink}>
 							</iframe>	                		
 	              		</CardContent>
@@ -124,9 +117,8 @@ class YTCard extends React.Component {
           					</DialogTitle>
           					<DialogContent>
 	            				<TextField
-	            					id="link" 
-	            					value={this.state.link} 
-	            					onInput={this.handleChangeInput.bind(this)} 
+	            					id="link" 	            					
+	            					onKeyUp={this.handleChangeInput.bind(this)} 
 	            					label="Youtube Link"
 	            				/>
 	            			</DialogContent>
