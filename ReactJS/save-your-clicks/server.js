@@ -34,7 +34,7 @@ app.post('/api/saveusers', (req, res) => {
 				res.status(201).send(err);
 			}
 			else {
-				res.status(200).send();
+				res.status(200).send('OK');
 			}
 		});
 	});
@@ -51,10 +51,7 @@ app.post('/api/saveComponent', (req, res) => {
 		const db = client.db(dbName);
 		
 		const collection = db.collection("Components");
-		let document = req.body.Component;
-
-		console.log("TEST: " + util.inspect(document));
-
+		let document = req.body;
 		
 		collection.insert(document, function(err, records){
 			if (err){
@@ -62,8 +59,33 @@ app.post('/api/saveComponent', (req, res) => {
 				res.status(201).send(err);
 			}
 			else {
-				console.log("Record added as "+records[0]);
+				res.status(200).send("OK");
 			}
+		});
+	});
+});
+
+app.get('/api/getComponents', (req, res) => {
+	const userid = req.query.userid;
+	MongoClient.connect(process.env.MONGOLAB_URI, function(err, client) {
+		if (err) {
+			console.log(err);
+			res.status(201).send(err);
+		}
+
+		const db = client.db(dbName);
+
+		const collection = db.collection("Components");
+
+		collection.find({userid: userid}).toArray((err, docs) => {
+			if(err) {
+				res.status(201).send(err);
+			}
+			else {
+				console.log(docs);
+				res.status(200).send(docs);
+			}
+
 		});
 	});
 });
