@@ -10,19 +10,27 @@ import IconButton from '@material-ui/core/IconButton';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import LockIcon from '@material-ui/icons/Lock';
 import UnlockIcon from '@material-ui/icons/LockOpen';
+import './Dragtest.css';
 
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import request from 'superagent';
 
 import TextField from '@material-ui/core/TextField';
+import InputLabel from '@material-ui/core/InputLabel';
 
+import Grid from '@material-ui/core/Grid'
 
 class DragCard extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			position: {
+       			x: 0, y: 0
+			},
 			disabled : false,
 			weatherData: null,
 			WeatherIMG: null,
@@ -47,9 +55,31 @@ class DragCard extends React.Component {
     	this.clearSelection();
     	const {disabled} = this.state;
     	this.setState({disabled: !disabled});
+    	if (!disabled){
+    		const message = {userid: this.props.userProfile.sub, position: {x: this.state.position.x, y: this.state.position.y}}
+			request
+	        .post('/api/savewidgetposition')
+	        .send(message)
+	        .set('Accept', 'application/json')
+	        .end((err, res) => {
+	          if (err || !res.ok) {
+	            console.log('Failure');
+	          }
+	        });    	
+    	}
+	}
+
+	handleDrag(e, ui) {
+	    this.setState({
+	      position: {
+	        x: ui.x,
+	        y: ui.y,
+	      }
+	    });
 	}
 
 	handleData(data) {
+		console.log(data);
 		//set Image
 		this.setState({WeatherIMG : "http://openweathermap.org/img/w/" + data.weather[0].icon + ".png"});
 		this.setState({cityName: data.name});
@@ -58,17 +88,20 @@ class DragCard extends React.Component {
 	}
 
 	handleForecast(data) {
+		console.log(data);
 		let list = data.list;
 		let filteredList = [];
 		var day = new Date(1999);
+		console.log(day.getDate());
 
 		for (let forecast of list) {
 			let forecastDay = new Date(forecast.dt_txt);
-			if(day.getDate() !== forecastDay.getDate()) {
+			if(day.getDate() != forecastDay.getDate()) {
 				filteredList.push(forecast);
 				day = forecastDay;
 			}
 		}
+		console.log(filteredList);
 	}
 
 	handleDialogOpen() {
@@ -89,6 +122,20 @@ class DragCard extends React.Component {
 
 	componentDidMount() {
 		this.fetchData();
+		const message = {userid: this.props.userProfile.sub};
+		request
+	    .post('/api/getwidgetposition')
+	    .send(message)
+	    .set('Accept', 'application/json')
+	    .end((err, res) => {
+	       if (err || !res.ok) {
+	         console.log('Failure');
+	       } else {
+		      this.setState({
+		     	 position: res.body[0].position
+		   	  });
+	       }
+	    }); 
 	}
 
 	fetchData() {
@@ -110,12 +157,12 @@ class DragCard extends React.Component {
 
 	render() {
 		return (
-		    <Draggable disabled={this.state.disabled} {...this.props}>
+		    <Draggable onDrag={this.handleDrag.bind(this)} disabled={this.state.disabled} position={this.state.position}>
 	        	<div style={{ width: 500 }}>
 	        		<Card className="card">
 	        			<CardHeader 
 	        				avatar={
-	        					<img src={this.state.WeatherIMG} alt="" />
+	        					<img src={this.state.WeatherIMG} />
 	        				}
 	        				action={
 	        					<div>
@@ -141,6 +188,18 @@ class DragCard extends React.Component {
 	                		<Typography variant="headline" component="h2">
 	                  			{this.state.cityName} {this.state.temp}°C
 	                		</Typography>
+	                		<Grid
+	                			container
+	                			spacing="16"
+	                			direction="row"
+	                			justify="center"
+	                			alignItems="center"
+
+	                		>
+	                			<Grid item><p>Hallo1</p></Grid>
+	                			<Grid item><p>Hallo2</p></Grid>
+	                			<Grid item><p>Hallo3</p></Grid>
+	                		</Grid>	
 	              		</CardContent>
 	              		<CardActions>
 	              		</CardActions>
