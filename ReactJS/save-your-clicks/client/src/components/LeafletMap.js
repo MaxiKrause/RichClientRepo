@@ -55,18 +55,6 @@ class LeafletMap extends React.Component {
     	this.clearSelection();
     	const {disabled} = this.state;
     	this.setState({disabled: !disabled});
-    	/*if (!disabled){
-    		const message = {userid: this.props.userProfile.sub, position: {x: this.state.position.x, y: this.state.position.y}}
-			request
-	        .post('/api/savewidgetposition')
-	        .send(message)
-	        .set('Accept', 'application/json')
-	        .end((err, res) => {
-	          if (err || !res.ok) {
-	            console.log('Failure');
-	          }
-	        });    	
-    	}*/
 	}
 
 	handleDrag(e, ui) {
@@ -95,20 +83,6 @@ class LeafletMap extends React.Component {
   	};
 
 	componentDidMount() {
-		const message = {userid: this.props.userProfile.sub};
-		/*request
-	    .post('/api/getwidgetposition')
-	    .send(message)
-	    .set('Accept', 'application/json')
-	    .end((err, res) => {
-	       if (err || !res.ok) {
-	         console.log('Failure');
-	       } else {
-		      this.setState({
-		     	 position: res.body[0].position
-		   	  });
-	       }
-	    }); */
 	}
 
 	render() {

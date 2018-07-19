@@ -7,12 +7,11 @@ class Home extends Component {
 	
 	render() {
 
-
   		return(
   			<div>
     			<p>Home-Seite</p>
-    			<DragCard userProfile={this.props.auth.userProfile} grid={[25, 25]} bounds="body"/>
-    			<LeafletMap userProfile={this.props.auth.userProfile} grid={[25, 25]} bounds="body"/>
+    			<DragCard auth={this.props.auth} grid={[25, 25]} bounds="body"/>
+    			<LeafletMap auth={this.props.auth} grid={[25, 25]} bounds="body"/>
   			</div>
   		);
 	}

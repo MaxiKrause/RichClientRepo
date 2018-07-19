@@ -56,16 +56,18 @@ class DragCard extends React.Component {
     	const {disabled} = this.state;
     	this.setState({disabled: !disabled});
     	if (!disabled){
-    		const message = {userid: this.props.userProfile.sub, position: {x: this.state.position.x, y: this.state.position.y}}
-			request
-	        .post('/api/savewidgetposition')
-	        .send(message)
-	        .set('Accept', 'application/json')
-	        .end((err, res) => {
-	          if (err || !res.ok) {
-	            console.log('Failure');
-	          }
-	        });    	
+    		this.props.auth.getProfile((err, profile) => {
+    			const message = {userid: profile.sub, position: {x: this.state.position.x, y: this.state.position.y}}
+				request
+		        .post('/api/savewidgetposition')
+		        .send(message)
+		        .set('Accept', 'application/json')
+		        .end((err, res) => {
+		          if (err || !res.ok) {
+		            console.log('Failure');
+		          }
+		        });
+	        })   	
     	}
 	}
 
@@ -122,20 +124,22 @@ class DragCard extends React.Component {
 
 	componentDidMount() {
 		this.fetchData();
-		const message = {userid: this.props.userProfile.sub};
-		request
-	    .post('/api/getwidgetposition')
-	    .send(message)
-	    .set('Accept', 'application/json')
-	    .end((err, res) => {
-	       if (err || !res.ok) {
-	         console.log('Failure');
-	       } else {
-		      this.setState({
-		     	 position: res.body[0].position
-		   	  });
-	       }
-	    }); 
+		this.props.auth.getProfile((err, profile) => {
+			const message = {userid: profile.sub};
+			request
+		    .post('/api/getwidgetposition')
+		    .send(message)
+		    .set('Accept', 'application/json')
+		    .end((err, res) => {
+		       if (err || !res.ok) {
+		         console.log('Failure');
+		       } else {
+			      this.setState({
+			     	 position: res.body[0].position
+			   	  });
+		       }
+		    }); 
+		})
 	}
 
 	fetchData() {
