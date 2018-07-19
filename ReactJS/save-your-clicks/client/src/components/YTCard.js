@@ -26,6 +26,7 @@ class YTCard extends React.Component {
 			dialogOpen: false,
 			embedlink: "",
 			id: "",
+			ytlink: "",
 		};
 	}
 
@@ -71,7 +72,13 @@ class YTCard extends React.Component {
   	};
 
 	componentDidMount() {
-		console.log(this.state.embedlink)
+
+	}
+
+	ytComponent() {
+		return (<iframe width="420" height="315" allowFullScreen="true" title="YTCard"
+					src={this.state.embedlink}>
+				</iframe>);
 	}
 
 	render() {
@@ -80,6 +87,9 @@ class YTCard extends React.Component {
 	        	<div style={{ width: 500 }}>
 	        		<Card className="card">
 	        			<CardHeader 
+	        				avatar={
+				                <h1> Youtube </h1>
+				            }
 	        				action={
 	        					<div>
 		        					<IconButton size="small" onClick={this.changeMoveState.bind(this)}>
@@ -101,9 +111,8 @@ class YTCard extends React.Component {
 	        				}
 	        			/>
 	        			<CardContent>
-	                		<iframe width="420" height="315" allowFullScreen="true" title="YTCard"
-								src={this.state.embedlink}>
-							</iframe>	                		
+	        				{this.state.embedlink !== "" ? this.ytComponent() : null}
+	                			                		
 	              		</CardContent>
 	              		<CardActions>
 	              		</CardActions>

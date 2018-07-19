@@ -116,7 +116,7 @@ class NewsCard extends React.Component {
 	render() {
 		return (
 		    <Draggable disabled={this.state.disabled} {...this.props}>
-	        	<div style={{ width: 900 }}>
+	        	<div style={{ maxWidth: 900, maxHeight: 350 }}>
 	        		<Card className="card">
 	        			<CardHeader 	
 	        				avatar={

@@ -5,7 +5,6 @@ import CardHeader from '@material-ui/core/CardHeader'
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import LockIcon from '@material-ui/icons/Lock';
@@ -17,19 +16,16 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
 import TextField from '@material-ui/core/TextField';
+import ReactTwitchEmbedVideo from "react-twitch-embed-video"
 
-
-class DragCard extends React.Component {
+class YTCard extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			disabled : false,
-			weatherData: null,
-			WeatherIMG: null,
-			cityName: "Loading...",
 			dialogOpen: false,
-			userCity: "London,uk",
-			temp: "Loading..."
+			channeltemp: "",
+			channel: "",
 		};
 	}
 
@@ -49,28 +45,7 @@ class DragCard extends React.Component {
     	this.setState({disabled: !disabled});
 	}
 
-	handleData(data) {
-		//set Image
-		this.setState({WeatherIMG : "http://openweathermap.org/img/w/" + data.weather[0].icon + ".png"});
-		this.setState({cityName: data.name});
-		this.setState({weatherData : data});
-		this.setState({temp: data.main.temp})
-	}
-
-	handleForecast(data) {
-		let list = data.list;
-		let filteredList = [];
-		var day = new Date(1999);
-
-		for (let forecast of list) {
-			let forecastDay = new Date(forecast.dt_txt);
-			if(day.getDate() !== forecastDay.getDate()) {
-				filteredList.push(forecast);
-				day = forecastDay;
-			}
-		}
-	}
-
+	
 	handleDialogOpen() {
 		this.setState({
 			dialogOpen: true,
@@ -80,43 +55,31 @@ class DragCard extends React.Component {
 
 	handleDialogClose(event) {
 		this.setState({dialogOpen: false});
-		this.fetchData();
+		this.setState({channel: this.state.channeltemp})
+
 	}
 
 	handleChangeInput(event) {
-    	this.setState({ userCity: event.target.value });
+		this.setState({channeltemp: event.target.value})
   	};
 
 	componentDidMount() {
-		this.fetchData();
+
 	}
 
-	fetchData() {
-		const units = "&units=Metric";
-		const cnt = "&cnt=5"
-		const curWeatherAPI = "http://api.openweathermap.org/data/2.5/weather?q=" + this.state.userCity + units;
-		const forecast5 = "http://api.openweathermap.org/data/2.5/forecast?q=" + this.state.userCity + units + cnt;
-		const API_KEY = "63e1989514bf141a4fa6085fb66c5802";
-
-		fetch(curWeatherAPI + "&appid=" + API_KEY)
-			.then((response) => response.json())
-			.then((data) => this.handleData(data));
-
-		fetch(forecast5 + "&appid=" + API_KEY)
-			.then((response) => response.json())
-			.then((data) => this.handleForecast(data))
-
+	twitchComponent() {
+		return <ReactTwitchEmbedVideo channel={this.state.channel} layout="video"  width="600" />
 	}
 
 	render() {
 		return (
 		    <Draggable disabled={this.state.disabled} {...this.props}>
-	        	<div style={{ width: 500 }}>
+	        	<div style={{ width: 700 }}>
 	        		<Card className="card">
 	        			<CardHeader 
 	        				avatar={
-	        					<img src={this.state.WeatherIMG} alt="" />
-	        				}
+				                <h1> Twitch </h1>
+				            }
 	        				action={
 	        					<div>
 		        					<IconButton size="small" onClick={this.changeMoveState.bind(this)}>
@@ -138,9 +101,7 @@ class DragCard extends React.Component {
 	        				}
 	        			/>
 	        			<CardContent>
-	                		<Typography variant="headline" component="h2">
-	                  			{this.state.cityName} {this.state.temp}°C
-	                		</Typography>
+	                		{this.state.channel!== "" ? this.twitchComponent() : null}	                		
 	              		</CardContent>
 	              		<CardActions>
 	              		</CardActions>
@@ -154,10 +115,9 @@ class DragCard extends React.Component {
           					</DialogTitle>
           					<DialogContent>
 	            				<TextField
-	            					id="city" 
-	            					value={this.state.userCity} 
+	            					id="link" 	            					
 	            					onChange={this.handleChangeInput.bind(this)} 
-	            					label="Wetter für"
+	            					label="Twitch Kanal Name"
 	            				/>
 	            			</DialogContent>
 	    					<DialogActions>
@@ -176,4 +136,4 @@ class DragCard extends React.Component {
 	}
 }
 
-export default DragCard;
+export default YTCard;
