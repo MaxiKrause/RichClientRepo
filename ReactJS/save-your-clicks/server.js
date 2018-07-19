@@ -7,6 +7,8 @@ const app = express();
 const port = process.env.PORT || 5000;
 const dbName = "saveyourclicks";
 
+const path = require('path');
+
 const result = dotenv.config();
 var util = require('util');
  
@@ -67,6 +69,9 @@ app.post('/api/saveComponent', (req, res) => {
 
 app.get('/api/getComponents', (req, res) => {
 	const userid = req.query.userid;
+	if (!userid) {
+		res.status(201).send("Keinen User Angegeben!");
+	}
 	MongoClient.connect(process.env.MONGOLAB_URI, function(err, client) {
 		if (err) {
 			console.log(err);
