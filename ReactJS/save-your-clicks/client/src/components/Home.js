@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import DragCard from './DragCard.js';
 import NewsCard from './NewsCard.js';
 import YTCard from './YTCard.js';
+import TwitchCard from './TwitchCard.js';
 import {generateElement} from 'react-live';
 import Draggable from 'react-draggable';
 import Card from '@material-ui/core/Card';
@@ -46,6 +47,7 @@ class Home extends Component {
     			<DragCard grid={[25, 25]} bounds="body"/>
     			<NewsCard grid={[25, 25]} bounds="body"/>
     			<YTCard grid={[25, 25]} bounds="body"/>
+    			<TwitchCard grid={[25, 25]} bounds="body"/>
     			{this.state.components.map((Components) => <Components />)}
   			</div>
 

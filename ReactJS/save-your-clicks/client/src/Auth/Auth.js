@@ -34,7 +34,6 @@ export default class Auth {
   }
 
   getProfile(cb) {
-    console.log("Ich bin im GETPROFILE")
     let accessToken = this.getAccessToken();
     this.auth0.client.userInfo(accessToken, (err, profile) => {
       if (profile) {
@@ -43,14 +42,7 @@ export default class Auth {
       request
         .post('/api/saveusers')
         .send(this.userProfile)
-        .set('Accept', 'application/json')
-        .end((err, res) => {
-          if (err || !res.ok) {
-            console.log('Failure');
-          } else {
-            console.log('Success');
-          }
-        });
+        .set('Accept', 'application/json');
       }
       cb(err, profile);
     });

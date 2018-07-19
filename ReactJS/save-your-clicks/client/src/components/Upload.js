@@ -30,7 +30,6 @@ class Upload extends Component {
 			);
 		}
 	}`;
-	const scope = {Draggable, Card, React};
     this.state = {
 			content: startCode,
 			component: div,

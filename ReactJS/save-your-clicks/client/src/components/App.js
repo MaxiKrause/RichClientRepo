@@ -22,14 +22,7 @@ class App extends Component {
     }
   		return(
   			<div>
-  				<Header auth={this.props.auth}/>
-    			<p>Hallo</p>
-          <p>{history.location.pathname}</p>
-    			{
-    				isAuthenticated() && (
-    					<p>LOGGED IN</p>
-    				)
-    			}
+  				<Header auth={this.props.auth}/>   			
   			</div>
 
   		);
