@@ -134,9 +134,12 @@ class DragCard extends React.Component {
 		       if (err || !res.ok) {
 		         console.log('Failure');
 		       } else {
-			      this.setState({
-			     	 position: res.body[0].position
-			   	  });
+		       		if (res.body[0]==null)
+		       			return
+		       		else
+				      this.setState({
+				     	 position: res.body[0].position
+				   	  });
 		       }
 		    }); 
 		})
