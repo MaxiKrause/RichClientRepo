@@ -10,10 +10,8 @@ import Card from '@material-ui/core/Card';
 class Home extends Component {
 	constructor(props) {
 		super(props);
-		let list = [];
-		list.push(generateElement({code: "<div>hallo</div>"}));
 		this.state = {
-			components: list,
+			components: [],
 			loaded: false
 		};
 	}
