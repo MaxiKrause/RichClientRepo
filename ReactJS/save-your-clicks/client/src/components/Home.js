@@ -29,8 +29,8 @@ class Home extends Component {
 	}
 
 	handleComponents(data) {
+		if (!data) return;
 		let list = [];
-		console.log(data[0].component);
 		for (var i = data.length - 1; i >= 0; i--) {
 			list.push(Element = generateElement({code: data[i].component, scope:{Draggable, Card}}));
 		}
