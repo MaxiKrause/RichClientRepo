@@ -16,9 +16,15 @@ import History from '../history'
 
 class Header extends React.Component {
 
-  state = {
+  constructor(props) {
+    super(props);
+
+    this.state = {
     anchorEl: null,
-  };
+   };
+  }
+
+  
 
   handleClick = event => {
     this.setState({ anchorEl: event.currentTarget });

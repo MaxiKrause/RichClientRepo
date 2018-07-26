@@ -88,7 +88,7 @@ class LeafletMap extends React.Component {
 	render() {
 		const coords = [this.state.lat, this.state.lng];
 		return (
-		    <Draggable onDrag={this.handleDrag.bind(this)} disabled={this.state.disabled} position={this.state.position}>
+		    <Draggable onDrag={this.handleDrag.bind(this)} disabled={this.state.disabled} position={this.state.position} {...this.props}>
 	        	<div style={{ width: 500 }}>
 	        		<Card className="card">
 	        			<CardHeader 
