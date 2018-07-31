@@ -11,20 +11,19 @@ import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import './Home.css'
-import UniqueID from 'react-html-id';
 
 
 
 class Home extends Component {
 	 constructor(props) {
     super(props);
-    UniqueID.enableUniqueIds(this);
     this.state = {
       components: [],
       loaded: false,
       standardComponents: [{}],
       anchorEl: null,
       index: "",
+      id: 1 ,
     };
 
     this.addYT = this.addYT.bind(this) 
@@ -38,6 +37,17 @@ class Home extends Component {
         .then((response) => response.json())
         .then((data) => this.handleComponents(data));
     })
+  }
+
+  componentDidUpdate() {
+    console.log(this.state.standardComponents)  
+  }
+
+  getNewId() {
+    let id = Object.assign(this.state.id)
+    id++
+    this.setState({id: id})
+    return this.state.id
   }
 
   handleClick = event => {
@@ -58,18 +68,6 @@ class Home extends Component {
     return card
   }
 
-  setIndices(ind) {
-    const comps = Object.assign([], this.state.standardComponents);
-
-    comps.map((comp, index) => {comp.index=index})
-
-    this.setState({standardComponents: comps})
-  }
-
-  setIndex(index) {
-    this.setState({index: index})
-  }
-
   handleComponents(data) {
     if (!data) return;
     let list = [];
@@ -81,20 +79,19 @@ class Home extends Component {
     });
   }
 
-  removeComp = (index, e) => {
-    console.log(index)
-    //const users = [...this.state.users];
-    //const comps = Object.assign([], this.state.standardComponents);
-    //comps.splice(index, 1);
-    //this.setState({standardComponents:comps});
+  removeComp = (id, e) => {
+    const comp = Object.assign([], this.state.standardComponents)
+    let index = comp.findIndex((element)=>{return element.id===id})
+    comp.splice(index, 1)
+    this.setState({standardComponents: comp})
   }
 
   addWeather() {
   this.handleClose()
     const comp = Object.assign([], this.state.standardComponents)
 
-    comp.push({id:this.nextUniqueId(), card:<DragCard auth={this.props.auth} grid={[25, 25]} bounds="html" 
-                delEvent={this.removeComp.bind(this,this.state.index)}/>})
+    comp.push({id:this.getNewId(), card:<DragCard auth={this.props.auth} grid={[25, 25]} bounds="html" 
+                delEvent={this.removeComp.bind(this,this.state.id)}/>})
 
     this.setState({standardComponents: comp}) 
   }
@@ -103,7 +100,8 @@ class Home extends Component {
     this.handleClose()
     const comp = Object.assign([], this.state.standardComponents)
 
-    comp.push(<LeafletMap auth={this.props.auth} grid={[25, 25]} bounds="body"/>)
+    comp.push({id:this.getNewId(), card:<LeafletMap auth={this.props.auth} grid={[25, 25]} bounds="html" 
+                delEvent={this.removeComp.bind(this,this.state.id)}/>})
 
     this.setState({standardComponents: comp}) 
   }
@@ -112,7 +110,8 @@ class Home extends Component {
     this.handleClose()
     const comp = Object.assign([], this.state.standardComponents)
 
-    comp.push(<TwitchCard auth={this.props.auth} grid={[25, 25]} bounds="body"/>)
+    comp.push({id:this.getNewId(), card:<TwitchCard auth={this.props.auth} grid={[25, 25]} bounds="html" 
+                delEvent={this.removeComp.bind(this,this.state.id)}/>})
 
     this.setState({standardComponents: comp}) 
   }
@@ -121,7 +120,8 @@ class Home extends Component {
     this.handleClose()
     const comp = Object.assign([], this.state.standardComponents)
 
-    comp.push(<NewsCard auth={this.props.auth} grid={[25, 25]} bounds="body"/>)
+    comp.push({id:this.getNewId(), card:<NewsCard auth={this.props.auth} grid={[25, 25]} bounds="html" 
+                delEvent={this.removeComp.bind(this,this.state.id)}/>})
 
     this.setState({standardComponents: comp}) 
   }
@@ -130,7 +130,8 @@ class Home extends Component {
     this.handleClose()
     const comp = Object.assign([], this.state.standardComponents)
 
-    comp.push(<YTCard className="Widget" auth={this.props.auth} grid={[25, 25]} bounds="body"/>)
+    comp.push({id:this.getNewId(), card:<YTCard auth={this.props.auth} grid={[25, 25]} bounds="html" 
+                delEvent={this.removeComp.bind(this,this.state.id)}/>})
 
     this.setState({standardComponents: comp}) 
   }
@@ -161,7 +162,7 @@ class Home extends Component {
           <MenuItem onClick={() => this.addMap()}>Karte</MenuItem>
         </Menu>
           {this.state.components.map((Components) => <Components />)}
-          {this.state.standardComponents.map((comp, index) => {this.setIndices(index); return comp.card})}         
+          {this.state.standardComponents.map((comp, index) => {return comp.card})}         
   			</div>
   		);
 	}

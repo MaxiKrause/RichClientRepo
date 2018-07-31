@@ -10,6 +10,7 @@ import IconButton from '@material-ui/core/IconButton';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import LockIcon from '@material-ui/icons/Lock';
 import UnlockIcon from '@material-ui/icons/LockOpen';
+import DeleteIcon from '@material-ui/icons/Delete';
 import './NewsCard.css';
 
 import Dialog from '@material-ui/core/Dialog';
@@ -138,6 +139,9 @@ class NewsCard extends React.Component {
 	      							</IconButton>
 	      					        <IconButton onClick={this.handleDialogOpen.bind(this)}>
 	                					<MoreVertIcon />
+	              					</IconButton>
+	              					<IconButton onClick={this.props.delEvent}>
+	                					<DeleteIcon />
 	              					</IconButton>
 	              				</div>
 	        				}

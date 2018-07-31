@@ -11,6 +11,7 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import LockIcon from '@material-ui/icons/Lock';
 import UnlockIcon from '@material-ui/icons/LockOpen';
 import './LeafletMap.css';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -106,6 +107,9 @@ class LeafletMap extends React.Component {
 		    								)
 		    							}
 	      							</IconButton>
+	      							<IconButton onClick={this.props.delEvent}>
+	                					<DeleteIcon />
+	              					</IconButton>
 	              				</div>
 	        				}
 	        			/>

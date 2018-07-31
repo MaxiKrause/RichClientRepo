@@ -9,6 +9,7 @@ import IconButton from '@material-ui/core/IconButton';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import LockIcon from '@material-ui/icons/Lock';
 import UnlockIcon from '@material-ui/icons/LockOpen';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -106,6 +107,9 @@ class YTCard extends React.Component {
 	      							</IconButton>
 	      					        <IconButton onClick={this.handleDialogOpen.bind(this)}>
 	                					<MoreVertIcon />
+	              					</IconButton>
+	              					<IconButton onClick={this.props.delEvent}>
+	                					<DeleteIcon />
 	              					</IconButton>
 	              				</div>
 	        				}
