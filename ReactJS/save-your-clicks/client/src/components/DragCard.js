@@ -28,9 +28,7 @@ class DragCard extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			position: {
-       			x: 0, y: 0
-			},
+			position: props.defaultPositon,
 			disabled : false,
 			weatherData: null,
 			WeatherIMG: null,
@@ -50,6 +48,7 @@ class DragCard extends React.Component {
 	}
 
 	changeMoveState(e) {
+		console.log(this.props.id)
 		e.preventDefault();
     	e.stopPropagation();
     	this.clearSelection();
@@ -57,7 +56,7 @@ class DragCard extends React.Component {
     	this.setState({disabled: !disabled});
     	if (!disabled){
     		this.props.auth.getProfile((err, profile) => {
-    			const message = {userid: profile.sub, position: {x: this.state.position.x, y: this.state.position.y}}
+    			const message = {userid: profile.sub, widgetid: this.props.id, name:"weather", position: this.state.position}
 				request
 		        .post('/api/savewidgetposition')
 		        .send(message)
@@ -81,7 +80,6 @@ class DragCard extends React.Component {
 	}
 
 	handleData(data) {
-		console.log(data);
 		//set Image
 		this.setState({WeatherIMG : "http://openweathermap.org/img/w/" + data.weather[0].icon + ".png"});
 		this.setState({cityName: data.name});
@@ -90,11 +88,9 @@ class DragCard extends React.Component {
 	}
 
 	handleForecast(data) {
-		console.log(data);
 		let list = data.list;
 		let filteredList = [];
 		var day = new Date(1999);
-		console.log(day.getDate());
 
 		for (let forecast of list) {
 			let forecastDay = new Date(forecast.dt_txt);
@@ -103,7 +99,6 @@ class DragCard extends React.Component {
 				day = forecastDay;
 			}
 		}
-		console.log(filteredList);
 	}
 
 	handleDialogOpen() {
@@ -124,25 +119,6 @@ class DragCard extends React.Component {
 
 	componentDidMount() {
 		this.fetchData();
-		this.props.auth.getProfile((err, profile) => {
-			const message = {userid: profile.sub};
-			request
-		    .post('/api/getwidgetposition')
-		    .send(message)
-		    .set('Accept', 'application/json')
-		    .end((err, res) => {
-		       if (err || !res.ok) {
-		         console.log('Failure');
-		       } else {
-		       		if (res.body[0]==null)
-		       			return
-		       		else
-				      this.setState({
-				     	 position: res.body[0].position
-				   	  });
-		       }
-		    }); 
-		})
 	}
 
 	fetchData() {

@@ -17,11 +17,13 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 
 import TextField from '@material-ui/core/TextField';
 import GetYTID from 'get-youtube-id'
+import request from 'superagent';
 
 class YTCard extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			position: props.defaultPositon,
 			disabled : false,
 			dialogOpen: false,
 			embedlink: "",
@@ -49,8 +51,30 @@ class YTCard extends React.Component {
     	this.clearSelection();
     	const {disabled} = this.state;
     	this.setState({disabled: !disabled});
+		if (!disabled){
+    		this.props.auth.getProfile((err, profile) => {
+    			const message = {userid: profile.sub, widgetid: this.props.id, name:"youtube", position: this.state.position}
+				request
+		        .post('/api/savewidgetposition')
+		        .send(message)
+		        .set('Accept', 'application/json')
+		        .end((err, res) => {
+		          if (err || !res.ok) {
+		            console.log('Failure');
+		          }
+		        });
+	        })   	
+    	}
 	}
 
+	handleDrag(e, ui) {
+	    this.setState({
+	      position: {
+	        x: ui.x,
+	        y: ui.y,
+	      }
+	    });
+	}
 	
 	handleDialogOpen() {
 		this.setState({
@@ -83,7 +107,7 @@ class YTCard extends React.Component {
 
 	render() {
 		return (
-		    <Draggable disabled={this.state.disabled} {...this.props}>
+		    <Draggable onDrag={this.handleDrag.bind(this)} disabled={this.state.disabled} {...this.props}>
 	        	<div style={{ width: 500 }}>
 	        		<Card className="card">
 	        			<CardHeader 

@@ -9,6 +9,7 @@ import IconButton from '@material-ui/core/IconButton';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import LockIcon from '@material-ui/icons/Lock';
 import UnlockIcon from '@material-ui/icons/LockOpen';
+import request from 'superagent';
 
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -22,6 +23,7 @@ class YTCard extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			position: props.defaultPositon,
 			disabled : false,
 			dialogOpen: false,
 			channeltemp: "",
@@ -43,8 +45,30 @@ class YTCard extends React.Component {
     	this.clearSelection();
     	const {disabled} = this.state;
     	this.setState({disabled: !disabled});
+		if (!disabled){
+    		this.props.auth.getProfile((err, profile) => {
+    			const message = {userid: profile.sub, widgetid: this.props.id, name:"twitch", position: this.state.position}
+				request
+		        .post('/api/savewidgetposition')
+		        .send(message)
+		        .set('Accept', 'application/json')
+		        .end((err, res) => {
+		          if (err || !res.ok) {
+		            console.log('Failure');
+		          }
+		        });
+	        })   	
+    	}
 	}
 
+	handleDrag(e, ui) {
+	    this.setState({
+	      position: {
+	        x: ui.x,
+	        y: ui.y,
+	      }
+	    });
+	}
 	
 	handleDialogOpen() {
 		this.setState({
@@ -73,7 +97,7 @@ class YTCard extends React.Component {
 
 	render() {
 		return (
-		    <Draggable disabled={this.state.disabled} {...this.props}>
+		    <Draggable onDrag={this.handleDrag.bind(this)} disabled={this.state.disabled} {...this.props}>
 	        	<div style={{ width: 700 }}>
 	        		<Card className="card">
 	        			<CardHeader 

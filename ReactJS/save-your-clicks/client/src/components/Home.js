@@ -11,8 +11,9 @@ import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import './Home.css'
+import request from 'superagent';
 
-
+let userid;
 
 class Home extends Component {
 	 constructor(props) {
@@ -25,28 +26,62 @@ class Home extends Component {
     };
 
     this.addYT = this.addYT.bind(this) 
+	this.constructWidgets = this.constructWidgets.bind(this)
   }
 
 
 
   componentDidMount() {
     const id = this.props.auth.getProfile((err, profile) => {
-      const userid = profile.sub;
+     userid = profile.sub;
 
       fetch("/api/getComponents?userid=" + userid)
         .then((response) => response.json())
         .then((data) => this.handleComponents(data));
-    })
+		
+	  const message = {userid: userid};
+	  request
+		.post('/api/getwidgets')
+		.send(message)
+		.set('Accept', 'application/json')
+		.end((err, res) => {
+			if (err || !res.ok) {
+				console.log('Failure');
+			 } else {
+				 if (res.body[0]==null)
+					return
+				 else{
+					this.constructWidgets(res.body)
+				 }
+			 }
+		}); 
+	});
+
   }
-
-  handleClick = event => {
-    this.setState({ anchorEl: event.currentTarget });
-  };
-
-  handleClose = (route) => {
-    this.setState({ anchorEl: null });
-  };
-
+  
+  constructWidgets(data) {
+   data.forEach(function(element) {
+	   for ( var key in element ) {
+			if(element[key][0].name=="weather"){
+				this.addWeather(false, key, element[key][0].position)
+			}
+			else if(element[key][0].name=="map"){
+				this.addMap(false, key, element[key][0].position)
+			}
+			else if(element[key][0].name=="twitch"){
+				this.addTwitch(false, key, element[key][0].position)
+			}
+			else if(element[key][0].name=="news"){
+				this.addNews(false, key, element[key][0].position)
+			}
+			else if(element[key][0].name=="youtube"){
+				this.addYT(false, key, element[key][0].position)
+			}
+				
+	  }
+    }.bind(this));
+  }
+  
   constructComponent() {
     let card
     this.state.standardComponents.map((comp)=>{
@@ -56,6 +91,30 @@ class Home extends Component {
     });
     return card
   }
+  
+  saveWidget(widgetName, callback) {
+	  	const message = {userid: userid, name: widgetName}
+		request
+		.post('/api/savewidget')
+		.send(message)
+		.set('Accept', 'application/json')
+		.end((err, res) => {
+			if (err || !res.ok) {
+				console.log('Failure');
+			}
+			else {
+				callback(res.text);
+			}
+		});
+  }
+  
+  handleClick = event => {
+    this.setState({ anchorEl: event.currentTarget });
+  };
+
+  handleClose = (route) => {
+    this.setState({ anchorEl: null });
+  };
 
   handleComponents(data) {
     if (!data) return;
@@ -68,50 +127,89 @@ class Home extends Component {
     });
   }
 
-  addWeather() {
-  this.handleClose()
-    const comp = Object.assign([], this.state.standardComponents)
-
-    comp.push(<DragCard auth={this.props.auth} grid={[25, 25]} bounds="html" defaultPosition={{x: 250, y: 150}}/>)
-
-    this.setState({standardComponents: comp}) 
+  addWeather(saveInDB, key, position) {
+	 this.handleClose()
+	 const comp = Object.assign([], this.state.standardComponents)
+	  
+	if (saveInDB){
+		this.saveWidget("weather", function(widgetID){
+			comp.push(<DragCard auth={this.props.auth} id={widgetID} grid={[25, 25]} bounds="html" defaultPosition={{x: 0, y: 0}}/>)
+			this.setState({standardComponents: comp}) 
+		}.bind(this));
+	}
+	else {
+		comp.push(<DragCard auth={this.props.auth} id={key} grid={[25, 25]} bounds="html" defaultPosition={position}/>)
+		this.setState({standardComponents: comp}) 
+	}
   }
 
-  addMap() {
-    this.handleClose()
-    const comp = Object.assign([], this.state.standardComponents)
-
-    comp.push(<LeafletMap auth={this.props.auth} grid={[25, 25]} bounds="body"/>)
-
-    this.setState({standardComponents: comp}) 
+  addMap(saveInDB, key, position) {
+	 this.handleClose()
+	 const comp = Object.assign([], this.state.standardComponents)
+	  
+	if (saveInDB){
+		this.saveWidget("map", function(widgetID){
+			comp.push(<LeafletMap auth={this.props.auth} id={widgetID} grid={[25, 25]} bounds="body" defaultPosition={{x: 0, y: 0}}/>)
+			this.setState({standardComponents: comp}) 
+		}.bind(this));
+	}
+	else {
+		comp.push(<LeafletMap auth={this.props.auth} id={key} grid={[25, 25]} bounds="body" defaultPosition={position}/>)
+		this.setState({standardComponents: comp}) 
+	}
+  }
+  
+ 
+ 
+  addTwitch(saveInDB, key, position) {
+	 this.handleClose()
+	 const comp = Object.assign([], this.state.standardComponents)
+	  
+	if (saveInDB){
+		this.saveWidget("twitch", function(widgetID){
+			comp.push(<TwitchCard auth={this.props.auth} id={widgetID} grid={[25, 25]} bounds="body" defaultPosition={{x: 0, y: 0}}/>)
+			this.setState({standardComponents: comp}) 
+		}.bind(this));
+	}
+	else {
+		comp.push(<TwitchCard auth={this.props.auth} id={key} grid={[25, 25]} bounds="body" defaultPosition={position}/>)
+		this.setState({standardComponents: comp}) 
+	}
+  }
+  
+  addNews(saveInDB, key, position) {
+	 this.handleClose()
+	 const comp = Object.assign([], this.state.standardComponents)
+	  
+	if (saveInDB){
+		this.saveWidget("news", function(widgetID){
+			comp.push(<NewsCard auth={this.props.auth} id={widgetID} grid={[25, 25]} bounds="body" defaultPosition={{x: 0, y: 0}}/>)
+			this.setState({standardComponents: comp}) 
+		}.bind(this));
+	}
+	else {
+		comp.push(<NewsCard auth={this.props.auth} id={key} grid={[25, 25]} bounds="body" defaultPosition={position}/>)
+		this.setState({standardComponents: comp}) 
+	}
   }
 
-  addTwitch() {
-    this.handleClose()
-    const comp = Object.assign([], this.state.standardComponents)
-
-    comp.push(<TwitchCard auth={this.props.auth} grid={[25, 25]} bounds="body"/>)
-
-    this.setState({standardComponents: comp}) 
+  addYT(saveInDB, key, position) {
+	 this.handleClose()
+	 const comp = Object.assign([], this.state.standardComponents)
+	  
+	if (saveInDB){
+		this.saveWidget("youtube", function(widgetID){
+			comp.push(<YTCard className="Widget" auth={this.props.auth} id={widgetID} grid={[25, 25]} bounds="body" defaultPosition={{x: 0, y: 0}}/>)
+			this.setState({standardComponents: comp}) 
+		}.bind(this));
+	}
+	else {
+		comp.push(<YTCard className="Widget" auth={this.props.auth} id={key} grid={[25, 25]} bounds="body" defaultPosition={position}/>)
+		this.setState({standardComponents: comp}) 
+	}
   }
+  
 
-  addNews() {
-    this.handleClose()
-    const comp = Object.assign([], this.state.standardComponents)
-
-    comp.push(<NewsCard auth={this.props.auth} grid={[25, 25]} bounds="body"/>)
-
-    this.setState({standardComponents: comp}) 
-  }
-
-  addYT() {
-    this.handleClose()
-    const comp = Object.assign([], this.state.standardComponents)
-
-    comp.push(<YTCard className="Widget" auth={this.props.auth} grid={[25, 25]} bounds="body"/>)
-
-    this.setState({standardComponents: comp}) 
-  }
 
 	render() {
       const { anchorEl } = this.state;
@@ -132,11 +230,11 @@ class Home extends Component {
           open={Boolean(anchorEl)}
           onClose={this.handleClose}
         >
-          <MenuItem onClick={() => this.addWeather()}>Wetter</MenuItem>
-          <MenuItem onClick={() => this.addNews()}>Nachrichten</MenuItem>
-          <MenuItem onClick={() => this.addYT()}>Youtube</MenuItem>
-          <MenuItem onClick={() => this.addTwitch()}>Twitch</MenuItem>
-          <MenuItem onClick={() => this.addMap()}>Karte</MenuItem>
+          <MenuItem onClick={() => this.addWeather(true)}>Wetter</MenuItem>
+          <MenuItem onClick={() => this.addNews(true)}>Nachrichten</MenuItem>
+          <MenuItem onClick={() => this.addYT(true)}>Youtube</MenuItem>
+          <MenuItem onClick={() => this.addTwitch(true)}>Twitch</MenuItem>
+          <MenuItem onClick={() => this.addMap(true)}>Karte</MenuItem>
         </Menu>
           {this.state.components.map((Components) => <Components />)}
           {this.state.standardComponents}         

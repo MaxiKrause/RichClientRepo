@@ -30,9 +30,7 @@ class LeafletMap extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			position: {
-       			x: 0, y: 0
-			},
+			position: props.defaultPositon,
 			disabled : false,
 			dialogOpen: false,
 			lat: 51.505,
@@ -55,6 +53,20 @@ class LeafletMap extends React.Component {
     	this.clearSelection();
     	const {disabled} = this.state;
     	this.setState({disabled: !disabled});
+		if (!disabled){
+    		this.props.auth.getProfile((err, profile) => {
+    			const message = {userid: profile.sub, widgetid: this.props.id, name:"map", position: this.state.position}
+				request
+		        .post('/api/savewidgetposition')
+		        .send(message)
+		        .set('Accept', 'application/json')
+		        .end((err, res) => {
+		          if (err || !res.ok) {
+		            console.log('Failure');
+		          }
+		        });
+	        })   	
+    	}
 	}
 
 	handleDrag(e, ui) {
