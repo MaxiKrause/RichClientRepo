@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const MongoClient = require('mongodb').MongoClient;
+const ObjectID = require('mongodb').ObjectID;
 const dotenv = require('dotenv');
 
 const app = express();
@@ -32,7 +33,6 @@ app.post('/api/saveusers', (req, res) => {
 		
 		collection.insert(document, function(err, records){
 			if (err){
-				console.error(err);
 				res.status(201).send(err);
 			}
 			else {
@@ -95,6 +95,60 @@ app.get('/api/getComponents', (req, res) => {
 	});
 });
 
+app.post ('/api/savewidget', (req, res) => {
+	MongoClient.connect(process.env.MONGOLAB_URI, function(err, client) {
+		if (err) {
+			console.error(err);
+			res.status(201).send(err);
+		}
+		
+		var objectId = new ObjectID().toString();
+		var obj = {[objectId]: [	
+         {
+			name: req.body.name,
+			position: {x: 0, y:0}
+         }
+      ] };
+		const db = client.db(dbName);
+		const collection = db.collection("users");
+
+		collection.update({_id: req.body.userid}, {$set: obj}, {upsert:true}, function(err, records){
+			if (err){
+				console.error(err);
+				res.status(201).send(err);
+			}
+			else {
+				res.status(200).send(objectId);
+			}
+		});
+	});
+});
+
+app.post('/api/getwidgets', function(req, res){
+	MongoClient.connect(process.env.MONGOLAB_URI, function(err, client) {
+		if (err) {
+			console.error(err);
+			res.status(201).send(err);
+		}
+		
+		const db = client.db(dbName);
+		const collection = db.collection("users");
+		let document = {_id: req.body.userid};
+
+		collection.find(document).toArray(function(err, records){
+			if (err){
+				console.error(err);
+				res.status(201).send(err);
+			}
+			else {
+				console.log(req.body)
+				res.status(200);
+				res.send(records);
+			}
+		});
+	});
+});
+
 app.post ('/api/savewidgetposition', (req, res) => {
 	MongoClient.connect(process.env.MONGOLAB_URI, function(err, client) {
 		if (err) {
@@ -104,8 +158,16 @@ app.post ('/api/savewidgetposition', (req, res) => {
 		
 		const db = client.db(dbName);
 		const collection = db.collection("users");
-
-		collection.update({_id: req.body.userid}, {$set:{position: req.body.position}}, {upsert:true}, function(err, records){
+		
+		console.log(req.body)
+		
+		var obj = {[req.body.widgetid]: [	
+        {
+			name: req.body.name,
+			position: req.body.position
+         }
+        ]};
+		collection.update({_id: req.body.userid}, {$set: obj}, {upsert:true}, function(err, records){
 			if (err){
 				console.error(err);
 				res.status(201).send(err);
@@ -142,3 +204,4 @@ app.post('/api/getwidgetposition', function(req, res){
 });
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
+
