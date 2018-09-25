@@ -112,7 +112,7 @@ class Upload extends Component {
 		            shrink: true,
 		          }}
 		          placeholder="Erscheinungsjahr"
-		          value={this.state.sdata.Year}
+		          value={this.state.sdata.Year || ''}
 		          margin="normal"
 		        />
 
@@ -122,7 +122,7 @@ class Upload extends Component {
 		            shrink: true,
 		          }}
 		          placeholder="Genre"
-		          value={this.state.sdata.Genre}
+		          value={this.state.sdata.Genre || ''}
 		          fullWidth
 		          margin="normal"
 		        />
@@ -133,7 +133,7 @@ class Upload extends Component {
 		            shrink: true,
 		          }}
 		          placeholder="Handlung"
-		          value={this.state.sdata.Plot}
+		          value={this.state.sdata.Plot || ''}
 		          multiline
          		  rowsMax="9"
 		          fullWidth
@@ -146,7 +146,7 @@ class Upload extends Component {
 		            shrink: true,
 		          }}
 		          placeholder="Bewertung"
-		          value={this.state.sdata.imdbRating}
+		          value={this.state.sdata.imdbRating || ''}
 		          margin="normal"
 		        />
             </div>
