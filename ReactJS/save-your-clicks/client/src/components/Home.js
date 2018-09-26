@@ -63,19 +63,19 @@ class Home extends Component {
    data.forEach(function(element) {
 	   for ( var key in element ) {
 			if(element[key][0].name=="weather"){
-				this.addWeather(false, key, element[key][0].position)
+				this.addWeather(false, key, element[key][0].settings, element[key][0].position)
 			}
 			else if(element[key][0].name=="map"){
 				this.addMap(false, key, element[key][0].position)
 			}
 			else if(element[key][0].name=="twitch"){
-				this.addTwitch(false, key, element[key][0].position)
+				this.addTwitch(false, key, element[key][0].settings, element[key][0].position)
 			}
 			else if(element[key][0].name=="news"){
 				this.addNews(false, key, element[key][0].position)
 			}
 			else if(element[key][0].name=="youtube"){
-				this.addYT(false, key, element[key][0].position)
+				this.addYT(false, key, element[key][0].settings, element[key][0].position)
 			}
 				
 	  }
@@ -92,8 +92,8 @@ class Home extends Component {
     return card
   }
   
-  saveWidget(widgetName, callback) {
-	  	const message = {userid: userid, name: widgetName}
+  saveWidget(widgetName, callback, settings) {
+	  	const message = {userid: userid, name: widgetName, settings: settings}
 		request
 		.post('/api/savewidget')
 		.send(message)
@@ -127,18 +127,18 @@ class Home extends Component {
     });
   }
 
-  addWeather(saveInDB, key, position) {
+  addWeather(saveInDB, key, city, position) {
 	 this.handleClose()
 	 const comp = Object.assign([], this.state.standardComponents)
 	  
 	if (saveInDB){
 		this.saveWidget("weather", function(widgetID){
-			comp.push(<DragCard auth={this.props.auth} id={widgetID} grid={[25, 25]} bounds="html" defaultPosition={{x: 0, y: 0}}/>)
+			comp.push(<DragCard auth={this.props.auth} id={widgetID} city="berlin,de" grid={[25, 25]} bounds="html" defPosition={{x: 0, y: 0}}/>)
 			this.setState({standardComponents: comp}) 
-		}.bind(this));
+		}.bind(this), "berlin,de");
 	}
 	else {
-		comp.push(<DragCard auth={this.props.auth} id={key} grid={[25, 25]} bounds="html" defaultPosition={position}/>)
+		comp.push(<DragCard auth={this.props.auth} id={key} city={city} grid={[25, 25]}  bounds="html" defPosition={position}/>)
 		this.setState({standardComponents: comp}) 
 	}
   }
@@ -149,30 +149,28 @@ class Home extends Component {
 	  
 	if (saveInDB){
 		this.saveWidget("map", function(widgetID){
-			comp.push(<LeafletMap auth={this.props.auth} id={widgetID} grid={[25, 25]} bounds="body" defaultPosition={{x: 0, y: 0}}/>)
+			comp.push(<LeafletMap auth={this.props.auth} id={widgetID} grid={[25, 25]} bounds="body" defPosition={{x: 0, y: 0}}/>)
 			this.setState({standardComponents: comp}) 
 		}.bind(this));
 	}
 	else {
-		comp.push(<LeafletMap auth={this.props.auth} id={key} grid={[25, 25]} bounds="body" defaultPosition={position}/>)
+		comp.push(<LeafletMap auth={this.props.auth} id={key} grid={[25, 25]} bounds="body" defPosition={position}/>)
 		this.setState({standardComponents: comp}) 
 	}
   }
   
- 
- 
-  addTwitch(saveInDB, key, position) {
+  addTwitch(saveInDB, key, channelName, position) {
 	 this.handleClose()
 	 const comp = Object.assign([], this.state.standardComponents)
 	  
 	if (saveInDB){
 		this.saveWidget("twitch", function(widgetID){
-			comp.push(<TwitchCard auth={this.props.auth} id={widgetID} grid={[25, 25]} bounds="body" defaultPosition={{x: 0, y: 0}}/>)
+			comp.push(<TwitchCard auth={this.props.auth} id={widgetID} channelName="" grid={[25, 25]} bounds="body" defPosition={{x: 0, y: 0}}/>)
 			this.setState({standardComponents: comp}) 
 		}.bind(this));
 	}
 	else {
-		comp.push(<TwitchCard auth={this.props.auth} id={key} grid={[25, 25]} bounds="body" defaultPosition={position}/>)
+		comp.push(<TwitchCard auth={this.props.auth} id={key} channelName={channelName} grid={[25, 25]} bounds="body" defPosition={position}/>)
 		this.setState({standardComponents: comp}) 
 	}
   }
@@ -183,28 +181,28 @@ class Home extends Component {
 	  
 	if (saveInDB){
 		this.saveWidget("news", function(widgetID){
-			comp.push(<NewsCard auth={this.props.auth} id={widgetID} grid={[25, 25]} bounds="body" defaultPosition={{x: 0, y: 0}}/>)
+			comp.push(<NewsCard auth={this.props.auth} id={widgetID} grid={[25, 25]} bounds="body" defPosition={{x: 0, y: 0}}/>)
 			this.setState({standardComponents: comp}) 
 		}.bind(this));
 	}
 	else {
-		comp.push(<NewsCard auth={this.props.auth} id={key} grid={[25, 25]} bounds="body" defaultPosition={position}/>)
+		comp.push(<NewsCard auth={this.props.auth} id={key} grid={[25, 25]} bounds="body" defPosition={position}/>)
 		this.setState({standardComponents: comp}) 
 	}
   }
 
-  addYT(saveInDB, key, position) {
+  addYT(saveInDB, key, link, position) {
 	 this.handleClose()
 	 const comp = Object.assign([], this.state.standardComponents)
 	  
 	if (saveInDB){
 		this.saveWidget("youtube", function(widgetID){
-			comp.push(<YTCard className="Widget" auth={this.props.auth} id={widgetID} grid={[25, 25]} bounds="body" defaultPosition={{x: 0, y: 0}}/>)
+			comp.push(<YTCard className="Widget" auth={this.props.auth} id={widgetID} grid={[25, 25]} bounds="body" defPosition={{x: 0, y: 0}}/>)
 			this.setState({standardComponents: comp}) 
 		}.bind(this));
 	}
 	else {
-		comp.push(<YTCard className="Widget" auth={this.props.auth} id={key} grid={[25, 25]} bounds="body" defaultPosition={position}/>)
+		comp.push(<YTCard className="Widget" auth={this.props.auth} id={key} link={link} grid={[25, 25]} bounds="body" defPosition={position}/>)
 		this.setState({standardComponents: comp}) 
 	}
   }

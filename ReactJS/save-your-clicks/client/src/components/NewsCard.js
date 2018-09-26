@@ -10,6 +10,7 @@ import IconButton from '@material-ui/core/IconButton';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import LockIcon from '@material-ui/icons/Lock';
 import UnlockIcon from '@material-ui/icons/LockOpen';
+import DeleteIcon from '@material-ui/icons/Delete';
 import './NewsCard.css';
 import request from 'superagent';
 
@@ -24,9 +25,10 @@ class NewsCard extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			position: props.defaultPositon,
+			position: props.defPosition,
 			disabled : false,
 			dialogOpen: false,
+			dialogOpenDelete: false,
 			Items: [],
 			query: "",
 			country: "",
@@ -97,6 +99,30 @@ class NewsCard extends React.Component {
 		this.setState({dialogOpen: false});
 		this.fetchData();
 	}
+	
+	handleDialogOpenDelete() {
+		this.setState({
+			dialogOpenDelete: true,
+		});
+	}
+
+	handleDialogCloseDelete(event) {
+		this.setState({dialogOpenDelete: false});
+		    	this.props.auth.getProfile((err, profile) => {
+    			const message = {userid: profile.sub, widgetid: this.props.id}
+				request
+		        .post('/api/deleteWidget')
+		        .send(message)
+		        .set('Accept', 'application/json')
+		        .end((err, res) => {
+		          if (err || !res.ok) {
+		            console.log('Failure');
+		          }
+				  else 
+					  window.location.reload(); 
+		        });
+	        })   	
+	}
 
 	handleChangeQuery(event) {
     	this.setState({ query: event.target.value });
@@ -161,6 +187,9 @@ class NewsCard extends React.Component {
 		    								)
 		    							}
 	      							</IconButton>
+									<IconButton size="small"  onClick={this.handleDialogOpenDelete.bind(this)}>
+										<DeleteIcon/>
+									</IconButton>
 	      					        <IconButton onClick={this.handleDialogOpen.bind(this)}>
 	                					<MoreVertIcon />
 	              					</IconButton>
@@ -220,6 +249,26 @@ class NewsCard extends React.Component {
 					            </Button>
 					            <Button onClick={this.handleDialogClose.bind(this)} color="primary" id="save">
 					            	Speichern
+					            </Button>
+	    					</DialogActions>
+          				</div>
+          			</Dialog>
+					<Dialog
+	            		open={this.state.dialogOpenDelete}
+          			>
+          				<div>
+          					<DialogTitle>
+          						Einstellungen
+          					</DialogTitle>
+          					<DialogContent>
+								Wollen Sie das Widget löschen?
+	            			</DialogContent>
+	    					<DialogActions>
+	    						<Button onClick={() => this.setState({dialogOpenDelete: false})} color="primary" id="cancelDelete">
+					            	Abrechen
+					            </Button>
+					            <Button onClick={this.handleDialogCloseDelete.bind(this)} color="primary" id="delete">
+					            	Ja
 					            </Button>
 	    					</DialogActions>
           				</div>

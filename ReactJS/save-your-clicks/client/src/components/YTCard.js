@@ -9,6 +9,7 @@ import IconButton from '@material-ui/core/IconButton';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import LockIcon from '@material-ui/icons/Lock';
 import UnlockIcon from '@material-ui/icons/LockOpen';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -23,10 +24,11 @@ class YTCard extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			position: props.defaultPositon,
+			position: props.defPosition,
 			disabled : false,
 			dialogOpen: false,
-			embedlink: "",
+			dialogOpenDelete: false,
+			embedlink: props.link,
 			id: "",
 			ytlink: "",
 		};
@@ -53,7 +55,7 @@ class YTCard extends React.Component {
     	this.setState({disabled: !disabled});
 		if (!disabled){
     		this.props.auth.getProfile((err, profile) => {
-    			const message = {userid: profile.sub, widgetid: this.props.id, name:"youtube", position: this.state.position}
+    			const message = {userid: profile.sub, widgetid: this.props.id, name:"youtube", position: this.state.position, settings: this.state.embedlink}
 				request
 		        .post('/api/savewidgetposition')
 		        .send(message)
@@ -89,6 +91,30 @@ class YTCard extends React.Component {
 		let embid = "https://www.youtube.com/embed/"+this.state.id;
 
     	this.setState({ embedlink: embid})
+	}
+	
+	handleDialogOpenDelete() {
+		this.setState({
+			dialogOpenDelete: true,
+		});
+	}
+
+	handleDialogCloseDelete(event) {
+		this.setState({dialogOpenDelete: false});
+		    	this.props.auth.getProfile((err, profile) => {
+    			const message = {userid: profile.sub, widgetid: this.props.id}
+				request
+		        .post('/api/deleteWidget')
+		        .send(message)
+		        .set('Accept', 'application/json')
+		        .end((err, res) => {
+		          if (err || !res.ok) {
+		            console.log('Failure');
+		          }
+				   else 
+					  window.location.reload(); 
+		        });
+	        })   	
 	}
 
 	handleChangeInput(event) {
@@ -128,6 +154,9 @@ class YTCard extends React.Component {
 		    								)
 		    							}
 	      							</IconButton>
+									<IconButton size="small"  onClick={this.handleDialogOpenDelete.bind(this)}>
+										<DeleteIcon/>
+									</IconButton>
 	      					        <IconButton onClick={this.handleDialogOpen.bind(this)}>
 	                					<MoreVertIcon />
 	              					</IconButton>
@@ -161,6 +190,26 @@ class YTCard extends React.Component {
 					            </Button>
 					            <Button onClick={this.handleDialogClose.bind(this)} color="primary" id="save">
 					            	Speichern
+					            </Button>
+	    					</DialogActions>
+          				</div>
+          			</Dialog>
+					<Dialog
+	            		open={this.state.dialogOpenDelete}
+          			>
+          				<div>
+          					<DialogTitle>
+          						Einstellungen
+          					</DialogTitle>
+          					<DialogContent>
+								Wollen Sie das Widget löschen?
+	            			</DialogContent>
+	    					<DialogActions>
+	    						<Button onClick={() => this.setState({dialogOpenDelete: false})} color="primary" id="cancelDelete">
+					            	Abrechen
+					            </Button>
+					            <Button onClick={this.handleDialogCloseDelete.bind(this)} color="primary" id="delete">
+					            	Ja
 					            </Button>
 	    					</DialogActions>
           				</div>

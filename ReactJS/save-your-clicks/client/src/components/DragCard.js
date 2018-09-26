@@ -10,6 +10,7 @@ import IconButton from '@material-ui/core/IconButton';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import LockIcon from '@material-ui/icons/Lock';
 import UnlockIcon from '@material-ui/icons/LockOpen';
+import DeleteIcon from '@material-ui/icons/Delete';
 import './Dragtest.css';
 
 import Dialog from '@material-ui/core/Dialog';
@@ -28,13 +29,14 @@ class DragCard extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			position: props.defaultPositon,
+			position: props.defPosition,
 			disabled : false,
 			weatherData: null,
 			WeatherIMG: null,
 			cityName: "Loading...",
 			dialogOpen: false,
-			userCity: "London,uk",
+			dialogOpenDelete: false,
+			userCity: props.city,
 			temp: "Loading..."
 		};
 	}
@@ -48,7 +50,6 @@ class DragCard extends React.Component {
 	}
 
 	changeMoveState(e) {
-		console.log(this.props.id)
 		e.preventDefault();
     	e.stopPropagation();
     	this.clearSelection();
@@ -56,7 +57,7 @@ class DragCard extends React.Component {
     	this.setState({disabled: !disabled});
     	if (!disabled){
     		this.props.auth.getProfile((err, profile) => {
-    			const message = {userid: profile.sub, widgetid: this.props.id, name:"weather", position: this.state.position}
+    			const message = {userid: profile.sub, widgetid: this.props.id, name:"weather", settings: this.state.userCity, position: this.state.position}
 				request
 		        .post('/api/savewidgetposition')
 		        .send(message)
@@ -112,6 +113,31 @@ class DragCard extends React.Component {
 		this.setState({dialogOpen: false});
 		this.fetchData();
 	}
+	
+	handleDialogOpenDelete() {
+		this.setState({
+			dialogOpenDelete: true,
+		});
+	}
+
+	handleDialogCloseDelete(event) {
+		this.setState({dialogOpenDelete: false});
+		    	this.props.auth.getProfile((err, profile) => {
+    			const message = {userid: profile.sub, widgetid: this.props.id}
+				request
+		        .post('/api/deleteWidget')
+		        .send(message)
+		        .set('Accept', 'application/json')
+		        .end((err, res) => {
+		          if (err || !res.ok) {
+		            console.log('Failure');
+		          }
+				  else 
+					  window.location.reload(); 
+		        });
+	        })   	
+		
+	}
 
 	handleChangeInput(event) {
     	this.setState({ userCity: event.target.value });
@@ -161,6 +187,9 @@ class DragCard extends React.Component {
 		    								)
 		    							}
 	      							</IconButton>
+									<IconButton size="small"  onClick={this.handleDialogOpenDelete.bind(this)}>
+										<DeleteIcon/>
+									</IconButton>
 	      					        <IconButton onClick={this.handleDialogOpen.bind(this)}>
 	                					<MoreVertIcon />
 	              					</IconButton>
@@ -171,18 +200,6 @@ class DragCard extends React.Component {
 	                		<Typography variant="headline" component="h2">
 	                  			{this.state.cityName} {this.state.temp}°C
 	                		</Typography>
-	                		<Grid
-	                			container
-	                			spacing="16"
-	                			direction="row"
-	                			justify="center"
-	                			alignItems="center"
-
-	                		>
-	                			<Grid item><p>Hallo1</p></Grid>
-	                			<Grid item><p>Hallo2</p></Grid>
-	                			<Grid item><p>Hallo3</p></Grid>
-	                		</Grid>	
 	              		</CardContent>
 	              		<CardActions>
 	              		</CardActions>
@@ -212,8 +229,29 @@ class DragCard extends React.Component {
 	    					</DialogActions>
           				</div>
           			</Dialog>
+					
+				    <Dialog
+	            		open={this.state.dialogOpenDelete}
+          			>
+          				<div>
+          					<DialogTitle>
+          						Einstellungen
+          					</DialogTitle>
+          					<DialogContent>
+								Wollen Sie das Widget löschen?
+	            			</DialogContent>
+	    					<DialogActions>
+	    						<Button onClick={() => this.setState({dialogOpenDelete: false})} color="primary" id="cancelDelete">
+					            	Abrechen
+					            </Button>
+					            <Button onClick={this.handleDialogCloseDelete.bind(this)} color="primary" id="delete">
+					            	Ja
+					            </Button>
+	    					</DialogActions>
+          				</div>
+          			</Dialog>
 	          	</div>
-	        </Draggable>
+		</Draggable> 
 		);
 	}
 }
