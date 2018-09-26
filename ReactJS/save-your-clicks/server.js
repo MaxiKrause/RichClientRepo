@@ -106,7 +106,8 @@ app.post ('/api/savewidget', (req, res) => {
 		var obj = {[objectId]: [	
          {
 			name: req.body.name,
-			position: {x: 0, y:0}
+			position: {x: 0, y:0},
+			settings: req.body.settings
          }
       ] };
 		const db = client.db(dbName);
@@ -164,7 +165,8 @@ app.post ('/api/savewidgetposition', (req, res) => {
 		var obj = {[req.body.widgetid]: [	
         {
 			name: req.body.name,
-			position: req.body.position
+			position: req.body.position,
+			settings: req.body.settings
          }
         ]};
 		collection.update({_id: req.body.userid}, {$set: obj}, {upsert:true}, function(err, records){
@@ -198,6 +200,32 @@ app.post('/api/getwidgetposition', function(req, res){
 			else {
 				res.status(200);
 				res.send(records);
+			}
+		});
+	});
+});
+
+app.post ('/api/deleteWidget', (req, res) => {
+	MongoClient.connect(process.env.MONGOLAB_URI, function(err, client) {
+		if (err) {
+			console.error(err);
+			res.status(201).send(err);
+		}
+		
+		const db = client.db(dbName);
+		const collection = db.collection("users");
+		
+		var obj = {[req.body.widgetid]: [	
+        {
+         }
+        ]};
+		collection.update({_id: req.body.userid}, {$unset: obj}, {upsert:true}, function(err, records){
+			if (err){
+				console.error(err);
+				res.status(201).send(err);
+			}
+			else {
+				res.status(200).send();
 			}
 		});
 	});
