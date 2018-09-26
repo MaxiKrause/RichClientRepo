@@ -10,7 +10,9 @@ import IconButton from '@material-ui/core/IconButton';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import LockIcon from '@material-ui/icons/Lock';
 import UnlockIcon from '@material-ui/icons/LockOpen';
+import DeleteIcon from '@material-ui/icons/Delete';
 import './NewsCard.css';
+import request from 'superagent';
 
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -23,8 +25,10 @@ class NewsCard extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			position: props.defPosition,
 			disabled : false,
 			dialogOpen: false,
+			dialogOpenDelete: false,
 			Items: [],
 			query: "",
 			country: "",
@@ -48,8 +52,31 @@ class NewsCard extends React.Component {
     	this.clearSelection();
     	const {disabled} = this.state;
     	this.setState({disabled: !disabled});
+		if (!disabled){
+    		this.props.auth.getProfile((err, profile) => {
+    			const message = {userid: profile.sub, widgetid: this.props.id, name:"news", position: this.state.position}
+				request
+		        .post('/api/savewidgetposition')
+		        .send(message)
+		        .set('Accept', 'application/json')
+		        .end((err, res) => {
+		          if (err || !res.ok) {
+		            console.log('Failure');
+		          }
+		        });
+	        })   	
+    	}
 	}
 
+	handleDrag(e, ui) {
+	    this.setState({
+	      position: {
+	        x: ui.x,
+	        y: ui.y,
+	      }
+	    });
+	}
+	
 	handleData(data) {
 		const listItems = data.articles.map((data, i) =>
 			  <li key={i}>{data.source.name} : <a href={data.url}>{data.title}</a></li>
@@ -71,6 +98,30 @@ class NewsCard extends React.Component {
 	handleDialogClose(event) {
 		this.setState({dialogOpen: false});
 		this.fetchData();
+	}
+	
+	handleDialogOpenDelete() {
+		this.setState({
+			dialogOpenDelete: true,
+		});
+	}
+
+	handleDialogCloseDelete(event) {
+		this.setState({dialogOpenDelete: false});
+		    	this.props.auth.getProfile((err, profile) => {
+    			const message = {userid: profile.sub, widgetid: this.props.id}
+				request
+		        .post('/api/deleteWidget')
+		        .send(message)
+		        .set('Accept', 'application/json')
+		        .end((err, res) => {
+		          if (err || !res.ok) {
+		            console.log('Failure');
+		          }
+				  else 
+					  window.location.reload(); 
+		        });
+	        })   	
 	}
 
 	handleChangeQuery(event) {
@@ -115,7 +166,7 @@ class NewsCard extends React.Component {
 
 	render() {
 		return (
-		    <Draggable disabled={this.state.disabled} {...this.props}>
+		    <Draggable onDrag={this.handleDrag.bind(this)} disabled={this.state.disabled} {...this.props}>
 	        	<div style={{ maxWidth: 900, maxHeight: 350 }}>
 	        		<Card className="card">
 	        			<CardHeader 	
@@ -136,6 +187,9 @@ class NewsCard extends React.Component {
 		    								)
 		    							}
 	      							</IconButton>
+									<IconButton size="small"  onClick={this.handleDialogOpenDelete.bind(this)}>
+										<DeleteIcon/>
+									</IconButton>
 	      					        <IconButton onClick={this.handleDialogOpen.bind(this)}>
 	                					<MoreVertIcon />
 	              					</IconButton>
@@ -195,6 +249,26 @@ class NewsCard extends React.Component {
 					            </Button>
 					            <Button onClick={this.handleDialogClose.bind(this)} color="primary" id="save">
 					            	Speichern
+					            </Button>
+	    					</DialogActions>
+          				</div>
+          			</Dialog>
+					<Dialog
+	            		open={this.state.dialogOpenDelete}
+          			>
+          				<div>
+          					<DialogTitle>
+          						Einstellungen
+          					</DialogTitle>
+          					<DialogContent>
+								Wollen Sie das Widget löschen?
+	            			</DialogContent>
+	    					<DialogActions>
+	    						<Button onClick={() => this.setState({dialogOpenDelete: false})} color="primary" id="cancelDelete">
+					            	Abrechen
+					            </Button>
+					            <Button onClick={this.handleDialogCloseDelete.bind(this)} color="primary" id="delete">
+					            	Ja
 					            </Button>
 	    					</DialogActions>
           				</div>
